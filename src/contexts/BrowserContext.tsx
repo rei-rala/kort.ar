@@ -2,6 +2,14 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 
+const Breakpoint = {
+  XS: 0,
+  SM: 600,
+  MD: 900,
+  LG: 1200,
+  XL: 1536,
+};
+
 export const BrowserContext = React.createContext({});
 
 export const BrowserContextProvider: DefaultComponent = ({ children }) => {
@@ -9,12 +17,15 @@ export const BrowserContextProvider: DefaultComponent = ({ children }) => {
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
 
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<Breakpoint>(Breakpoint.SM);
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<number>(Breakpoint.SM);
+
+  const values = useMemo(
+    () => ({ isDarkThemed, width, height, currentBreakpoint }),
+    [isDarkThemed, width, height, currentBreakpoint]
+  );
 
   useEffect(() => {
-    if (!window || !window.matchMedia) {
-      return;
-    }
+    let colorSchemeQuery: MediaQueryList;
 
     function handleColorSchemeChange() {
       const mediaQuery = "(prefers-color-scheme: dark)";
@@ -22,10 +33,11 @@ export const BrowserContextProvider: DefaultComponent = ({ children }) => {
       setIsDarkThemed(currentlyDark);
     }
 
-    const colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    colorSchemeQuery.addEventListener("change", handleColorSchemeChange);
-
-    handleColorSchemeChange();
+    if (window && window.matchMedia) {
+      colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      colorSchemeQuery.addEventListener("change", handleColorSchemeChange);
+      handleColorSchemeChange();
+    }
 
     return () => colorSchemeQuery.removeEventListener("change", handleColorSchemeChange);
   }, []);
@@ -43,18 +55,13 @@ export const BrowserContextProvider: DefaultComponent = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (width < 600) return setCurrentBreakpoint(Breakpoint.XS);
-    if (width < 960) return setCurrentBreakpoint(Breakpoint.SM);
-    if (width < 1280) return setCurrentBreakpoint(Breakpoint.MD);
-    if (width < 1920) return setCurrentBreakpoint(Breakpoint.LG);
+    if (width >= Breakpoint.XL) return setCurrentBreakpoint(Breakpoint.XL);
+    if (width >= Breakpoint.LG) return setCurrentBreakpoint(Breakpoint.LG);
+    if (width >= Breakpoint.MD) return setCurrentBreakpoint(Breakpoint.MD);
+    if (width >= Breakpoint.SM) return setCurrentBreakpoint(Breakpoint.SM);
 
-    return setCurrentBreakpoint(Breakpoint.XL);
+    return setCurrentBreakpoint(Breakpoint.XS);
   }, [width]);
-
-  const values = useMemo(
-    () => ({ isDarkThemed, width, height, currentBreakpoint }),
-    [isDarkThemed, width, height, currentBreakpoint]
-  );
 
   return <BrowserContext.Provider value={values}>{children}</BrowserContext.Provider>;
 };

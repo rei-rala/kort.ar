@@ -1,11 +1,11 @@
 import "./globals.css";
 import { Open_Sans, Rubik } from "next/font/google";
 
-import Navbar from "@/components/navbar";
+import { Navbar } from "@/components/Navbar";
 import { BrowserContextProvider } from "@/contexts/BrowserContext";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
-const rubik = Rubik({ subsets: ["latin"] })
+const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata = {
   title: "kort.ar",
