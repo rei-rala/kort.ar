@@ -1,60 +1,42 @@
 "use client";
 
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import Typography from '@mui/material/Typography';
-import Link from 'next/link';
+import React, { useState, useEffect, useMemo, MouseEvent } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 export default function PrimarySearchAppBar(props: any) {
-  const [account, _] = React.useState({
-    name: "Kort.ar",
-    email: "info@kort.ar",
-    avatarUrl: 'https://avatars.githubusercontent.com/u/8908519?v=4',
-    communications: {
-      notifications: [
-        {
-          id: 1,
-          title: "Bienvenido a Kort.ar",
-          description: "Gracias por registrarte en Kort.ar, esperamos que disfrutes de la experiencia!",
-          date: new Date(),
-          read: false
-        },
-        {
-          id: 2,
-          title: "Valida tu email en Kort.ar",
-          description: "Revisa tu bandeja de entrada y valida tu email para poder disfrutar de todas las funcionalidades de Kort.ar",
-          date: new Date(),
-          read: false
-        },
-      ]
-    }
-  })
+  const { brandFont } = props;
+  const [account, setAccount] = useState<Account | null>(null);
 
-  const { notifications, unreadNotifications } = React.useMemo(() => {
-    let notifications = account.communications.notifications;
-    return {
-      notifications,
-      unreadNotifications: notifications.filter(n => !n.read)
-    }
-  }, [account.communications.notifications])
+  const [, unreadNotifications] = useMemo(() => {
+    let all: AccountNotification[] = [];
+    let unread: AccountNotification[] = [];
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    if (account?.communications) {
+      all = account.communications.notifications;
+      unread = all.filter((n) => !n.read);
+    }
+    return [all, unread];
+  }, [account?.communications]);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -67,23 +49,51 @@ export default function PrimarySearchAppBar(props: any) {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
+  useEffect(() => {
+    setAccount({
+      name: "Kort.ar",
+      email: "info@kort.ar",
+      avatarUrl: "https://avatars.githubusercontent.com/u/8908519?v=4",
+      communications: {
+        notifications: [
+          {
+            id: "1",
+            title: "Bienvenido a Kort.ar",
+            description:
+              "Gracias por registrarte en Kort.ar, esperamos que disfrutes de la experiencia!",
+            date: new Date(),
+            read: false,
+          },
+          {
+            id: "2",
+            title: "Valida tu email en Kort.ar",
+            description:
+              "Revisa tu bandeja de entrada y valida tu email para poder disfrutar de todas las funcionalidades de Kort.ar",
+            date: new Date(),
+            read: false,
+          },
+        ],
+      },
+    });
+  }, []);
+
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -94,19 +104,19 @@ export default function PrimarySearchAppBar(props: any) {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
@@ -121,7 +131,7 @@ export default function PrimarySearchAppBar(props: any) {
         >
           <AccountCircle />
         </IconButton>
-        <p>{account.name}</p>
+        <p>{account?.name}</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -135,7 +145,6 @@ export default function PrimarySearchAppBar(props: any) {
         </IconButton>
         <p>Notificationes</p>
       </MenuItem>
-
     </Menu>
   );
 
@@ -154,17 +163,16 @@ export default function PrimarySearchAppBar(props: any) {
 
           <Link href="/">
             <Typography
-              className={props.brandFont}
-              component='h1'
-              sx={{ fontSize: { xs: '1.25em', sm: '1.5em', md: '2em' } }}
+              className={brandFont}
+              component="h1"
+              sx={{ fontSize: { xs: "1.25em", sm: "1.5em", md: "2em" } }}
             >
               KORT.AR
             </Typography>
           </Link>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
               aria-label={`Mostrar ${unreadNotifications.length} notificaciones sin leer`}
@@ -186,7 +194,7 @@ export default function PrimarySearchAppBar(props: any) {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="Mostrar mas opciones"
@@ -202,6 +210,6 @@ export default function PrimarySearchAppBar(props: any) {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </Box >
+    </Box>
   );
 }

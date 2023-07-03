@@ -1,15 +1,15 @@
-"use client"
-import React, { useState, useEffect } from 'react';
+"use client";
+
+import React, { useState, useEffect, useMemo } from "react";
 
 export const BrowserContext = React.createContext({});
 
-export const BrowserContextProvider = ({ children }: { children: any }) => {
+export const BrowserContextProvider: DefaultComponent = ({ children }) => {
   const [isDarkThemed, setIsDarkThemed] = useState(false);
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
 
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<Breakpoints>('sm');
-
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<Breakpoint>(Breakpoint.SM);
 
   useEffect(() => {
     if (!window || !window.matchMedia) {
@@ -17,16 +17,17 @@ export const BrowserContextProvider = ({ children }: { children: any }) => {
     }
 
     function handleColorSchemeChange() {
-      let currentlyDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const mediaQuery = "(prefers-color-scheme: dark)";
+      const currentlyDark = window.matchMedia(mediaQuery).matches;
       setIsDarkThemed(currentlyDark);
     }
 
-    const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    colorSchemeQuery.addEventListener('change', handleColorSchemeChange);
+    const colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    colorSchemeQuery.addEventListener("change", handleColorSchemeChange);
 
     handleColorSchemeChange();
 
-    return () => colorSchemeQuery.removeEventListener('change', handleColorSchemeChange);
+    return () => colorSchemeQuery.removeEventListener("change", handleColorSchemeChange);
   }, []);
 
   useEffect(() => {
@@ -35,29 +36,25 @@ export const BrowserContextProvider = ({ children }: { children: any }) => {
       setHeight(window.innerHeight);
     }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    if (width < 600)
-      return setCurrentBreakpoint('xs');
-    if (width < 960)
-      return setCurrentBreakpoint('sm');
-    if (width < 1280)
-      return setCurrentBreakpoint('md');
-    if (width < 1920)
-      return setCurrentBreakpoint('lg');
+    if (width < 600) return setCurrentBreakpoint(Breakpoint.XS);
+    if (width < 960) return setCurrentBreakpoint(Breakpoint.SM);
+    if (width < 1280) return setCurrentBreakpoint(Breakpoint.MD);
+    if (width < 1920) return setCurrentBreakpoint(Breakpoint.LG);
 
-    return setCurrentBreakpoint('xl');
+    return setCurrentBreakpoint(Breakpoint.XL);
   }, [width]);
 
-
-  return (
-    <BrowserContext.Provider value={{ isDarkThemed, width, height, currentBreakpoint }}>
-      {children}
-    </BrowserContext.Provider>
+  const values = useMemo(
+    () => ({ isDarkThemed, width, height, currentBreakpoint }),
+    [isDarkThemed, width, height, currentBreakpoint]
   );
-}
+
+  return <BrowserContext.Provider value={values}>{children}</BrowserContext.Provider>;
+};
