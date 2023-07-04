@@ -14,6 +14,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import { getUserTest } from "@/services/usertest.services";
 
 export default function Navbar(props: any) {
   const { brandFont } = props;
@@ -53,32 +54,20 @@ export default function Navbar(props: any) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogin = () => {
+    handleMenuClose();
+    handleMobileMenuClose();
+    setAccount(null);
+    getUserTest().then(setAccount).catch(console.log);
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    setAccount(null);
+  };
+
   useEffect(() => {
-    setAccount({
-      name: "Kort.ar",
-      email: "info@kort.ar",
-      avatarUrl: "https://avatars.githubusercontent.com/u/8908519?v=4",
-      communications: {
-        notifications: [
-          {
-            id: "1",
-            title: "Bienvenido a Kort.ar",
-            description:
-              "Gracias por registrarte en Kort.ar, esperamos que disfrutes de la experiencia!",
-            date: new Date(),
-            read: false,
-          },
-          {
-            id: "2",
-            title: "Valida tu email en Kort.ar",
-            description:
-              "Revisa tu bandeja de entrada y valida tu email para poder disfrutar de todas las funcionalidades de Kort.ar",
-            date: new Date(),
-            read: false,
-          },
-        ],
-      },
-    });
+    getUserTest().then(setAccount).catch(console.log);
   }, []);
 
   const menuId = "primary-search-account-menu";
@@ -100,7 +89,7 @@ export default function Navbar(props: any) {
     >
       <MenuItem onClick={handleMenuClose}>Tu perfil</MenuItem>
       <MenuItem onClick={handleMenuClose}>Ajustes</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Cerrar sesión</MenuItem>
+      <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
     </Menu>
   );
 
@@ -121,30 +110,46 @@ export default function Navbar(props: any) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="Cuenta del usuario actual"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>{account?.name}</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label={`Mostrar ${unreadNotifications.length} notificaciones sin leer`}
-          color="inherit"
-        >
-          <Badge badgeContent={unreadNotifications.length} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notificationes</p>
-      </MenuItem>
+      {account?.name ? (
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            size="large"
+            aria-label="Cuenta del usuario actual"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>{account?.name}</p>
+        </MenuItem>
+      ) : (
+        <MenuItem onClick={handleLogin}>
+          <IconButton
+            size="large"
+            aria-label="Cuenta del usuario actual"
+            aria-controls="primary-search-account-menu"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Iniciar sesión</p>
+        </MenuItem>
+      )}
+      {account && (
+        <MenuItem>
+          <IconButton
+            size="large"
+            aria-label={`Mostrar ${unreadNotifications.length} notificaciones sin leer`}
+            color="inherit"
+          >
+            <Badge badgeContent={unreadNotifications.length} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notificaciones</p>
+        </MenuItem>
+      )}
     </Menu>
   );
 

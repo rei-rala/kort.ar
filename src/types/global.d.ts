@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import React from "react";
 
 declare global {
@@ -26,13 +25,4 @@ declare global {
   }
 
   type DefaultComponent = React.FC<DefaultComponentProps>;
-
-  // eslint-disable-next-line no-shadow
-  enum Breakpoint {
-    XS = 0,
-    SM = 600,
-    MD = 900,
-    LG = 1200,
-    XL = 1536,
-  }
 }
