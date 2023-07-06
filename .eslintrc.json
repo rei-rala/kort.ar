@@ -37,6 +37,7 @@
     "import/prefer-default-export": "warn",
     "react/function-component-definition": "off",
     "import/extensions": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "react/destructuring-assignment": "warn"
   }
 }

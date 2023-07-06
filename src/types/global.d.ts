@@ -21,8 +21,23 @@ declare global {
   }
   interface DefaultComponentProps {
     children?: React.ReactNode;
-    className?: string | undefined;
+    className?: string;
   }
 
   type DefaultComponent = React.FC<DefaultComponentProps>;
+
+  type PageReq = {
+    params: {
+      [key: string]: string;
+    };
+    searchParams: {
+      [key: string]: string;
+    };
+  };
+
+  type ProfilePageReq = PageReq & {
+    params: {
+      profileName: string;
+    };
+  };
 }
