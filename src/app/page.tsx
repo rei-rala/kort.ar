@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@mui/material";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
@@ -10,8 +11,8 @@ export default function Home() {
       <code>
         <pre>{JSON.stringify(data, null, "\t")}</pre>
       </code>
-      <button onClick={() => signIn("google")}>Iniciar sesion con google</button>
-      <button onClick={() => signOut()}>Cerrar sesion</button>
+      <Button onClick={() => signIn("google")}>Iniciar sesion con google</Button>
+      <Button onClick={() => signOut()}>Cerrar sesion</Button>
     </main>
   );
 }
