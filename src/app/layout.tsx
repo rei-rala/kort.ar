@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Open_Sans, Rubik } from "next/font/google";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/DefaultNavbar";
 import Providers from "./providers";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
