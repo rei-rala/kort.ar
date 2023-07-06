@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, MouseEvent } from "react";
+import React, { useState, useMemo, MouseEvent, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,22 +14,25 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { getUserTest } from "@/services/usertest.services";
+
+import Avatar from "@mui/material/Avatar";
+import { UserContext } from "@/contexts/UserContext";
+
+const iconsSx = {
+  width: "1.75rem",
+  height: "1.75rem",
+};
 
 export default function Navbar(props: any) {
+  const { user, logIn, logOut } = useContext(UserContext);
   const { brandFont } = props;
-  const [account, setAccount] = useState<Account | null>(null);
 
   const [, unreadNotifications] = useMemo(() => {
-    let all: AccountNotification[] = [];
-    let unread: AccountNotification[] = [];
+    const all: AccountNotification[] = [];
+    const unread: AccountNotification[] = [];
 
-    if (account?.communications) {
-      all = account.communications.notifications;
-      unread = all.filter((n) => !n.read);
-    }
     return [all, unread];
-  }, [account?.communications]);
+  }, []);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
@@ -57,18 +60,14 @@ export default function Navbar(props: any) {
   const handleLogin = () => {
     handleMenuClose();
     handleMobileMenuClose();
-    setAccount(null);
-    getUserTest().then(setAccount).catch(console.log);
+    logIn();
   };
 
   const handleLogout = () => {
     handleMenuClose();
-    setAccount(null);
+    handleMobileMenuClose();
+    logOut();
   };
-
-  useEffect(() => {
-    getUserTest().then(setAccount).catch(console.log);
-  }, []);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -110,7 +109,7 @@ export default function Navbar(props: any) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {account?.name ? (
+      {user?.name && user.image ? (
         <MenuItem onClick={handleProfileMenuOpen}>
           <IconButton
             size="large"
@@ -119,9 +118,9 @@ export default function Navbar(props: any) {
             aria-haspopup="true"
             color="inherit"
           >
-            <AccountCircle />
+            <Avatar alt={user.name} src={user.image} sx={{ ...iconsSx }} />
           </IconButton>
-          <p>{account?.name}</p>
+          <p>{user.name}</p>
         </MenuItem>
       ) : (
         <MenuItem onClick={handleLogin}>
@@ -131,12 +130,12 @@ export default function Navbar(props: any) {
             aria-controls="primary-search-account-menu"
             color="inherit"
           >
-            <AccountCircle />
+            <AccountCircle sx={iconsSx} />
           </IconButton>
           <p>Iniciar sesión</p>
         </MenuItem>
       )}
-      {account && (
+      {user && (
         <MenuItem>
           <IconButton
             size="large"
@@ -196,7 +195,11 @@ export default function Navbar(props: any) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {user?.name && user.image ? (
+                <Avatar src={user.image} alt={user.name} sx={iconsSx} />
+              ) : (
+                <AccountCircle sx={iconsSx} />
+              )}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

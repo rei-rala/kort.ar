@@ -2,11 +2,14 @@
 
 import { SessionProvider } from "next-auth/react";
 import { BrowserContextProvider } from "../contexts/BrowserContext";
+import { UserContextProvider } from "@/contexts/UserContext";
 
 const Providers: DefaultComponent = ({ children }) => {
   return (
     <SessionProvider>
-      <BrowserContextProvider>{children}</BrowserContextProvider>
+      <UserContextProvider>
+        <BrowserContextProvider>{children}</BrowserContextProvider>
+      </UserContextProvider>
     </SessionProvider>
   );
 };
