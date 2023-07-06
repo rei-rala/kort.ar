@@ -2,7 +2,7 @@ import "./globals.css";
 import { Open_Sans, Rubik } from "next/font/google";
 
 import { Navbar } from "../components/Navbar";
-import { BrowserContextProvider } from "../contexts/BrowserContext";
+import Providers from "./providers";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 const rubik = Rubik({ subsets: ["latin"] });
@@ -17,10 +17,10 @@ export const RootLayout: DefaultComponent = ({ children }) => {
   return (
     <html lang="es">
       <body className={openSans.className}>
-        <BrowserContextProvider>
+        <Providers>
           <Navbar brandFont={rubik.className} />
           {children}
-        </BrowserContextProvider>
+        </Providers>
       </body>
     </html>
   );
