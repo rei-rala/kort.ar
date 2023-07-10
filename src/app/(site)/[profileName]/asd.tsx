@@ -8,5 +8,5 @@ export default function ProfilePage(req: ProfilePageReq) {
 
   console.log(`Redireccionando a de /profile/${profileName}`);
 
-  router.push(`/profile/${profileName}`);
+  //router.push(`/profile/${profileName}`);
 }

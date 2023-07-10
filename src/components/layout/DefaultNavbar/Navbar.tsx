@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, MouseEvent, useContext } from "react";
+import React, { useState, useMemo, MouseEvent } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,16 +16,17 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import Avatar from "@mui/material/Avatar";
-import { UserContext } from "@/contexts/UserContext";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const iconsSx = {
   width: "1.75rem",
   height: "1.75rem",
 };
 
-export default function Navbar(props: any) {
-  const { user, logIn, logOut } = useContext(UserContext);
-  const { brandFont } = props;
+export default function Navbar({ brandFont }: { brandFont: string }) {
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const [, unreadNotifications] = useMemo(() => {
     const all: AccountNotification[] = [];
@@ -60,13 +61,27 @@ export default function Navbar(props: any) {
   const handleLogin = () => {
     handleMenuClose();
     handleMobileMenuClose();
-    logIn();
+    router.push("/api/auth/signin");
   };
 
   const handleLogout = () => {
     handleMenuClose();
     handleMobileMenuClose();
-    logOut();
+    signOut();
+  };
+
+  const menuItems = () => {
+    if (session?.user) {
+      return (
+        <>
+          <MenuItem onClick={handleMenuClose}>Tu perfil</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Ajustes</MenuItem>
+          <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+        </>
+      );
+    }
+
+    return <MenuItem onClick={handleLogin}>Iniciar sesión</MenuItem>;
   };
 
   const menuId = "primary-search-account-menu";
@@ -86,9 +101,7 @@ export default function Navbar(props: any) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Tu perfil</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Ajustes</MenuItem>
-      <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+      {menuItems()}
     </Menu>
   );
 
@@ -109,7 +122,7 @@ export default function Navbar(props: any) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {user?.name && user.image ? (
+      {session?.user?.name && session?.user.image ? (
         <MenuItem onClick={handleProfileMenuOpen}>
           <IconButton
             size="large"
@@ -118,9 +131,9 @@ export default function Navbar(props: any) {
             aria-haspopup="true"
             color="inherit"
           >
-            <Avatar alt={user.name} src={user.image} sx={{ ...iconsSx }} />
+            <Avatar alt={session.user.name} src={session.user.image} sx={{ ...iconsSx }} />
           </IconButton>
-          <p>{user.name}</p>
+          <p>{session.user.name}</p>
         </MenuItem>
       ) : (
         <MenuItem onClick={handleLogin}>
@@ -135,7 +148,7 @@ export default function Navbar(props: any) {
           <p>Iniciar sesión</p>
         </MenuItem>
       )}
-      {user && (
+      {session?.user && (
         <MenuItem>
           <IconButton
             size="large"
@@ -177,15 +190,17 @@ export default function Navbar(props: any) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label={`Mostrar ${unreadNotifications.length} notificaciones sin leer`}
-              color="inherit"
-            >
-              <Badge badgeContent={unreadNotifications.length} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            {session?.user && (
+              <IconButton
+                size="large"
+                aria-label={`Mostrar ${unreadNotifications.length} notificaciones sin leer`}
+                color="inherit"
+              >
+                <Badge badgeContent={unreadNotifications.length} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            )}
             <IconButton
               size="large"
               edge="end"
@@ -195,8 +210,8 @@ export default function Navbar(props: any) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              {user?.name && user.image ? (
-                <Avatar src={user.image} alt={user.name} sx={iconsSx} />
+              {session?.user?.name && session?.user.image ? (
+                <Avatar src={session.user.image} alt={session.user.name} sx={iconsSx} />
               ) : (
                 <AccountCircle sx={iconsSx} />
               )}

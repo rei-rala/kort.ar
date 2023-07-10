@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Head from "next/head";
 
 const Breakpoint = {
   XS: 0,
@@ -10,7 +11,12 @@ const Breakpoint = {
   XL: 1536,
 };
 
-export const BrowserContext = React.createContext({});
+export const BrowserContext = React.createContext({
+  isDarkThemed: false,
+  width: 0,
+  height: 0,
+  currentBreakpoint: Breakpoint.SM,
+});
 
 export const BrowserContextProvider: DefaultComponent = ({ children }) => {
   const [isDarkThemed, setIsDarkThemed] = useState(false);
@@ -63,5 +69,18 @@ export const BrowserContextProvider: DefaultComponent = ({ children }) => {
     return setCurrentBreakpoint(Breakpoint.XS);
   }, [width]);
 
-  return <BrowserContext.Provider value={values}>{children}</BrowserContext.Provider>;
+  const faviconHref = useMemo(() => {
+    return isDarkThemed ? "/kortar-dark.png" : "/kortar.png";
+  }, [isDarkThemed]);
+
+  return (
+    <BrowserContext.Provider value={values}>
+      <Head>
+        <link rel="icon" href={faviconHref} sizes="any" />
+      </Head>
+      {children}
+    </BrowserContext.Provider>
+  );
 };
+
+export const useBrowserContext = () => React.useContext(BrowserContext);
