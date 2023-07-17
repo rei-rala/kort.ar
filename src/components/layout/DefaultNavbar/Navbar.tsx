@@ -61,7 +61,7 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
   const handleLogin = () => {
     handleMenuClose();
     handleMobileMenuClose();
-    router.push("/api/auth/signin");
+    router.push("/auth/login");
   };
 
   const handleLogout = () => {
@@ -72,13 +72,17 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
 
   const menuItems = () => {
     if (session?.user) {
-      return (
-        <>
-          <MenuItem onClick={handleMenuClose}>Tu perfil</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Ajustes</MenuItem>
-          <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
-        </>
-      );
+      return [
+        <MenuItem key="Tu perfil" onClick={handleMenuClose}>
+          Tu perfil
+        </MenuItem>,
+        <MenuItem key="Ajustes" onClick={handleMenuClose}>
+          Ajustes
+        </MenuItem>,
+        <MenuItem key="Cerrar sesión" onClick={handleLogout}>
+          Cerrar sesión
+        </MenuItem>,
+      ];
     }
 
     return <MenuItem onClick={handleLogin}>Iniciar sesión</MenuItem>;

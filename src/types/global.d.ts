@@ -2,6 +2,16 @@
 import React from "react";
 
 declare global {
+  type ProfileLink = {
+    id: string;
+    owner: Account;
+    alias: string;
+    from: string;
+    to: string;
+    icon: string;
+    color: string;
+    canReturnToProfile: boolean;
+  };
   interface AccountNotification {
     id: string;
     title: string;
@@ -16,12 +26,14 @@ declare global {
   interface Account {
     name: string;
     email: string;
+    username: string;
     avatarUrl: string;
-    communications: Communications;
+    communications?: Communications;
   }
   interface DefaultComponentProps {
     children?: React.ReactNode;
     className?: string;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   }
 
   type DefaultComponent = React.FC<DefaultComponentProps>;
@@ -37,7 +49,13 @@ declare global {
 
   type ProfilePageReq = PageReq & {
     params: {
-      profileName: string;
+      username: string;
+    };
+  };
+
+  type LinkPageReq = PageReq & {
+    params: {
+      link: string;
     };
   };
 }
