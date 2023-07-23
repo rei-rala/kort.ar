@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   const { data: session } = useSession();
 
-  function handleClick() {
+  function handleLoginChrome() {
     signIn("google");
   }
 
@@ -23,10 +23,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <code>
-        <h3> Not logged in</h3>
-      </code>
-      <Button variant="contained" color="primary" size="large" onClick={handleClick}>
+      <Button variant="contained" color="primary" size="large" onClick={handleLoginChrome}>
         Iniciar sesion con google
       </Button>
     </>

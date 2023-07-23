@@ -1,14 +1,40 @@
+"use client";
+
 import React from "react";
 import { Rubik } from "next/font/google";
+import { Box, Container } from "@mui/material";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
 export const AuthLayout: DefaultComponent = ({ children }) => {
   return (
-    <React.Fragment>
-      <h1 className={rubik.className}>Kort.ar</h1>
-      {children}
-    </React.Fragment>
+    <Container
+      maxWidth="sm"
+      sx={{
+        display: "grid",
+        placeContent: "center",
+        height: "100vh",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          textAlign: "center",
+          gap: "1rem",
+          margin: "auto",
+          padding: "1rem",
+          color: "black",
+          backgroundColor: "white",
+          height: "100%",
+          borderRadius: "3px",
+        }}
+      >
+        <h1 className={rubik.className}>Kort.ar</h1>
+        {children}
+      </Box>
+    </Container>
   );
 };
 
