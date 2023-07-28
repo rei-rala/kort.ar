@@ -7,12 +7,14 @@ export default function Home() {
   const { data, status } = useSession();
   return (
     <main>
-      <code>{status}</code>
-      <code>
-        <pre>{JSON.stringify(data, null, "\t")}</pre>
-      </code>
-      <Button onClick={() => signIn("google")}>Iniciar sesion con google</Button>
-      <Button onClick={() => signOut()}>Cerrar sesion</Button>
+      <div>
+        <code>{status}</code>
+        <code>
+          <pre>{JSON.stringify(data, null, "\t")}</pre>
+        </code>
+        <Button onClick={() => signIn("google")}>Iniciar sesion con google</Button>
+        <Button onClick={() => signOut()}>Cerrar sesion</Button>
+      </div>
     </main>
   );
 }
