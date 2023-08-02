@@ -10,13 +10,11 @@ export const metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-const SiteLayout: DefaultComponent = ({ children }) => {
+export default function MeLayout({ children }: { children: any }) {
   return (
     <React.Fragment>
       <Navbar brandFont={rubik.className} />
       {children}
     </React.Fragment>
   );
-};
-
-export default SiteLayout;
+}

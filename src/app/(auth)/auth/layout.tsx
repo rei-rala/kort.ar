@@ -6,7 +6,7 @@ import { Box, Container } from "@mui/material";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-export const AuthLayout: DefaultComponent = ({ children }) => {
+export default function AuthLayout({ children }: { children: any }) {
   return (
     <Container
       maxWidth="sm"
@@ -36,6 +36,4 @@ export const AuthLayout: DefaultComponent = ({ children }) => {
       </Box>
     </Container>
   );
-};
-
-export default AuthLayout;
+}

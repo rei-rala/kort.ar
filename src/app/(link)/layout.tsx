@@ -10,13 +10,11 @@ export const metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-const LinkLayout: DefaultComponent = ({ children }) => {
+export default function LinkLayout({ children }: { children: any }) {
   return (
     <React.Fragment>
       <Navbar brandFont={rubik.className} />
       {children}
     </React.Fragment>
   );
-};
-
-export default LinkLayout;
+}
