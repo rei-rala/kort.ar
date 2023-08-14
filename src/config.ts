@@ -1,5 +1,5 @@
 const globals = {
-  brand: process.env.node_env === "production" ? process.env.BRAND || "---" : "test-env",
+  brand: process.env.NODE_ENV === "production" ? process.env.BRAND || "---" : "test-env",
 };
 
 Object.freeze(globals);
