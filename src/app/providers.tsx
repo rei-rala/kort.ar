@@ -2,15 +2,13 @@
 
 import { SessionProvider } from "next-auth/react";
 import { BrowserContextProvider } from "../contexts/BrowserContext";
-import { ThemeProvider } from "@mui/material";
-
-import themeOptions from "./theme";
+import ThemeRegistry from "@/components/_ThemeRegistry/ThemeRegistry";
 
 const Providers: DefaultComponent = ({ children }) => {
   return (
     <SessionProvider>
       <BrowserContextProvider>
-        <ThemeProvider theme={themeOptions}>{children}</ThemeProvider>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </BrowserContextProvider>
     </SessionProvider>
   );

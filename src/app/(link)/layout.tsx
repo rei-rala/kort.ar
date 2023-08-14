@@ -1,20 +1,18 @@
-import React from "react";
-import { Rubik } from "next/font/google";
+import cfg from "@/config";
+import BrandWatermark from "@/components/BrandWatermark/BrandWatermark";
 
-import Navbar from "@/components/layout/DefaultNavbar";
-
-const rubik = Rubik({ subsets: ["latin"] });
+import styles from "./linkLayout.module.css";
 
 export const metadata = {
-  title: "kort.ar",
+  title: cfg.brand,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
 export default function LinkLayout({ children }: { children: any }) {
   return (
-    <React.Fragment>
-      <Navbar brandFont={rubik.className} />
-      {children}
-    </React.Fragment>
+    <>
+      <BrandWatermark customBrand={cfg.brand} />
+      <div className={styles.content}>{children}</div>
+    </>
   );
 }

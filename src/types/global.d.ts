@@ -11,6 +11,7 @@ declare global {
     icon: string;
     color: string;
     canReturnToProfile: boolean;
+    timerRedirect: boolean;
   };
   interface AccountNotification {
     id: string;
@@ -37,6 +38,7 @@ declare global {
   }
 
   type DefaultComponent = React.FC<DefaultComponentProps>;
+  type ExtendedComponent<T> = React.FC<DefaultComponentProps & T>;
 
   type PageReq = {
     params: {

@@ -19,6 +19,8 @@ import Avatar from "@mui/material/Avatar";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+import cfg from "@/config";
+
 const iconsSx = {
   width: "1.75rem",
   height: "1.75rem",
@@ -73,12 +75,12 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
   const menuItems = () => {
     if (session?.user) {
       return [
-        <MenuItem key="Tu perfil" onClick={handleMenuClose}>
-          Tu perfil
-        </MenuItem>,
-        <MenuItem key="Ajustes" onClick={handleMenuClose}>
-          Ajustes
-        </MenuItem>,
+        <Link href="/me/dashboard" key="Tu perfil" onClick={handleMenuClose}>
+          <MenuItem>Tu perfil</MenuItem>
+        </Link>,
+        <Link href="/me/dashboard" key="Ajustes" onClick={handleMenuClose}>
+          <MenuItem>Ajustes</MenuItem>
+        </Link>,
         <MenuItem key="Cerrar sesión" onClick={handleLogout}>
           Cerrar sesión
         </MenuItem>,
@@ -188,7 +190,7 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
               component="h1"
               sx={{ fontSize: { xs: "1.25em", sm: "1.5em", md: "1.75em" } }}
             >
-              KORT.AR
+              {cfg.brand}
             </Typography>
           </Link>
 

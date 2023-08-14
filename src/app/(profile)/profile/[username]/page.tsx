@@ -1,6 +1,6 @@
 "use client";
 
-import linksFromProfile from "@/app/testLinks";
+import linksFromProfile from "@/services/testLinks";
 import Link from "next/link";
 
 export default function ProfilePage(req: ProfilePageReq) {

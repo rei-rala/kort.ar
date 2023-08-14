@@ -1,20 +1,18 @@
 import "./globals.css";
 import type { Metadata } from "next/types";
-import { Open_Sans } from "next/font/google";
 
 import Providers from "./providers";
-
-const openSans = Open_Sans({ subsets: ["latin"] });
+import cfg from "@/config";
 
 export const metadata: Metadata = {
-  title: "kort.ar",
-  description: "Inicia sesion kort.ar",
+  title: cfg.brand,
+  description: `Inicia sesion ${cfg.brand}`,
 };
 
 const RootLayout: DefaultComponent = ({ children }) => {
   return (
     <html lang="es">
-      <body className={openSans.className}>
+      <body>
         <Providers> {children} </Providers>
       </body>
     </html>

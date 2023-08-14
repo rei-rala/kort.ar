@@ -1,6 +1,12 @@
 import { ThemeOptions, createTheme } from "@mui/material/styles";
+import { Open_Sans } from "next/font/google";
+
+const openSans = Open_Sans({ subsets: ["latin"] });
 
 const themeOptions: ThemeOptions = createTheme({
+  typography: {
+    fontFamily: openSans.style.fontFamily,
+  },
   palette: {
     background: {
       default: "#000000",

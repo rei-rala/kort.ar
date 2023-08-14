@@ -1,12 +1,13 @@
 import React from "react";
 import { Rubik } from "next/font/google";
+import cfg from "@/config";
 
 import Navbar from "@/components/layout/DefaultNavbar";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "kort.ar",
+  title: cfg.brand,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 

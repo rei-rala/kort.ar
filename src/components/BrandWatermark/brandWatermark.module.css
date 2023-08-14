@@ -1,0 +1,25 @@
+.brandWatermarkText {
+  position: absolute;
+  width: auto;
+  display: flex;
+}
+
+.TopLeft {
+  top: 5vh;
+  left: 5vh;
+}
+
+.TopRight {
+  top: 5vh;
+  left: 5vh;
+}
+
+.BottomLeft {
+  top: 5vh;
+  left: 5vh;
+}
+
+.BottomRight {
+  top: 5vh;
+  left: 5vh;
+}

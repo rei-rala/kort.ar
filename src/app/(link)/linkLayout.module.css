@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+
+  min-width: 10rem;
+  max-width: 80vw;
+}

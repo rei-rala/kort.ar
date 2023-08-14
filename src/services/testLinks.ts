@@ -1,4 +1,6 @@
-export const linksFromProfile: ProfileLink[] = [
+import { removeSpaces } from "@/utils/text";
+
+const linksFromProfile: ProfileLink[] = [
   {
     owner: {
       name: "Ramon Irala",
@@ -9,10 +11,11 @@ export const linksFromProfile: ProfileLink[] = [
     id: "github",
     alias: "GitHub",
     from: "rei_github",
-    to: "http://localhost:3000/rei_github",
+    to: "https://www.google.com.ar",
     icon: "github",
     color: "#000000",
     canReturnToProfile: true,
+    timerRedirect: true,
   },
   {
     owner: {
@@ -24,11 +27,21 @@ export const linksFromProfile: ProfileLink[] = [
     id: "linkedin",
     alias: "LinkedIn",
     from: "rei_linkedin",
-    to: "http://localhost:3000/rei_linkedin",
+    to: "www.google.com",
     icon: "linkedin",
     color: "#0077B5",
     canReturnToProfile: false,
+    timerRedirect: false,
   },
 ];
 
-export default linksFromProfile;
+Object.freeze(linksFromProfile);
+
+export async function getLinkByAlias(linkAlias: string) {
+  const aliasLower = removeSpaces(linkAlias).toLowerCase();
+  let found: ProfileLink | null = null;
+
+  if (aliasLower !== "") found = linksFromProfile.find((l) => l.from === aliasLower) || null;
+
+  return found;
+}

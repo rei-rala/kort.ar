@@ -1,53 +1,47 @@
-import linksFromProfile from "@/app/testLinks";
 import Link from "next/link";
+import { getLinkByAlias } from "@/services/testLinks";
 
-export default async function LinkPage(req: LinkPageReq) {
-  const { link: linkParam } = req.params;
-  const linkParamLower = linkParam.toLowerCase();
-  const found = linksFromProfile.find((link) => link.from.toLowerCase() === linkParamLower);
-
-  linksFromProfile.forEach((l) => {
-    console.log({
-      from: l.from,
-      linkParam,
-    });
-    console.log(l.from.toLowerCase() === linkParamLower);
-  });
-
-  if (!found) {
+const getLinkComponent = (link: string, profileLink: ProfileLink | null) => {
+  if (!profileLink) {
     return (
       <div>
-        <h1>404: {linkParam}</h1>
+        <h1>404: {link}</h1>
       </div>
     );
   }
 
-  const { owner, to, canReturnToProfile } = found;
-
   return (
-    <div>
+    <>
       <h2>
-        {owner.name} quiere llevarte a &quot;{to}&quot;
+        {profileLink.owner.name} quiere llevarte a &quot;
+        <Link href={`${profileLink.to}`}>{profileLink.to}</Link>&quot;
       </h2>
-      <div>
-        <p>
-          Click{" "}
-          <Link href={to}>
-            <b>aqui</b>
-          </Link>{" "}
-          para continuar
-        </p>
-      </div>
-      {canReturnToProfile && (
+      {profileLink?.timerRedirect ? (
         <div>
-          <p>
-            O visualiza todos sus links desde{" "}
-            <Link href={`/profile/${owner.username}`}>
-              <b>aqui</b>
-            </Link>
-          </p>
+          Redireccionando en <b id="redirectSeconds">3</b>
+          {/* countdown XD */}...
+        </div>
+      ) : (
+        <div>
+          {profileLink.canReturnToProfile && !profileLink.timerRedirect && (
+            <div>
+              <p>
+                O visualiza todos sus links desde{" "}
+                <Link href={`/profile/${profileLink.owner.username}`}>
+                  <b>aqui</b>
+                </Link>
+              </p>
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
+};
+
+export default async function LinkPage(req: LinkPageReq) {
+  const found: ProfileLink | null = await getLinkByAlias(req.params.link);
+  const linkComponent = getLinkComponent(req.params.link, found);
+
+  return <section>{linkComponent}</section>;
 }
