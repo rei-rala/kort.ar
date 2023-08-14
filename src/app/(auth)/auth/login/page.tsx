@@ -1,5 +1,3 @@
-"use client";
-
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LogInOptions from "@/components/LogInOptions/LogInOptions";
