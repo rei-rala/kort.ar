@@ -1,9 +1,9 @@
-"use client";
-
-import linksFromProfile from "@/services/testLinks";
 import Link from "next/link";
+import { getLinkByUsername } from "@/services/testLinks";
 
-export default function ProfilePage(req: ProfilePageReq) {
+export default async function ProfilePage(req: ProfilePageReq) {
+  let linksFromProfile = await getLinkByUsername(req.params.username);
+
   return (
     <main>
       <h2>Los links de {req.params.username}</h2>

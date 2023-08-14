@@ -27,7 +27,7 @@ const linksFromProfile: ProfileLink[] = [
     id: "linkedin",
     alias: "LinkedIn",
     from: "rei_linkedin",
-    to: "www.google.com",
+    to: "https://www.google.com",
     icon: "linkedin",
     color: "#0077B5",
     canReturnToProfile: false,
@@ -36,6 +36,14 @@ const linksFromProfile: ProfileLink[] = [
 ];
 
 Object.freeze(linksFromProfile);
+
+export async function getLinks() {
+  return linksFromProfile;
+}
+
+export async function getLinkByUsername(username: string) {
+  return linksFromProfile.filter((l) => l.owner.username === username);
+}
 
 export async function getLinkByAlias(linkAlias: string) {
   const aliasLower = removeSpaces(linkAlias).toLowerCase();
