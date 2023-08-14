@@ -21,6 +21,8 @@ import { useRouter } from "next/navigation";
 
 import cfg from "@/config";
 
+import styles from "./Navbar.module.css";
+
 const iconsSx = {
   width: "1.75rem",
   height: "1.75rem",
@@ -186,7 +188,7 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
 
           <Link href="/">
             <Typography
-              className={brandFont}
+              className={`${brandFont} ${styles.brandWatermarkText}`}
               component="h1"
               sx={{ fontSize: { xs: "1.25em", sm: "1.5em", md: "1.75em" } }}
             >

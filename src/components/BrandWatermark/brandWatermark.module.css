@@ -1,7 +1,9 @@
 .brandWatermarkText {
   position: absolute;
-  width: auto;
   display: flex;
+  width: auto;
+  text-transform: uppercase;
+  opacity: 0.5;
 }
 
 .TopLeft {

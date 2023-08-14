@@ -8,7 +8,7 @@ export default function LoginPage() {
   const { data: session } = useSession();
 
   if (session?.user) {
-    redirect("/me/}");
+    redirect("/me/dashboard");
   }
 
   return (
