@@ -14,6 +14,9 @@ const nextConfig = {
       "avatars.githubusercontent.com",
     ],
   },
+  env: {
+    BRAND: process.env.NODE_ENV === "production" ? "kort.ar" : "[test]",
+  },
 };
 
 module.exports = nextConfig;

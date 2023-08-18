@@ -11,10 +11,5 @@ export default function LoginPage() {
     redirect("/me/dashboard");
   }
 
-  return (
-    <>
-      <LogInOptions />
-      {session && <b>Already logged in😊</b>}
-    </>
-  );
+  return session ? <b>Already logged in, redirecting 😊</b> : <LogInOptions />;
 }

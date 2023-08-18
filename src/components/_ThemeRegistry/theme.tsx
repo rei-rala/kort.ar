@@ -1,9 +1,27 @@
 import { ThemeOptions, createTheme } from "@mui/material/styles";
 import { Open_Sans } from "next/font/google";
+import { Ref, forwardRef } from "react";
+import NextLink, { LinkProps } from "next/link";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
+const LinkBehaviour = forwardRef(function LinkBehaviour(props: LinkProps, ref) {
+  return <NextLink {...props} href={props.href} ref={ref as Ref<HTMLAnchorElement> | undefined} />;
+});
+
 const themeOptions: ThemeOptions = createTheme({
+  components: {
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehaviour,
+      } as any,
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehaviour,
+      },
+    },
+  },
   typography: {
     fontFamily: openSans.style.fontFamily,
   },

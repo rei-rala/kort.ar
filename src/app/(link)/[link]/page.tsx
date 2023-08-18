@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getLinkByAlias } from "@/services/testLinks";
+import { removeHTTPPrefix } from "@/utils/text";
 
 const getLinkComponent = (link: string, profileLink: ProfileLink | null) => {
   if (!profileLink) {
@@ -13,8 +14,8 @@ const getLinkComponent = (link: string, profileLink: ProfileLink | null) => {
   return (
     <>
       <h2>
-        {profileLink.owner.name} quiere llevarte a &quot;
-        <Link href={`${profileLink.to}`}>{profileLink.to}</Link>&quot;
+        {profileLink.owner.name} quiere llevarte a{" "}
+        <Link href={`${profileLink.to}`}>{removeHTTPPrefix(profileLink.to)}</Link>
       </h2>
       {profileLink?.timerRedirect ? (
         <div>

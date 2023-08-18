@@ -19,7 +19,7 @@ import Avatar from "@mui/material/Avatar";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import cfg from "@/config";
+const title = process.env.BRAND;
 
 import styles from "./Navbar.module.css";
 
@@ -174,7 +174,7 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box className={styles.navbar} sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -188,11 +188,11 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
 
           <Link href="/">
             <Typography
-              className={`${brandFont} ${styles.brandWatermarkText}`}
               component="h1"
+              className={styles.navbarBrand}
               sx={{ fontSize: { xs: "1.25em", sm: "1.5em", md: "1.75em" } }}
             >
-              {cfg.brand}
+              <span className={brandFont}>{title}</span>
             </Typography>
           </Link>
 

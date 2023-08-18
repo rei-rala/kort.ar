@@ -1,18 +1,21 @@
-import cfg from "@/config";
 import BrandWatermark from "@/components/BrandWatermark/BrandWatermark";
 
 import styles from "./linkLayout.module.css";
 
+const title = process.env.BRAND;
+
 export const metadata = {
-  title: cfg.brand,
+  title,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
 export default function LinkLayout({ children }: { children: any }) {
   return (
     <>
-      <BrandWatermark customBrand={cfg.brand} />
-      <div className={styles.content}>{children}</div>
+      <BrandWatermark customBrand={title} />
+      <div className={styles.content}>
+        <span>{children}</span>
+      </div>
     </>
   );
 }

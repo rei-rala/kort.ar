@@ -2,11 +2,10 @@ import "./globals.css";
 import type { Metadata } from "next/types";
 
 import Providers from "./providers";
-import cfg from "@/config";
 
 export const metadata: Metadata = {
-  title: cfg.brand,
-  description: `Inicia sesion ${cfg.brand}`,
+  title: process.env.BRAND,
+  description: `Inicia sesion ${process.env.BRAND}`,
 };
 
 const RootLayout: DefaultComponent = ({ children }) => {

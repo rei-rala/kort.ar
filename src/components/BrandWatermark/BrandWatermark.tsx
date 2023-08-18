@@ -3,18 +3,15 @@ import styles from "./brandWatermark.module.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-type Positions = "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
 
 const BrandWatermark: ExtendedComponent<{
   customBrand?: string;
-  position?: Positions;
+  position?: "";
 }> = ({ customBrand, position = "TopLeft" }) => {
   const brand = customBrand ?? "unbranded :3";
-  return (
-    <h1 className={`${rubik.className} ${styles.brandWatermarkText} ${styles[position]}`}>
-      {brand}
-    </h1>
-  );
+  const className = `${rubik.className} ${styles.brandWatermarkText}`;
+
+  return <h1 className={className}>{brand}</h1>;
 };
 
 export default BrandWatermark;

@@ -1,27 +1,3 @@
 .brandWatermarkText {
-  position: absolute;
-  display: flex;
-  width: auto;
   text-transform: uppercase;
-  opacity: 0.5;
-}
-
-.TopLeft {
-  top: 5vh;
-  left: 5vh;
-}
-
-.TopRight {
-  top: 5vh;
-  left: 5vh;
-}
-
-.BottomLeft {
-  top: 5vh;
-  left: 5vh;
-}
-
-.BottomRight {
-  top: 5vh;
-  left: 5vh;
 }

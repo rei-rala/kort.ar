@@ -5,7 +5,6 @@ import { Rubik } from "next/font/google";
 import { Box, Container } from "@mui/material";
 
 import styles from "./layout.module.css";
-import cfg from "@/config";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -34,7 +33,7 @@ export default function AuthLayout({ children }: { children: any }) {
           borderRadius: "3px",
         }}
       >
-        <h1 className={`${rubik.className} ${styles.brand}`}>{cfg.brand}</h1>
+        <h1 className={`${rubik.className} ${styles.brand}`}>{process.env.BRAND}</h1>
         {children}
       </Box>
     </Container>

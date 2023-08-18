@@ -1,13 +1,13 @@
 import React from "react";
 import { Rubik } from "next/font/google";
 
-import cfg from "@/config";
 import Navbar from "@/components/layout/DefaultNavbar";
 
 const rubik = Rubik({ subsets: ["latin"] });
+const title = process.env.BRAND;
 
 export const metadata = {
-  title: cfg.brand,
+  title,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
