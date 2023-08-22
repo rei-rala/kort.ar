@@ -3,7 +3,6 @@ import styles from "./brandWatermark.module.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-
 const BrandWatermark: ExtendedComponent<{
   customBrand?: string;
   position?: "";

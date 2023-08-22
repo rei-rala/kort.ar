@@ -1,0 +1,16 @@
+import Navbar from "../../DefaultNavbar";
+
+const MeLayoutComponents: ExtendedComponent<{ brandFont: string }> = ({
+  children,
+  brandFont,
+  className,
+}) => {
+  return (
+    <>
+      <Navbar brandFont={brandFont} />
+      <section className={className}>{children}</section>
+    </>
+  );
+};
+
+export default MeLayoutComponents;

@@ -1,6 +1,6 @@
 import { removeSpaces } from "@/utils/text";
 
-const linksFromProfile: ProfileLink[] = [
+const exampleLinks: ProfileLink[] = [
   {
     owner: {
       name: "Ramon Irala",
@@ -35,21 +35,21 @@ const linksFromProfile: ProfileLink[] = [
   },
 ];
 
-Object.freeze(linksFromProfile);
+Object.freeze(exampleLinks);
 
 export async function getLinks() {
-  return linksFromProfile;
+  return exampleLinks;
 }
 
 export async function getLinkByUsername(username: string) {
-  return linksFromProfile.filter((l) => l.owner.username === username);
+  return exampleLinks.filter((l) => l.owner.username === username);
 }
 
 export async function getLinkByAlias(linkAlias: string) {
   const aliasLower = removeSpaces(linkAlias).toLowerCase();
   let found: ProfileLink | null = null;
 
-  if (aliasLower !== "") found = linksFromProfile.find((l) => l.from === aliasLower) || null;
+  if (aliasLower !== "") found = exampleLinks.find((l) => l.from === aliasLower) || null;
 
   return found;
 }

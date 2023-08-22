@@ -1,15 +1,9 @@
-"use client";
-
-import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
+import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
 import LogInOptions from "@/components/LogInOptions/LogInOptions";
+import { getServerSession } from "next-auth";
 
-export default function LoginPage() {
-  const { data: session } = useSession();
-
-  if (session?.user) {
-    redirect("/me/dashboard");
-  }
+export default async function LoginPage() {
+  const session = await getServerSession(authOptions);
 
   return session ? <b>Already logged in, redirecting 😊</b> : <LogInOptions />;
 }

@@ -1,41 +1,25 @@
-"use client";
-
 import React from "react";
 import { Rubik } from "next/font/google";
-import { Box, Container } from "@mui/material";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
 
+import AuthLayoutComponents from "@/components/_layouts/auth/AuthLayoutComponents";
 import styles from "./layout.module.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-export default function AuthLayout({ children }: { children: any }) {
+export default async function AuthLayout({ children }: { children: any }) {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user) {
+    redirect("/me/dashboard");
+  }
+
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        display: "grid",
-        placeContent: "center",
-        height: "100vh",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignContent: "center",
-          textAlign: "center",
-          gap: "1rem",
-          margin: "auto",
-          padding: "1rem",
-          color: "black",
-          backgroundColor: "white",
-          height: "100%",
-          borderRadius: "3px",
-        }}
-      >
-        <h1 className={`${rubik.className} ${styles.brand}`}>{process.env.BRAND}</h1>
-        {children}
-      </Box>
-    </Container>
+    <AuthLayoutComponents>
+      <h1 className={`${rubik.className} ${styles.brand}`}>{process.env.BRAND}</h1>
+      {children}
+    </AuthLayoutComponents>
   );
 }

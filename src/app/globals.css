@@ -22,17 +22,22 @@ a {
   text-decoration: none;
 }
 
-:is(main, section, footer) {
-  & a:hover {
-    text-decoration: underline;
-  }
+ul {
+  list-style-type: none;
 }
 
 :is(header, main, section, footer) {
   & > * {
     margin: auto;
-    padding: 0.5rem;
     width: var(--layout-max-width);
     max-width: 100%;
+  }
+}
+
+:is(main, section) {
+  padding: 1.5rem;
+
+  & a:hover {
+    text-decoration: underline;
   }
 }
