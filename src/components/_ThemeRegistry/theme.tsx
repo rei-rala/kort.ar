@@ -15,6 +15,14 @@ const themeOptions: ThemeOptions = createTheme({
       defaultProps: {
         component: LinkBehaviour,
       } as any,
+      variants: [
+        {
+          props: { variant: "navbar" },
+          style: {
+            color: "#fff",
+          },
+        },
+      ],
     },
     MuiButtonBase: {
       defaultProps: {

@@ -13,9 +13,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
-
 import Avatar from "@mui/material/Avatar";
+import Link from "@mui/material/Link";
+
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -77,10 +77,22 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
   const menuItems = () => {
     if (session?.user) {
       return [
-        <Link href="/me/dashboard" key="Tu perfil" onClick={handleMenuClose}>
+        <Link
+          underline="none"
+          href="/me/dashboard"
+          key="Tu perfil"
+          onClick={handleMenuClose}
+          variant="navbar"
+        >
           <MenuItem>Tu perfil</MenuItem>
         </Link>,
-        <Link href="/me/dashboard" key="Ajustes" onClick={handleMenuClose}>
+        <Link
+          underline="none"
+          href="/me/settings"
+          key="Ajustes"
+          onClick={handleMenuClose}
+          variant="navbar"
+        >
           <MenuItem>Ajustes</MenuItem>
         </Link>,
         <MenuItem key="Cerrar sesión" onClick={handleLogout}>
@@ -186,7 +198,7 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
             <MenuIcon />
           </IconButton>
 
-          <Link href="/">
+          <Link underline="none" href="/" variant="navbar">
             <Typography
               component="h1"
               className={styles.navbarBrand}
