@@ -13,29 +13,29 @@ declare global {
     canReturnToProfile: boolean;
     timerRedirect: boolean;
   };
-  interface AccountNotification {
+  type AccountNotification = {
     id: string;
     title: string;
     description: string;
     date: Date;
     read: Boolean;
-  }
-  interface Communications {
+  };
+  type Communications = {
     notifications: AccountNotification[];
-  }
+  };
 
-  interface Account {
+  type Account = {
     name: string;
     email: string;
     username: string;
     avatarUrl: string;
     communications?: Communications;
-  }
-  interface DefaultComponentProps {
+  };
+  type DefaultComponentProps = {
     children?: React.ReactNode;
     className?: string;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  }
+  };
 
   type DefaultComponent = React.FC<DefaultComponentProps>;
   type ExtendedComponent<T> = React.FC<DefaultComponentProps & T>;
@@ -65,7 +65,7 @@ declare global {
 // Overriding variants for material UI components with module augmentation (TypeScript)
 // ref: https://mui.com/material-ui/customization/theme-components/
 declare module "@mui/material/Typography" {
-  interface TypographyPropsVariantOverrides {
+  type TypographyPropsVariantOverrides = {
     navbar: true;
-  }
+  };
 }
