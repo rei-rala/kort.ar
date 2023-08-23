@@ -13,6 +13,7 @@ declare global {
     canReturnToProfile: boolean;
     timerRedirect: boolean;
   };
+
   type AccountNotification = {
     id: string;
     title: string;
@@ -20,6 +21,7 @@ declare global {
     date: Date;
     read: Boolean;
   };
+
   type Communications = {
     notifications: AccountNotification[];
   };
@@ -65,7 +67,7 @@ declare global {
 // Overriding variants for material UI components with module augmentation (TypeScript)
 // ref: https://mui.com/material-ui/customization/theme-components/
 declare module "@mui/material/Typography" {
-  type TypographyPropsVariantOverrides = {
+  interface TypographyPropsVariantOverrides {
     navbar: true;
-  };
+  }
 }
