@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import Head from "next/head";
+import React, { useState, useEffect } from "react";
 
 const Breakpoint = {
   XS: 0,
@@ -11,24 +10,12 @@ const Breakpoint = {
   XL: 1536,
 };
 
-export const BrowserContext = React.createContext({
-  isDarkThemed: false,
-  width: 0,
-  height: 0,
-  currentBreakpoint: Breakpoint.SM,
-});
-
-export const BrowserContextProvider: DefaultComponent = ({ children }) => {
+export const useBrowser = () => {
   const [isDarkThemed, setIsDarkThemed] = useState(false);
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
 
   const [currentBreakpoint, setCurrentBreakpoint] = useState<number>(Breakpoint.SM);
-
-  const values = useMemo(
-    () => ({ isDarkThemed, width, height, currentBreakpoint }),
-    [isDarkThemed, width, height, currentBreakpoint]
-  );
 
   useEffect(() => {
     let colorSchemeQuery: MediaQueryList;
@@ -69,18 +56,5 @@ export const BrowserContextProvider: DefaultComponent = ({ children }) => {
     return setCurrentBreakpoint(Breakpoint.XS);
   }, [width]);
 
-  const faviconHref = useMemo(() => {
-    return isDarkThemed ? "/kortar-dark.png" : "/kortar.png";
-  }, [isDarkThemed]);
-
-  return (
-    <BrowserContext.Provider value={values}>
-      <Head>
-        <link rel="icon" href={faviconHref} sizes="any" />
-      </Head>
-      {children}
-    </BrowserContext.Provider>
-  );
+  return { isDarkThemed, width, height, currentBreakpoint };
 };
-
-export const useBrowserContext = () => React.useContext(BrowserContext);

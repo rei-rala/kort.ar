@@ -3,9 +3,18 @@ import type { Metadata } from "next/types";
 
 import Providers from "./providers";
 
+const title = process.env.BRAND;
+
 export const metadata: Metadata = {
-  title: process.env.BRAND,
-  description: `Inicia sesion ${process.env.BRAND}`,
+  title,
+  description: `Inicia sesion ${title}`,
+  icons: [
+    {
+      rel: "icon",
+      type: "image/png",
+      url: "/favicon/kortar.png",
+    },
+  ],
 };
 
 const RootLayout: DefaultComponent = ({ children }) => {
