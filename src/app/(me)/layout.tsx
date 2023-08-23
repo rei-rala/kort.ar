@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 import MeLayoutComponents from "@/components/_layouts/me/MeLayoutComponents";
-import authOptions from "../api/auth/[...nextauth]/authOptions";
+import authOptions from "@/libs/nextAuth";
 
 const rubik = Rubik({ subsets: ["latin"] });
 const title = process.env.BRAND;

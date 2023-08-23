@@ -1,7 +1,8 @@
 import { ThemeOptions, createTheme } from "@mui/material/styles";
 import { Open_Sans } from "next/font/google";
 import { Ref, forwardRef } from "react";
-import NextLink, { LinkProps } from "next/link";
+import NextLink from "next/link";
+import type { LinkProps } from "next/link";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 

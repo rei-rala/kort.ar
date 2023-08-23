@@ -1,7 +1,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import { BrowserContextProvider } from "../contexts/BrowserContext";
+import { BrowserContextProvider } from "@/contexts/BrowserContext";
 import ThemeRegistry from "@/components/_ThemeRegistry/ThemeRegistry";
 
 const Providers: DefaultComponent = ({ children }) => {

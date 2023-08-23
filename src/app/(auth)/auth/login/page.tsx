@@ -1,4 +1,4 @@
-import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
+import authOptions from "@/libs/nextAuth";
 import LogInOptions from "@/components/LogInOptions/LogInOptions";
 import { getServerSession } from "next-auth";
 

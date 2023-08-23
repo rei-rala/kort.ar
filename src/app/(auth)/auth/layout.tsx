@@ -2,7 +2,7 @@ import React from "react";
 import { Rubik } from "next/font/google";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import authOptions from "@/app/api/auth/[...nextauth]/authOptions";
+import authOptions from "@/libs/nextAuth";
 
 import AuthLayoutComponents from "@/components/_layouts/auth/AuthLayoutComponents";
 import styles from "./layout.module.css";

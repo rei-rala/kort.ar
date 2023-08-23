@@ -1,7 +1,7 @@
 import type { NextRequest, NextResponse } from "next/server";
 import NextAuth from "next-auth";
 
-import authOptions from "./authOptions";
+import authOptions from "@/libs/nextAuth";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function auth(req: NextRequest, res: NextResponse) {
