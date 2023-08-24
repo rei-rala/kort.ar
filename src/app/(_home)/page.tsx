@@ -3,7 +3,7 @@
 import { Link, Button } from "@mui/material";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-export default function Home() {
+export default function HomePage() {
   const { data, status } = useSession();
   return (
     <main>
