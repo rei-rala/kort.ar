@@ -1,4 +1,4 @@
-import Navbar from "@/components/DefaultNavbar";
+import { Navbar } from "@/components/shared";
 import { Fragment } from "react";
 
 const ProfileLayoutComponents: ExtendedComponent<{ brandFont: string }> = ({

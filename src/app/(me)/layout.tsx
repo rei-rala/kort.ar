@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import MeLayoutComponents from "@/components/_layouts/me/MeLayoutComponents";
+import { MeLayout } from "@/components/layouts";
 import authOptions from "@/libs/nextAuth";
 
 const rubik = Rubik({ subsets: ["latin"] });
@@ -16,16 +16,12 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default async function MeLayout({ children }: { children: any }) {
+export default async function MePageLayout({ children }: { children: any }) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
     redirect("/auth/login");
   }
 
-  return (
-    <MeLayoutComponents className="" brandFont={rubik.className}>
-      {children}
-    </MeLayoutComponents>
-  );
+  return <MeLayout brandFont={rubik.className}>{children}</MeLayout>;
 }

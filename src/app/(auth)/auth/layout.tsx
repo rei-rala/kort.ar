@@ -4,12 +4,12 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import authOptions from "@/libs/nextAuth";
 
-import AuthLayoutComponents from "@/components/_layouts/auth/AuthLayoutComponents";
+import { AuthLayout } from "@/components/layouts";
 import styles from "./layout.module.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-export default async function AuthLayout({ children }: { children: any }) {
+export default async function AuthPageLayout({ children }: { children: any }) {
   const session = await getServerSession(authOptions);
 
   if (session?.user) {
@@ -17,9 +17,9 @@ export default async function AuthLayout({ children }: { children: any }) {
   }
 
   return (
-    <AuthLayoutComponents>
+    <AuthLayout>
       <h1 className={`${rubik.className} ${styles.brand}`}>{process.env.BRAND}</h1>
       {children}
-    </AuthLayoutComponents>
+    </AuthLayout>
   );
 }

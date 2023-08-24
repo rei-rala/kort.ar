@@ -2,7 +2,7 @@ import React from "react";
 import { Rubik } from "next/font/google";
 import type { Metadata } from "next";
 
-import ProfileLayoutComponents from "@/components/_layouts/profile/ProfileLayoutComponents";
+import { ProfileLayout } from "@/components/layouts";
 
 const rubik = Rubik({ subsets: ["latin"] });
 const title = process.env.BRAND;
@@ -12,6 +12,6 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default function SiteLayout({ children }: { children: any }) {
-  return <ProfileLayoutComponents brandFont={rubik.className}>{children}</ProfileLayoutComponents>;
+export default function ProfilePageLayout({ children }: { children: any }) {
+  return <ProfileLayout brandFont={rubik.className}>{children}</ProfileLayout>;
 }

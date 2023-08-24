@@ -1,7 +1,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import ThemeRegistry from "@/components/_ThemeRegistry/ThemeRegistry";
+import { ThemeRegistry } from "@/libs/mui";
 
 const Providers: DefaultComponent = ({ children }) => {
   return (

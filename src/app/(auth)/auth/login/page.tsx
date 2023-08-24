@@ -1,5 +1,5 @@
 import authOptions from "@/libs/nextAuth";
-import LogInOptions from "@/components/LogInOptions/LogInOptions";
+import { LogInOptions } from "@/components/shared";
 import { getServerSession } from "next-auth";
 
 export default async function LoginPage() {

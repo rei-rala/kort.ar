@@ -1,4 +1,4 @@
-import LinkLayoutComponents from "@/components/_layouts/link/LinkLayoutComponents";
+import { LinkLayout } from "@/components/layouts";
 import type { Metadata } from "next";
 
 import styles from "./linkLayout.module.css";
@@ -10,10 +10,10 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default function LinkLayout({ children }: { children: any }) {
+export default function LinkPageLayout({ children }: { children: any }) {
   return (
-    <LinkLayoutComponents className={styles.content} customBrand={title}>
+    <LinkLayout className={styles.content} customBrand={title}>
       <span>{children}</span>
-    </LinkLayoutComponents>
+    </LinkLayout>
   );
 }

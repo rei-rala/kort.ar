@@ -1,4 +1,4 @@
-import Navbar from "@/components/DefaultNavbar";
+import { Navbar } from "@/components/shared";
 
 const MeLayoutComponents: ExtendedComponent<{ brandFont: string }> = ({
   children,

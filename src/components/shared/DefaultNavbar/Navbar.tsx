@@ -28,7 +28,7 @@ const iconsSx = {
   height: "1.75rem",
 };
 
-export default function Navbar({ brandFont }: { brandFont: string }) {
+export const Navbar: ExtendedComponent<{ brandFont: string }> = ({ brandFont }) => {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -255,4 +255,6 @@ export default function Navbar({ brandFont }: { brandFont: string }) {
       {renderMenu}
     </Box>
   );
-}
+};
+
+export default Navbar;

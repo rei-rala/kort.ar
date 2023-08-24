@@ -1,4 +1,4 @@
-import BrandWatermark from "@/components/BrandWatermark/BrandWatermark";
+import { BrandWatermark } from "@/components/shared";
 
 const LinkLayoutComponents: ExtendedComponent<{ customBrand: string }> = ({
   children,
