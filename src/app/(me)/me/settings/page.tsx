@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <main>
       {session?.user?.name && <code>{session.user.name}</code>}
-      <h1>Dashboard</h1>
+      <h1>Settings</h1>
       <p>Ajustes</p>
     </main>
   );

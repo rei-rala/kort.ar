@@ -1,5 +1,9 @@
 :root {
-  --layout-max-width: 1200px;
+  --layout-max-width: 1000px;
+  --outer-margin: 1.5rem;
+  --inner-margin: 16px; /* as MUI*/
+  --bd-radius: 0.25rem;
+  --navbar-height: 48px;
 }
 
 * {
@@ -26,6 +30,10 @@ ul {
   list-style-type: none;
 }
 
+:is(main, section):first-child {
+  margin-top: calc(var(--navbar-height) + var(--outer-margin)*2);
+}
+
 :is(header, main, section, footer) {
   & > * {
     margin: auto;
@@ -34,10 +42,26 @@ ul {
   }
 }
 
-:is(main, section) {
-  padding: 1.5rem;
+:is(main, section):first-child {
+  /* DEV */
+  background-color: rgba(255, 255, 255, 0.1);
+  /* END DEV */
+
+  padding: 0.5rem var(--inner-margin);
+  overflow: hidden;
+
+  border-radius: var(--bd-radius);
+  overflow: hidden;
+  max-width: calc(100% - var(--outer-margin) * 2);
 
   & a:hover {
     text-decoration: underline;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  :root {
+    --navbar-height: 56px;
+    --inner-margin: 24px; /* as MUI */
   }
 }

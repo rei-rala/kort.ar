@@ -1,3 +1,15 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border-radius: var(--bd-radius);
+    overflow: hidden;
+    margin: var(--outer-margin) 0;
+    max-width: calc(100% - var(--outer-margin) * 2);
+}
+
 .navbarBrand {
     text-transform: uppercase;
 }
