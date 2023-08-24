@@ -14,9 +14,10 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  deletedAt      DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   accounts Account[]
   UserLink UserLink[]
@@ -53,6 +54,10 @@ model UserLink {
   color              String
   canReturnToProfile Boolean @default(false)
   timerRedirect      Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model Hit {
@@ -60,4 +65,8 @@ model Hit {
   userId String?  @db.ObjectId
   date   DateTime @default(now())
   ip     String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
