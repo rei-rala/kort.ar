@@ -1,4 +1,5 @@
 "use client";
+import "./tabsWithPanels.css";
 
 import { useState } from "react";
 import type { ReactNode, SyntheticEvent } from "react";
@@ -58,14 +59,21 @@ const TabPanel: ExtendedComponent<TabPanelProps> = ({ panel, tabId }) => {
 const TabsWithPanels: ExtendedComponent<TabProps> = ({ tabId, panels }) => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (_: SyntheticEvent, newValue: number) => {
+  function handleChange(_: SyntheticEvent, newValue: number) {
     setValue(newValue);
-  };
+  }
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} aria-label={`tab '${tabId}'`}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label={`tab '${tabId}'`}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+        >
           {panels.map(({ label, children }, index) => (
             <Tab
               label={label}

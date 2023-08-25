@@ -1,0 +1,7 @@
+.MuiTabs-scrollButtons {
+  transition: opacity 100ms;
+}
+
+.MuiTabs-scrollButtons.Mui-disabled {
+  opacity: 0.1 !important;
+}
