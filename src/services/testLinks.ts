@@ -1,14 +1,14 @@
 import { removeSpaces } from "@/utils/text";
 
-const exampleLinks: ProfileLink[] = [
+const exampleLinks: UserLink[] = [
   {
     owner: {
       name: "Ramon Irala",
-      email: "ramonirala@@@@@",
+      email: "ramoniralaa@gmail.com",
       username: "rei-rala",
       avatarUrl: "https://avatars.githubusercontent.com/u/1004701?v=4",
     },
-    id: "github",
+    id: "1",
     alias: "GitHub",
     from: "rei_github",
     to: "https://www.google.com.ar",
@@ -24,7 +24,7 @@ const exampleLinks: ProfileLink[] = [
       username: "rei-rala",
       avatarUrl: "https://avatars.githubusercontent.com/u/1004701?v=4",
     },
-    id: "linkedin",
+    id: "2",
     alias: "LinkedIn",
     from: "rei_linkedin",
     to: "https://www.google.com",
@@ -41,13 +41,17 @@ export async function getLinks() {
   return exampleLinks;
 }
 
+export async function getLinksByEmail(email: string) {
+  return exampleLinks.filter((l) => l.owner.email === email);
+}
+
 export async function getLinkByUsername(username: string) {
   return exampleLinks.filter((l) => l.owner.username === username);
 }
 
 export async function getLinkByAlias(linkAlias: string) {
   const aliasLower = removeSpaces(linkAlias).toLowerCase();
-  let found: ProfileLink | null = null;
+  let found: UserLink | null = null;
 
   if (aliasLower !== "") found = exampleLinks.find((l) => l.from === aliasLower) || null;
 

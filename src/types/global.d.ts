@@ -2,7 +2,7 @@
 import React from "react";
 
 declare global {
-  type ProfileLink = {
+  type UserLink = {
     id: string;
     owner: Account;
     alias: string;

@@ -3,7 +3,7 @@ import { getLinkByUsername } from "@/services/testLinks";
 
 const ProfilePageComponent: ExtendedComponent<{
   username: string;
-  links: ProfileLink[];
+  links: UserLink[];
 }> = ({ username, links }) => {
   if (links.length === 0) {
     return (
