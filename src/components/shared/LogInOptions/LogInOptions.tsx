@@ -13,6 +13,7 @@ const LogInOptions = () => {
       <Button variant="contained" color="primary" size="large" onClick={handleLoginChrome}>
         Iniciar sesion con google
       </Button>
+      {/* ...other login options */}
     </>
   );
 };
