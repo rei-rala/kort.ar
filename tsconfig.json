@@ -31,11 +31,13 @@
   },
   "include": [
     "next-env.d.ts",
+    "src/types/mui.d.ts",
+    "src/types/next-auth.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/app/(link)/[link]/pageUtils.js", "src/components/_ThemeRegistry/theme.tsx"  ],
+  ],
   "exclude": [
     "node_modules"
-  ],
+  ]
 }
