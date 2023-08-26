@@ -15,16 +15,18 @@ const getLinkComponent = (link: string, profileLink: UserLink | null) => {
     <>
       <h2>
         {profileLink.owner.name} quiere llevarte a{" "}
-        <Link href={`${profileLink.to}`}>{removeHTTPPrefix(profileLink.to)}</Link>
+        <Link href={`${profileLink.to}`} target="_blank">
+          {removeHTTPPrefix(profileLink.to)}
+        </Link>
       </h2>
-      {profileLink?.timerRedirect ? (
+      {profileLink?.canReturnToProfile ? (
         <div>
           Redireccionando en <b id="redirectSeconds">3</b>
           {/* countdown XD */}...
         </div>
       ) : (
         <div>
-          {profileLink.canReturnToProfile && !profileLink.timerRedirect && (
+          {profileLink.canReturnToProfile && (
             <div>
               <p>
                 O visualiza todos sus links desde{" "}
