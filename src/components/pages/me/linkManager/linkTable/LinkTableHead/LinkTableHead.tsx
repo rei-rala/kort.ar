@@ -3,10 +3,10 @@ import "./linkTableHead.css";
 import TableHead from "@mui/material/TableHead/TableHead";
 import TableRow from "@mui/material/TableRow/TableRow";
 import TableCell from "@mui/material/TableCell/TableCell";
+import type { Headers } from "../LinkTable";
 
 let localeTest: Locales = "es";
 
-export type Headers = UserLink & { id?: string; owner?: Object };
 type Locales = "es" | "en" | "default";
 
 const localeHeaders: {

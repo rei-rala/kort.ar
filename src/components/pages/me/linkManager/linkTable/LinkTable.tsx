@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import LinkTableHead from "./LinkTableHead/LinkTableHead";
 import LinkTableBody from "./linkTableBody/LinkTableBody";
 
-import type { Headers } from "./LinkTableHead/LinkTableHead";
+export type Headers = UserLink & { id?: string; owner?: Object };
 
 function getNonObjectKeys(obj: UserLink[]): (keyof Headers)[] {
   const firstOrDefault: UserLink = obj.at(0) || ({} as UserLink);
