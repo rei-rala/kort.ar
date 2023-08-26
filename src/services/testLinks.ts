@@ -47,8 +47,8 @@ export async function getLinkByUsername(username: string) {
   return exampleLinks.filter((l) => l.owner.username === username);
 }
 
-export async function getLinkByAlias(linkAlias: string) {
-  const aliasLower = removeSpaces(linkAlias).toLowerCase();
+export async function getLinkByOrigin(linkFrom: string) {
+  const aliasLower = removeSpaces(linkFrom).toLowerCase();
   let found: UserLink | null = null;
 
   if (aliasLower !== "") found = exampleLinks.find((l) => l.from === aliasLower) || null;
