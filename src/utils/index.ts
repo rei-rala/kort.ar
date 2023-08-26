@@ -4,4 +4,5 @@ const utils = Object.freeze({
   ...textUtils,
 });
 
+export { textUtils };
 export default utils;

@@ -15,6 +15,9 @@ const exampleLinks: UserLink[] = [
     icon: "github",
     color: "#000000",
     canReturnToProfile: true,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     owner: {
@@ -30,6 +33,9 @@ const exampleLinks: UserLink[] = [
     icon: "linkedin",
     color: "#0077B5",
     canReturnToProfile: false,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 
@@ -45,6 +51,10 @@ export async function getLinksByEmail(email: string) {
 
 export async function getLinkByUsername(username: string) {
   return exampleLinks.filter((l) => l.owner.username === username);
+}
+
+export async function getLinkById(id: string) {
+  return exampleLinks.find((l) => l.id === id);
 }
 
 export async function getLinkByOrigin(linkFrom: string) {

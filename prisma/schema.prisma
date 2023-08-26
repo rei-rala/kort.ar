@@ -53,7 +53,7 @@ model UserLink {
   icon               String
   color              String
   canReturnToProfile Boolean @default(false)
-  timerRedirect      Boolean @default(false)
+  active             Boolean @default(true)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

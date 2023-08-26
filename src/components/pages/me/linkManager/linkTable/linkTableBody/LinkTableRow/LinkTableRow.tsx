@@ -2,6 +2,9 @@ import TableCell from "@mui/material/TableCell/TableCell";
 import TableRow from "@mui/material/TableRow/TableRow";
 
 import { TruthyIcon, ExternalLink } from "@/components/shared";
+import { Header, Row } from "../../LinkTable";
+import React from "react";
+import ModifyLink from "../ModifyLink/ModifyLink";
 
 type UserLinkMappedToObject = { [key in keyof UserLink]?: string };
 
@@ -39,8 +42,8 @@ const getCellContent = (header: keyof UserLink, data: any) => {
 };
 
 const LinkTableRow: ExtendedComponent<{
-  headers: (keyof UserLink)[];
-  row: UserLink;
+  headers: Header[];
+  row: Row;
 }> = ({ headers, row }) => {
   return (
     <TableRow key={row.alias} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -54,6 +57,9 @@ const LinkTableRow: ExtendedComponent<{
           {getCellContent(h, row[h])}
         </TableCell>
       ))}
+      <TableCell align="center">
+        <ModifyLink href={`/me/dashboard/link/${row.id}?returnUrl="/me/dashboard"`} />
+      </TableCell>
     </TableRow>
   );
 };

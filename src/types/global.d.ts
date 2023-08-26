@@ -11,6 +11,11 @@ declare global {
     icon: string;
     color: string;
     canReturnToProfile: boolean;
+    active: boolean;
+
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
   };
 
   type AccountNotification = {

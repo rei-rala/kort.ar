@@ -3,15 +3,21 @@ import "./linkTableHead.css";
 import TableHead from "@mui/material/TableHead/TableHead";
 import TableRow from "@mui/material/TableRow/TableRow";
 import TableCell from "@mui/material/TableCell/TableCell";
-import type { Headers } from "../LinkTable";
+import type { Header } from "../LinkTable";
 
 let localeTest: Locales = "es";
 
 type Locales = "es" | "en" | "default";
+type LocaleHeaders = {
+  [key in
+    | keyof Omit<UserLink, "createdAt" | "updatedAt" | "deletedAt" | "active">
+    | Header
+    | "edit"]: {
+    [locale in Locales]?: string;
+  };
+};
 
-const localeHeaders: {
-  [key in keyof Headers]: { [locale in Locales]?: string };
-} = {
+const localeHeaders: LocaleHeaders = {
   id: {
     default: "id",
   },
@@ -36,11 +42,14 @@ const localeHeaders: {
   canReturnToProfile: {
     default: "puede ver tu perfil",
   },
+  edit: {
+    default: "modificar",
+  },
 };
 
 type LinkTableHeadCellProps = {
   center?: boolean;
-  header: keyof Headers;
+  header: Header | "edit";
 };
 
 const LinkTableHeadCell: ExtendedComponent<LinkTableHeadCellProps> = ({ header, center }) => {
@@ -53,13 +62,14 @@ const LinkTableHeadCell: ExtendedComponent<LinkTableHeadCellProps> = ({ header, 
   );
 };
 
-const LinkTableHead: ExtendedComponent<{ headers: (keyof Headers)[] }> = ({ headers }) => {
+const LinkTableHead: ExtendedComponent<{ headers: Header[] }> = ({ headers }) => {
   return (
     <TableHead>
       <TableRow>
         {headers.map((h, index) => (
-          <LinkTableHeadCell header={h} center={index !== 0} key={"th" + h} />
+          <LinkTableHeadCell header={h} center={index !== 0} key={"th" + String(h)} />
         ))}
+        <LinkTableHeadCell header={"edit"} center={true} />
       </TableRow>
     </TableHead>
   );

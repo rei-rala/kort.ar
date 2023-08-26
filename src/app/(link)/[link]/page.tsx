@@ -1,14 +1,11 @@
 import Link from "next/link";
-import { getLinkByAlias } from "@/services/testLinks";
+import { getLinkByOrigin } from "@/services/testLinks";
 import { removeHTTPPrefix } from "@/utils/text";
+import { notFound } from "next/navigation";
 
 const getLinkComponent = (link: string, profileLink: UserLink | null) => {
   if (!profileLink) {
-    return (
-      <div>
-        <h1>404: {link}</h1>
-      </div>
-    );
+    notFound();
   }
 
   return (
@@ -38,12 +35,13 @@ const getLinkComponent = (link: string, profileLink: UserLink | null) => {
           )}
         </div>
       )}
+      <footer>{link}</footer>
     </>
   );
 };
 
 export default async function LinkPage(req: LinkPageReq) {
-  const found: UserLink | null = await getLinkByAlias(req.params.link);
+  const found: UserLink | null = await getLinkByOrigin(req.params.link);
   const linkComponent = getLinkComponent(req.params.link, found);
 
   return <section>{linkComponent}</section>;
