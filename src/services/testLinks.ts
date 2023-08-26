@@ -11,11 +11,10 @@ const exampleLinks: UserLink[] = [
     id: "1",
     alias: "GitHub",
     from: "rei_github",
-    to: "https://www.google.com.ar",
+    to: "https://www.google.com.ar/search?q=testtesttesttesttest",
     icon: "github",
     color: "#000000",
     canReturnToProfile: true,
-    timerRedirect: true,
   },
   {
     owner: {
@@ -31,7 +30,6 @@ const exampleLinks: UserLink[] = [
     icon: "linkedin",
     color: "#0077B5",
     canReturnToProfile: false,
-    timerRedirect: false,
   },
 ];
 

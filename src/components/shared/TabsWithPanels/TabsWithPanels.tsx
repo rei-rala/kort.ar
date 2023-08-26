@@ -11,8 +11,9 @@ import Tabs from "@mui/material/Tabs/Tabs";
 type TabPanel = {
   index?: number;
   value: string | number;
-  label: string;
+  label: ReactNode;
   children?: ReactNode;
+  disabled?: boolean;
 };
 
 type TabPanelProps = {
@@ -74,10 +75,10 @@ const TabsWithPanels: ExtendedComponent<TabProps> = ({ tabId, panels }) => {
           scrollButtons="auto"
           allowScrollButtonsMobile
         >
-          {panels.map(({ label, children }, index) => (
+          {panels.map(({ label, disabled, children }, index) => (
             <Tab
               label={label}
-              disabled={!Boolean(children)}
+              disabled={disabled ?? !Boolean(children)}
               {...a11yProps(index, tabId)}
               key={`tab:${label}`}
             />

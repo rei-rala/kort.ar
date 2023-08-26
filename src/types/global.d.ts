@@ -11,7 +11,6 @@ declare global {
     icon: string;
     color: string;
     canReturnToProfile: boolean;
-    timerRedirect: boolean;
   };
 
   type AccountNotification = {
