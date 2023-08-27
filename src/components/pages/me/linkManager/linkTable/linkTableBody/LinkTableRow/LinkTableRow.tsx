@@ -58,7 +58,7 @@ const LinkTableRow: ExtendedComponent<{
         </TableCell>
       ))}
       <TableCell align="center">
-        <ModifyLink href={`/me/dashboard/link/${row.id}?returnUrl="/me/dashboard"`} />
+        <ModifyLink href={`/me/link/${row.id}?returnUrl=/me`} />
       </TableCell>
     </TableRow>
   );

@@ -63,7 +63,7 @@ declare global {
 
   type LinkPageReq = PageReq & {
     params: {
-      link: string;
+      linkId: string;
     };
   };
 }
