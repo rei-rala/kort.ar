@@ -30,8 +30,8 @@ ul {
   list-style-type: none;
 }
 
-:is(main, section):first-child {
-  margin-top: calc(var(--navbar-height) + var(--outer-margin)*2);
+body > section > :nth-child(1):is(main, section) {
+  margin-top: calc(var(--navbar-height) + var(--outer-margin) * 2);
 }
 
 :is(header, main, section, footer) {
@@ -42,7 +42,7 @@ ul {
   }
 }
 
-:is(main, section):first-child {
+body > section > :is(main, section) {
   /* DEV */
   background-color: rgba(255, 255, 255, 0.1);
   /* END DEV */
@@ -53,7 +53,8 @@ ul {
   border-radius: var(--bd-radius);
   overflow: hidden;
   max-width: calc(100% - var(--outer-margin) * 2);
-
+  margin-bottom: 0.5rem;
+  
   & a:hover {
     text-decoration: underline;
   }
