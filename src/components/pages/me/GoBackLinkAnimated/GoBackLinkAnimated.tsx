@@ -3,14 +3,10 @@
 import GoBackLink from "@/components/shared/GoBackLink/GoBackLink";
 import Fade from "@mui/material/Fade/Fade";
 
-const GoBackLinkAnimated: DefaultComponent = ({}) => {
+const GoBackLinkAnimated: ExtendedComponent<{ title: string }> = ({ title }) => {
   return (
     <Fade in>
-      <section>
-        <nav>
-          <GoBackLink title="dashboard" />
-        </nav>
-      </section>
+      <GoBackLink title={title} />
     </Fade>
   );
 };

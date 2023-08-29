@@ -49,10 +49,10 @@ const TabPanel: ExtendedComponent<TabPanelProps> = ({ panel, tabId }) => {
       {...rest}
       role="tabpanel"
       hidden={value !== index}
-      id={getTabPanelId(index!, tabId)}
-      aria-labelledby={getTabId(index!, tabId)}
+      id={getTabPanelId(index ?? 0, tabId)}
+      aria-labelledby={getTabId(index ?? 0, tabId)}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
     </div>
   );
 };

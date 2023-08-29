@@ -3,7 +3,8 @@ import { AuthenticatedSession, getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import { getLinkById } from "@/services/testLinks";
 
-import GoBackLinkAnimated from "@/components/pages/me/GoBackLinkAnimated/GoBackLinkAnimated";
+import LinkForm from "@/components/pages/me/linkForm/LinkForm";
+import GoBackLink from "@/components/shared/GoBackLink/GoBackLink";
 
 export default async function MeLinkPage(req: LinkPageReq) {
   const session = (await getServerSession(authOptions)) as AuthenticatedSession;
@@ -15,11 +16,16 @@ export default async function MeLinkPage(req: LinkPageReq) {
 
   return (
     <>
-      <GoBackLinkAnimated />
+      <section>
+        <nav>
+          <GoBackLink title="dashboard" />
+        </nav>
+      </section>
       <main>
         <main>
           <pre>{JSON.stringify(link, null, 2)}</pre>
         </main>
+        <LinkForm />
       </main>
     </>
   );

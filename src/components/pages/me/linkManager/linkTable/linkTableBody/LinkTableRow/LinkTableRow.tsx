@@ -1,10 +1,13 @@
+import React from "react";
+
 import TableCell from "@mui/material/TableCell/TableCell";
 import TableRow from "@mui/material/TableRow/TableRow";
 
 import { TruthyIcon, ExternalLink } from "@/components/shared";
-import { Header, Row } from "../../LinkTable";
-import React from "react";
+import { TableHeaderData, TableRowData } from "../../LinkTable";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import ModifyLink from "../ModifyLink/ModifyLink";
+import Box from "@mui/material/Box/Box";
 
 type UserLinkMappedToObject = { [key in keyof UserLink]?: string };
 
@@ -18,6 +21,7 @@ const getCellDataType = (header: keyof UserLink) => {
     color: "color",
     icon: "icon",
     canReturnToProfile: "boolean",
+    active: "boolean",
   };
 
   return keyBasedType[header] ?? "";
@@ -42,21 +46,27 @@ const getCellContent = (header: keyof UserLink, data: any) => {
 };
 
 const LinkTableRow: ExtendedComponent<{
-  headers: Header[];
-  row: Row;
+  headers: TableHeaderData[];
+  row: TableRowData;
 }> = ({ headers, row }) => {
   return (
     <TableRow key={row.alias} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       {headers.map((h, index) => (
-        <TableCell
-          key={h + index}
-          component="th"
-          scope={index === 0 ? "row" : ""}
-          align={index === 0 ? "justify" : "center"}
-        >
-          {getCellContent(h, row[h])}
+        <TableCell key={h + index} component="th" scope={index === 0 ? "row" : ""}>
+          <Box
+            component="span"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: index === 0 ? "justify" : "center",
+            }}
+          >
+            {h === "alias" && <AlternateEmailIcon htmlColor={row.color ?? ""} color={"primary"} />}
+            {getCellContent(h, row[h])}
+          </Box>
         </TableCell>
       ))}
+      <TableCell align="center">{getCellContent("active", row["active"])}</TableCell>
       <TableCell align="center">
         <ModifyLink href={`/me/link/${row.id}?returnUrl=/me`} />
       </TableCell>

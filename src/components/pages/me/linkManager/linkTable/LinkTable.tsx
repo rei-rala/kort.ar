@@ -4,18 +4,19 @@ import Paper from "@mui/material/Paper";
 import LinkTableHead from "./LinkTableHead/LinkTableHead";
 import LinkTableBody from "./linkTableBody/LinkTableBody";
 
-export type Header = "id" | "icon" | "alias" | "to";
-export type Row = { [key in keyof UserLink as Header]: any };
+type ommitedModelData = "owner" | "updatedAt" | "deletedAt";
+export type TableHeaderData = keyof Omit<UserLink, ommitedModelData>;
+export type TableRowData = Omit<UserLink, ommitedModelData>;
 
 const LinkTable: ExtendedComponent<{ rows: UserLink[] }> = ({ rows }) => {
-  let headers: Header[] = ["id", "icon", "alias", "to"];
-  let pickedFormatRows: Row[] = rows;
+  let pickedHeaders: TableHeaderData[] = ["alias", "to"];
+  let pickedRows: TableRowData[] = rows;
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="Your table of links">
-        <LinkTableHead headers={headers} />
-        <LinkTableBody headers={headers} rows={pickedFormatRows} />
+        <LinkTableHead headers={pickedHeaders} />
+        <LinkTableBody headers={pickedHeaders} rows={pickedRows} />
       </Table>
     </TableContainer>
   );
