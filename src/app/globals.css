@@ -21,6 +21,10 @@ body {
   color: white;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 a {
   color: inherit;
   text-decoration: none;

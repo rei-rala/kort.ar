@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getLinkByUsername } from "@/services/testLinks";
+import Typography from "@mui/material/Typography/Typography";
+import LinkList from "@/components/pages/profile/LinkList/LinkList";
 
 const ProfilePageComponent: ExtendedComponent<{
   username: string;
@@ -8,7 +10,9 @@ const ProfilePageComponent: ExtendedComponent<{
   if (links.length === 0) {
     return (
       <>
-        <h2>Ups no encontramos a {username} =P</h2>
+        <Typography component={"h2"} variant="h4">
+          Ups no encontramos a {username} =P
+        </Typography>
         <div>
           <Link href="/">Ir a home</Link>
         </div>
@@ -18,14 +22,12 @@ const ProfilePageComponent: ExtendedComponent<{
 
   return (
     <>
-      <h2>Los links de {username}</h2>
+      <Typography component={"h2"} variant="h4">
+        Los links de {username}
+      </Typography>
       <div>
         <ul>
-          {links.map((link) => (
-            <li key={link.from}>
-              <Link href={link.to}>{link.alias}</Link>
-            </li>
-          ))}
+          <LinkList links={links} />
         </ul>
       </div>
     </>
@@ -36,9 +38,11 @@ export default async function ProfilePage(req: ProfilePageReq) {
   const { username } = req.params;
   const linksFromProfile = await getLinkByUsername(username);
 
+  let activeLinks = linksFromProfile.filter((l) => l.active);
+
   return (
     <main>
-      <ProfilePageComponent username={username} links={linksFromProfile} />
+      <ProfilePageComponent username={username} links={activeLinks} />
     </main>
   );
 }
