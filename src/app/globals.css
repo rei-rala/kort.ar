@@ -1,7 +1,8 @@
 :root {
   --layout-max-width: 1000px;
   --outer-margin: 1.5rem;
-  --inner-margin: 16px; /* as MUI*/
+  --inner-margin: 16px;
+  /* as MUI*/
   --bd-radius: 0.25rem;
   --navbar-height: 48px;
 }
@@ -21,8 +22,8 @@ body {
   color: white;
 }
 
-html {
-  overflow-y: scroll;
+body {
+  overflow-y: scroll !important;
 }
 
 a {
@@ -30,35 +31,26 @@ a {
   text-decoration: none;
 }
 
+
 ul {
   list-style-type: none;
 }
 
-body > section > :nth-child(1):is(main, section) {
-  margin-top: calc(var(--navbar-height) + var(--outer-margin) * 2);
-}
-
-:is(header, main, section, footer) {
-  & > * {
-    margin: auto;
-    width: var(--layout-max-width);
-    max-width: 100%;
-  }
-}
-
-body > section > :is(main, section) {
+body> :is(header, main, section, footer):not(.navbar) {
+  margin: auto;
+  width: var(--layout-max-width);
+  max-width: 95%;
   /* DEV */
   background-color: rgba(255, 255, 255, 0.1);
   /* END DEV */
 
-  padding: 0.5rem var(--inner-margin);
+  padding: var(--inner-margin);
   overflow: hidden;
 
   border-radius: var(--bd-radius);
   overflow: hidden;
-  max-width: calc(100% - var(--outer-margin) * 2);
   margin-bottom: 0.5rem;
-  
+
   & a:hover {
     text-decoration: underline;
   }
@@ -67,6 +59,6 @@ body > section > :is(main, section) {
 @media screen and (min-width: 600px) {
   :root {
     --navbar-height: 56px;
-    --inner-margin: 24px; /* as MUI */
+    --inner-margin: 24px;
   }
 }

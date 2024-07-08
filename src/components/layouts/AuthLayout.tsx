@@ -7,9 +7,10 @@ const AuthLayoutComponents: DefaultComponent = ({ children }) => {
     <Container
       maxWidth="sm"
       sx={{
+        position: "fixed",
         display: "grid",
         placeContent: "center",
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <Box

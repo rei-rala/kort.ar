@@ -79,7 +79,7 @@ export const Navbar: ExtendedComponent<{ brandFont: string }> = ({ brandFont }) 
       return [
         <Link
           underline="none"
-          href="/me/dashboard"
+          href="/me"
           key="Tu perfil"
           onClick={handleMenuClose}
           variant="navbar"
@@ -186,8 +186,8 @@ export const Navbar: ExtendedComponent<{ brandFont: string }> = ({ brandFont }) 
   );
 
   return (
-    <Box className={styles.navbar} sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box className={styles.navbar}>
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             size="large"

@@ -13,7 +13,7 @@ export default async function AuthPageLayout({ children }: { children: any }) {
   const session = await getServerSession(authOptions);
 
   if (session?.user) {
-    redirect("/me/dashboard");
+    redirect("/me");
   }
 
   return (
