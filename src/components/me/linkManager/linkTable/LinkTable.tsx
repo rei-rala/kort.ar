@@ -5,10 +5,10 @@ import LinkTableHead from "./LinkTableHead/LinkTableHead";
 import LinkTableBody from "./linkTableBody/LinkTableBody";
 
 type ommitedModelData = "owner" | "updatedAt" | "deletedAt";
-export type TableHeaderData = keyof Omit<UserLink, ommitedModelData>;
-export type TableRowData = Omit<UserLink, ommitedModelData>;
+export type TableHeaderData = keyof Omit<RedirectLink, ommitedModelData>;
+export type TableRowData = Omit<RedirectLink, ommitedModelData>;
 
-const LinkTable: ExtendedComponent<{ rows: UserLink[] }> = ({ rows }) => {
+const LinkTable: ExtendedComponent<{ rows: RedirectLink[] }> = ({ rows }) => {
   let pickedHeaders: TableHeaderData[] = ["alias", "to"];
   let pickedRows: TableRowData[] = rows;
 

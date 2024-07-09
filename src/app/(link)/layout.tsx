@@ -1,4 +1,4 @@
-import { LinkLayout } from "@/components/layouts";
+import { LinkLayout } from "@/layouts";
 import type { Metadata } from "next";
 
 import styles from "./linkLayout.module.css";

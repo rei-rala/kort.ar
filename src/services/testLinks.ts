@@ -1,6 +1,6 @@
 import { removeSpaces } from "@/utils/text";
 
-const exampleLinks: UserLink[] = [
+const exampleLinks: RedirectLink[] = [
   {
     owner: {
       name: "Ramon Irala",
@@ -77,7 +77,7 @@ export async function getLinkById(id: string) {
 
 export async function getLinkByOrigin(linkFrom: string) {
   const aliasLower = removeSpaces(linkFrom).toLowerCase();
-  let found: UserLink | null = null;
+  let found: RedirectLink | null = null;
 
   if (aliasLower !== "") found = exampleLinks.find((l) => l.from === aliasLower) || null;
 

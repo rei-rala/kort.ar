@@ -3,7 +3,7 @@ import { AuthenticatedSession, getServerSession } from "next-auth";
 import { getLinksByEmail } from "@/services/testLinks";
 
 import Typography from "@mui/material/Typography/Typography";
-import { LinkManager } from "@/components/pages/me";
+import { LinkManager } from "@/components/me";
 import { TabsWithPanels } from "@/components/shared";
 
 export default async function MeDashboardPage() {

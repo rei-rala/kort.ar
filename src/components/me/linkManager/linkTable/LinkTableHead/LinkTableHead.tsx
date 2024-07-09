@@ -10,7 +10,7 @@ let localeTest: Locales = "es";
 type Locales = "es" | "en";
 type AvailableLocales = { [locale in Locales]?: string } & { default: string };
 type LocaleHeaders = { [key in TableHeaderData]: AvailableLocales } & {
-  [key in keyof UserLink]?: AvailableLocales;
+  [key in keyof RedirectLink]?: AvailableLocales;
 } & { edit: AvailableLocales };
 
 const localeHeaders: LocaleHeaders = {

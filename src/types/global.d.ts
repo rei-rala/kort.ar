@@ -2,7 +2,7 @@
 import React from "react";
 
 declare global {
-  type UserLink = {
+  type RedirectLink = {
     id: string;
     owner: Account;
     alias: string;

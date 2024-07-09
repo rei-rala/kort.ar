@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import authOptions from "@/libs/nextAuth";
 
-import { AuthLayout } from "@/components/layouts";
+import { AuthLayout } from "@/layouts";
 import styles from "./layout.module.css";
 
 const rubik = Rubik({ subsets: ["latin"] });

@@ -9,10 +9,10 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import ModifyLink from "../ModifyLink/ModifyLink";
 import Box from "@mui/material/Box/Box";
 
-type UserLinkMappedToObject = { [key in keyof UserLink]?: string };
+type RedirectLinkMappedToObject = { [key in keyof RedirectLink]?: string };
 
-const getCellDataType = (header: keyof UserLink) => {
-  const keyBasedType: UserLinkMappedToObject = {
+const getCellDataType = (header: keyof RedirectLink) => {
+  const keyBasedType: RedirectLinkMappedToObject = {
     id: "string",
     owner: "object",
     alias: "string",
@@ -27,7 +27,7 @@ const getCellDataType = (header: keyof UserLink) => {
   return keyBasedType[header] ?? "";
 };
 
-const getCellContent = (header: keyof UserLink, data: any) => {
+const getCellContent = (header: keyof RedirectLink, data: any) => {
   let dataType = getCellDataType(header);
   let content;
 

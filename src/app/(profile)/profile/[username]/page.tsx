@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { getLinkByUsername } from "@/services/testLinks";
 import Typography from "@mui/material/Typography/Typography";
-import LinkList from "@/components/pages/profile/LinkList/LinkList";
+import LinkList from "@/components/profile/LinkList/LinkList";
 
 const ProfilePageComponent: ExtendedComponent<{
   username: string;
-  links: UserLink[];
+  links: RedirectLink[];
 }> = ({ username, links }) => {
   if (links.length === 0) {
     return (

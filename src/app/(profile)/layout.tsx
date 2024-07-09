@@ -2,7 +2,7 @@ import React from "react";
 import { Rubik } from "next/font/google";
 import type { Metadata } from "next";
 
-import { ProfileLayout } from "@/components/layouts";
+import { ProfileLayout } from "@/layouts";
 
 const rubik = Rubik({ subsets: ["latin"] });
 const title = process.env.BRAND;

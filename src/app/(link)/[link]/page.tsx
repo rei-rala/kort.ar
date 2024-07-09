@@ -3,7 +3,7 @@ import { getLinkByOrigin } from "@/services/testLinks";
 import { removeHTTPPrefix } from "@/utils/text";
 import { notFound } from "next/navigation";
 
-const getLinkComponent = (link: string, profileLink: UserLink | null) => {
+const getLinkComponent = (link: string, profileLink: RedirectLink | null) => {
   if (!profileLink) {
     notFound();
   }
@@ -41,7 +41,7 @@ const getLinkComponent = (link: string, profileLink: UserLink | null) => {
 };
 
 export default async function LinkPage(req: LinkPageReq) {
-  const found: UserLink | null = await getLinkByOrigin(req.params.link);
+  const found: RedirectLink | null = await getLinkByOrigin(req.params.link);
   const linkComponent = getLinkComponent(req.params.link, found);
 
   return <section>{linkComponent}</section>;

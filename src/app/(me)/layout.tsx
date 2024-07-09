@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { MeLayout } from "@/components/layouts";
+import { MeLayout } from "@/layouts";
 import authOptions from "@/libs/nextAuth";
 
 const rubik = Rubik({ subsets: ["latin"] });
