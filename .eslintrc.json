@@ -8,11 +8,7 @@
   ],
   "rules": {
     "prettier/prettier": [
-      "warn",
-      {
-        "endOfLine": "auto",
-        "printWidth": 100
-      }
+      "error"
     ]
   }
 }
