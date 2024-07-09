@@ -1,5 +1,5 @@
 import { Rubik } from "next/font/google";
-import Typography  from "@mui/material/Typography/Typography";
+import Typography from "@mui/material/Typography/Typography";
 
 import styles from "./brandWatermark.module.css";
 
