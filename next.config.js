@@ -15,7 +15,7 @@ const nextConfig = {
     ],
   },
   env: {
-    BRAND: process.env.NODE_ENV === "production" ? "kort.ar" : "[test]",
+    BRAND: process.env.BRAND + (process.env.NODE_ENV !== "production" && "[dev]"),
   },
 };
 
