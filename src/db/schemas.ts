@@ -5,6 +5,16 @@ const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 // quiza despues hacer que acepte urls sin https://
 const urlRegex = /^(?:(?:http|https|ftp):\/\/)?(?:[\w\-]+\.)+[a-zA-Z]{2,}(?:\/[/\w\-#?%.]*)?$/;
 
+const initialRedirectLinkValues: OptionalPropsOf<RedirectLink> = {
+  alias: "",
+  from: "",
+  to: "",
+  color: "#000000",
+  icon: "",
+  canReturnToProfile: false,
+  active: true,
+};
+
 const redirectLinkSchema = z.object({
   alias: z.string(),
   from: z.preprocess(
@@ -33,4 +43,4 @@ const redirectLinkSchema = z.object({
   active: z.boolean(),
 });
 
-export { pathRegex, urlRegex, hexColorRegex, redirectLinkSchema };
+export { pathRegex, urlRegex, hexColorRegex, initialRedirectLinkValues, redirectLinkSchema };

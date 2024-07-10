@@ -5,12 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DynamicFormControl } from "./DynamicFormControl";
-import { redirectLinkSchema } from "@/db/schemas";
+import { initialRedirectLinkValues, redirectLinkSchema } from "@/db/schemas";
 import Button from "@mui/material/Button";
 
 import styles from "./linkForm.module.css";
 
-const LinkForm = () => {
+const LinkForm = ({ link }: { link?: RedirectLink }) => {
   const {
     register,
     handleSubmit,
@@ -19,6 +19,7 @@ const LinkForm = () => {
     control,
   } = useForm({
     resolver: zodResolver(redirectLinkSchema),
+    defaultValues: link ?? initialRedirectLinkValues,
   });
 
   const onSubmit = async (data: any) => {

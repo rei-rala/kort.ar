@@ -25,7 +25,7 @@ export default async function MeLinkPage(req: LinkPageReq) {
         <main>
           <pre>{JSON.stringify(link, null, 2)}</pre>
         </main>
-        <LinkForm />
+        <LinkForm link={link} />
       </main>
     </>
   );

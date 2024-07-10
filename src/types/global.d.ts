@@ -2,6 +2,10 @@
 import React from "react";
 
 declare global {
+  type OptionalPropsOf<T> = {
+    [K in keyof T]?: T[K];
+  };
+
   type RedirectLink = {
     id: string;
     owner: Account;
