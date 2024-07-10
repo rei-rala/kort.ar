@@ -1,0 +1,22 @@
+.linkForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: auto
+}
+
+.previewValue {
+  text-transform: lowercase;
+}
+
+.invalidValue {
+  color: red;
+}
+
+.empty {
+  font-weight: bold;
+}
+
+.notEmpty {
+  font-style: italic;
+}
