@@ -4,13 +4,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { DynamicFormControl } from "./DynamicFormControl";
+import { DynamicFormControl } from "./dynamicFormControl/dynamicFormControl";
 import { initialRedirectLinkValues, redirectLinkSchema } from "@/db/schemas";
 import Button from "@mui/material/Button";
 
 import styles from "./linkForm.module.css";
 
-const LinkForm = ({ link }: { link?: RedirectLink }) => {
+export const LinkForm = ({ link }: { link?: RedirectLink }) => {
   const {
     register,
     handleSubmit,
@@ -29,7 +29,6 @@ const LinkForm = ({ link }: { link?: RedirectLink }) => {
 
   const renderFormControls = () => {
     const formFields = Object.keys(redirectLinkSchema.shape);
-
     return formFields.map((formField) => (
       <DynamicFormControl
         key={`form:${formField}`}
@@ -48,5 +47,3 @@ const LinkForm = ({ link }: { link?: RedirectLink }) => {
     </form>
   );
 };
-
-export default LinkForm;

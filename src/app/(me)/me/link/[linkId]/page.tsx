@@ -3,7 +3,7 @@ import { AuthenticatedSession, getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import { getLinkById } from "@/services/testLinks";
 
-import LinkForm from "@/components/me/linkForm/LinkForm";
+import { LinkForm } from "@/components/me/linkForm/LinkForm";
 import ReturnUrlLink from "@/components/shared/ReturnUrlLink";
 
 export default async function MeLinkPage(req: LinkPageReq) {

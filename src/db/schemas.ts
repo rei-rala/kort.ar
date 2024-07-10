@@ -3,7 +3,7 @@ import { z } from "zod";
 const pathRegex = /^[a-zA-Z0-9\-_\?\!\*\.,]*$/;
 const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 // quiza despues hacer que acepte urls sin https://
-const urlRegex = /^(?:(?:http|https|ftp):\/\/)?(?:[\w\-]+\.)+[a-zA-Z]{2,}(?:\/[/\w\-#?%.]*)?$/;
+const urlRegex = /^(?:(?:http|https|ftp):\/\/)?(?:[\w\-]+\.)+[a-zA-Z]{2,}(?:\/(?:[^/\s]*\/?)*)?$/;
 
 const initialRedirectLinkValues: OptionalPropsOf<RedirectLink> = {
   alias: "",
@@ -33,14 +33,21 @@ const redirectLinkSchema = z.object({
   ),
   to: z
     .string()
+    .max(1000, "No puede exceder 1000 caracteres")
     .regex(urlRegex, "Ingrese una URL valida")
     .refine((val) => val.startsWith("https://"), {
       message: "Solo se permiten URLs seguras (https://)",
     }),
   color: z.string().regex(hexColorRegex, "Color invalido"),
   icon: z.string(),
-  canReturnToProfile: z.boolean(),
-  active: z.boolean(),
+  canReturnToProfile: z.preprocess(
+    (boolean) => boolean == "true",
+    z.boolean({ message: "Debe ser verdadero o falso" })
+  ),
+  active: z.preprocess(
+    (boolean) => boolean == "true",
+    z.boolean({ message: "Debe ser verdadero o falso" })
+  ),
 });
 
 export { pathRegex, urlRegex, hexColorRegex, initialRedirectLinkValues, redirectLinkSchema };
