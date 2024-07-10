@@ -8,6 +8,8 @@ import {
   InputLabel,
 } from "@mui/material";
 
+import styles from "./dynamicFormControl.module.css";
+
 type HelperFormControlProps = InputProps &
   CheckboxProps & {
     label?: string;
@@ -28,6 +30,7 @@ export const HelperFormControl = forwardRef<
             inputRef={ref as React.RefObject<HTMLInputElement>}
           />
         }
+        className={styles.label}
         label={label}
       />
     );
@@ -35,8 +38,10 @@ export const HelperFormControl = forwardRef<
 
   return (
     <>
-      <InputLabel htmlFor={`formField:${formField}`}>{label}</InputLabel>
-      <Input {...props} inputRef={ref} {...props} />
+      <InputLabel className={styles.label} htmlFor={`formField:${formField}`}>
+        {label}
+      </InputLabel>
+      <Input type={type} {...props} inputRef={ref} {...props} />
     </>
   );
 });

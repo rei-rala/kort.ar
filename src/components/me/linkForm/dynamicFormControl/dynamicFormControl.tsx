@@ -3,6 +3,10 @@ import { FieldErrors, FieldValues, useWatch } from "react-hook-form";
 import { FormControl } from "@mui/material";
 import { HelperFormControl } from "./helperFormControl";
 import { HelperText } from "./helperText";
+import {
+  redirectLinkLocales,
+  type RedirectLinkLocale,
+} from "../../linkManager/linkTable/LinkTableHead/LinkTableHead";
 
 type DynamicFormControlProps = React.ComponentProps<typeof FormControl> & {
   formField: string;
@@ -12,24 +16,7 @@ type DynamicFormControlProps = React.ComponentProps<typeof FormControl> & {
 };
 
 const getLabel = (formField: string) => {
-  switch (formField) {
-    case "alias":
-      return "Alias";
-    case "canReturnToProfile":
-      return "¿Puede regresar a su perfil desde el link?";
-    case "active":
-      return "Link Activo";
-    case "color":
-      return "Color";
-    case "from":
-      return "Desde";
-    case "icon":
-      return "Icono";
-    case "to":
-      return "Hacia";
-    default:
-      return formField;
-  }
+  return redirectLinkLocales[formField as keyof RedirectLinkLocale]?.default || formField;
 };
 
 const getInputType = (formField: string) => {

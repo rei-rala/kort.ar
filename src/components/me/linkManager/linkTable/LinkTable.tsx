@@ -5,16 +5,16 @@ import LinkTableHead from "./LinkTableHead/LinkTableHead";
 import LinkTableBody from "./linkTableBody/LinkTableBody";
 
 type ommitedModelData = "owner" | "updatedAt" | "deletedAt";
-export type TableHeaderData = keyof Omit<RedirectLink, ommitedModelData>;
 export type TableRowData = Omit<RedirectLink, ommitedModelData>;
+export type TableHeaderData = keyof TableRowData;
 
 const LinkTable: ExtendedComponent<{ rows: RedirectLink[] }> = ({ rows }) => {
-  let pickedHeaders: TableHeaderData[] = ["alias", "to"];
+  let pickedHeaders: TableHeaderData[] = ["alias", "to", "canReturnToProfile", "hitCount"];
   let pickedRows: TableRowData[] = rows;
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="Your table of links">
+      <Table size="small" aria-label="Tu tabla de links">
         <LinkTableHead headers={pickedHeaders} />
         <LinkTableBody headers={pickedHeaders} rows={pickedRows} />
       </Table>

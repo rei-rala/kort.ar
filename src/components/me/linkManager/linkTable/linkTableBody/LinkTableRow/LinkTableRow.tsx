@@ -22,6 +22,7 @@ const getCellDataType = (header: keyof RedirectLink) => {
     icon: "icon",
     canReturnToProfile: "boolean",
     active: "boolean",
+    hitCount: "number",
   };
 
   return keyBasedType[header] ?? "";

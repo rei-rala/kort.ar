@@ -13,6 +13,7 @@ const initialRedirectLinkValues: OptionalPropsOf<RedirectLink> = {
   icon: "",
   canReturnToProfile: false,
   active: true,
+  hitCount: 0,
 };
 
 const redirectLinkSchema = z.object({
@@ -42,11 +43,11 @@ const redirectLinkSchema = z.object({
   icon: z.string(),
   canReturnToProfile: z.preprocess(
     (boolean) => boolean == "true",
-    z.boolean({ message: "Debe ser verdadero o falso" })
+    z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
   ),
   active: z.preprocess(
     (boolean) => boolean == "true",
-    z.boolean({ message: "Debe ser verdadero o falso" })
+    z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
   ),
 });
 

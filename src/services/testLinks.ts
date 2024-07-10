@@ -9,6 +9,7 @@ const exampleLinks: RedirectLink[] = [
       avatarUrl: "https://avatars.githubusercontent.com/u/1004701?v=4",
     },
     id: "1",
+    hitCount: 5,
     alias: "GitHub",
     from: "rei_github",
     to: "https://www.google.com.ar/search?q=testtesttesttesttest",
@@ -27,6 +28,7 @@ const exampleLinks: RedirectLink[] = [
       avatarUrl: "https://avatars.githubusercontent.com/u/1004701?v=4",
     },
     id: "2",
+    hitCount: 7,
     alias: "mi linkedIn",
     from: "rei_linkedin",
     to: "https://www.bing.com/search?q=asd",
@@ -54,6 +56,7 @@ const exampleLinks: RedirectLink[] = [
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
+    hitCount: 0,
   },
 ];
 

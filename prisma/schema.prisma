@@ -19,7 +19,7 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  accounts Account[]
+  accounts     Account[]
   RedirectLink RedirectLink[]
 }
 
@@ -54,8 +54,9 @@ model RedirectLink {
   color              String
   canReturnToProfile Boolean @default(false)
   active             Boolean @default(true)
-  
-  flaggedAt          DateTime?
+  hitCount           Int     @default(0)
+
+  flaggedAt DateTime?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

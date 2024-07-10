@@ -16,6 +16,7 @@ declare global {
     color: string;
     canReturnToProfile: boolean;
     active: boolean;
+    hitCount: number;
 
     createdAt: Date;
     updatedAt: Date;

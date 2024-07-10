@@ -9,11 +9,11 @@ let localeTest: Locales = "es";
 
 type Locales = "es" | "en";
 type AvailableLocales = { [locale in Locales]?: string } & { default: string };
-type LocaleHeaders = { [key in TableHeaderData]: AvailableLocales } & {
+export type RedirectLinkLocale = { [key in TableHeaderData]: AvailableLocales } & {
   [key in keyof RedirectLink]?: AvailableLocales;
 } & { edit: AvailableLocales };
 
-const localeHeaders: LocaleHeaders = {
+export const redirectLinkLocales: RedirectLinkLocale = {
   id: {
     default: "id",
   },
@@ -44,6 +44,9 @@ const localeHeaders: LocaleHeaders = {
   active: {
     default: "activo",
   },
+  hitCount: {
+    default: "visitas",
+  },
   createdAt: {
     default: "fecha creación",
   },
@@ -57,8 +60,8 @@ type LinkTableHeadCellProps = {
 const LinkTableHeadCell: ExtendedComponent<LinkTableHeadCellProps> = ({ header, center }) => {
   return (
     <TableCell align={center ? "center" : "justify"}>
-      {(localeHeaders[header] && localeHeaders[header][localeTest]) ??
-        localeHeaders[header]?.default ??
+      {(redirectLinkLocales[header] && redirectLinkLocales[header][localeTest]) ??
+        redirectLinkLocales[header]?.default ??
         String(header)}
     </TableCell>
   );

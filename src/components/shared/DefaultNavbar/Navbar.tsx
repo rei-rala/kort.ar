@@ -83,11 +83,11 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
         <Link
           underline="none"
           href="/me"
-          key="Tu perfil"
+          key="Dashboard"
           onClick={handleMenuClose}
           variant="navbar"
         >
-          <MenuItem>Tu perfil</MenuItem>
+          <MenuItem>Dashboard</MenuItem>
         </Link>,
         <Link
           underline="none"
