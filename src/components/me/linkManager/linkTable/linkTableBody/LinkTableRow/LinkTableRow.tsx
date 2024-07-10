@@ -11,7 +11,7 @@ import { LinkForm } from "@/components/me/linkForm/LinkForm";
 import { Button } from "@mui/material";
 
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 type RedirectLinkMappedToObject = { [key in keyof RedirectLink]?: string };
@@ -66,7 +66,19 @@ const LinkTableRow: ExtendedComponent<{
     openNewModal(
       "Editar link",
       <LinkForm link={row as RedirectLink} ref={actionRef} />,
-      <Button onClick={handleEditSubmit}> Guardar </Button>
+      <Button variant="contained" color="info" onClick={handleEditSubmit}>
+        Editar
+      </Button>
+    );
+  };
+
+  const handleDeleteLink = () => {
+    openNewModal(
+      "Eliminar link",
+      <p>Desea eliminar el link {row.alias}?</p>,
+      <Button variant="contained" color="error" onClick={handleEditSubmit}>
+        Editar
+      </Button>
     );
   };
 
@@ -90,7 +102,7 @@ const LinkTableRow: ExtendedComponent<{
       <TableCell align="center">{getCellContent("active", row["active"])}</TableCell>
       <TableCell sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
         <EditNoteIcon color="secondary" onClick={handleEditLink} sx={{ cursor: "pointer" }} />
-        <DeleteForeverIcon color="primary" onClick={handleEditLink} sx={{ cursor: "pointer" }} />
+        <DeleteForeverIcon color="primary" onClick={handleDeleteLink} sx={{ cursor: "pointer" }} />
       </TableCell>
     </TableRow>
   );

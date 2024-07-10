@@ -19,12 +19,14 @@ export const ModalCustomContent = () => {
     >
       <Box
         sx={{
-          position: "absolute",
+          position: "fixed",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
+          minWidth: 330,
+          width: "80vw",
+          maxWidth: "50svw",
+          bgcolor: "black",
           boxShadow: 24,
           p: 4,
         }}
@@ -35,9 +37,11 @@ export const ModalCustomContent = () => {
 
         {modalContent}
 
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 2, display: "flex", justifyContent: "space-evenly" }}>
           {modalAction && modalAction}
-          <Button onClick={handleClose}> Cerrar </Button>
+          <Button variant="outlined" onClick={handleClose}>
+            Cerrar
+          </Button>
         </Box>
       </Box>
     </Modal>

@@ -4,10 +4,9 @@ import React from "react";
 import { Button } from "@mui/material";
 import LinkManagerHeader from "./LinkManagerHeader/LinkManagerHeader";
 import LinkTable from "./linkTable/LinkTable";
-
-import styles from "./linkManager.module.css";
 import { useModal } from "@/contexts/modalContext";
 import { LinkForm } from "../linkForm/LinkForm";
+import AddLinkIcon from "@mui/icons-material/AddLink";
 
 const LinkManager: React.FC<{ links: RedirectLink[] }> = ({ links }) => {
   const { openNewModal, actionRef } = useModal();
@@ -20,7 +19,9 @@ const LinkManager: React.FC<{ links: RedirectLink[] }> = ({ links }) => {
     openNewModal(
       "Nuevo link",
       <LinkForm ref={actionRef} />,
-      <Button onClick={handleModalClick}>Guardar</Button>
+      <Button variant="contained" color="success" onClick={handleModalClick}>
+        Guardar
+      </Button>
     );
   };
 
@@ -29,10 +30,10 @@ const LinkManager: React.FC<{ links: RedirectLink[] }> = ({ links }) => {
       <Button
         color="success"
         variant="outlined"
-        className={styles.addNewLinkButton}
+        sx={{ m: "1rem", ml: 0 }}
         onClick={handleAddNewLink}
       >
-        Nuevo link
+        <AddLinkIcon sx={{ mr: "0.25rem" }} /> Nuevo link
       </Button>
       <LinkManagerHeader>
         <LinkTable rows={links} />
