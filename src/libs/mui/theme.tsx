@@ -42,13 +42,6 @@ const themeOptions: ThemeOptions = createTheme({
         LinkComponent: LinkBehaviour,
       },
     },
-    MuiTable: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "rgba(255, 255, 255, 0.8)", // White background
-        },
-      },
-    },
     MuiTableCell: {
       styleOverrides: {
         root: {

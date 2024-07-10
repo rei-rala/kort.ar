@@ -1,5 +1,5 @@
 "use client";
-import { ModalCustomContext } from "@/components/shared/ModalCustomContext";
+import { ModalCustomContent } from "@/components/shared/ModalCustomContent";
 import React, { createContext, useContext, useState } from "react";
 
 interface ModalContextType {
@@ -37,7 +37,7 @@ export const ModalProvider: DefaultComponent = ({ children }) => {
 
   return (
     <ModalContext.Provider value={{ open, setOpen, modalTitle, modalContent, openNewModal }}>
-      <ModalCustomContext />
+      <ModalCustomContent />
       {children}
     </ModalContext.Provider>
   );
