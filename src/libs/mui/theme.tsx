@@ -42,14 +42,42 @@ const themeOptions: ThemeOptions = createTheme({
         LinkComponent: LinkBehaviour,
       },
     },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgba(255, 255, 255, 0.8)", // White background
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          color: "#000000", // Black font color
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          color: "black",
+          backgroundColor: "#f9f9fa", // Light gray background
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: "white",
+        },
+      },
+    },
   },
   typography: {
     fontFamily: openSans.style.fontFamily,
   },
   palette: {
     background: {
-      default: "#000000",
-      paper: "#272626",
+      default: "#111827",
     },
     text: {
       primary: "#ffffff",

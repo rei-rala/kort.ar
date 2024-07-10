@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import TableCell from "@mui/material/TableCell/TableCell";
 import TableRow from "@mui/material/TableRow/TableRow";
@@ -6,8 +6,9 @@ import TableRow from "@mui/material/TableRow/TableRow";
 import { TruthyIcon, ExternalLink } from "@/components/shared";
 import { TableHeaderData, TableRowData } from "../../LinkTable";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import ModifyLink from "../ModifyLink/ModifyLink";
 import Box from "@mui/material/Box/Box";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import { LinkForm } from "@/components/me/linkForm/LinkForm";
 
 type RedirectLinkMappedToObject = { [key in keyof RedirectLink]?: string };
 
@@ -69,7 +70,7 @@ const LinkTableRow: ExtendedComponent<{
       ))}
       <TableCell align="center">{getCellContent("active", row["active"])}</TableCell>
       <TableCell align="center">
-        <ModifyLink href={`/me/link/${row.id}?returnUrl=/me`} />
+        <AutoFixHighIcon onClick={() => console.log('holi ')} />
       </TableCell>
     </TableRow>
   );

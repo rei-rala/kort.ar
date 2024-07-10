@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { MeLayout } from "@/layouts";
 import authOptions from "@/libs/nextAuth";
+import { Navbar } from "@/components/shared";
 
 const title = process.env.BRAND;
 
@@ -21,5 +21,12 @@ export default async function MePageLayout({ children }: { children: any }) {
     redirect("/auth/login");
   }
 
-  return <MeLayout>{children}</MeLayout>;
+  return (
+    <>
+      <Navbar />
+      {React.Children.map(children, (child, index) => (
+        <section key={`me-layout-child:${index + 1}`}>{child}</section>
+      ))}
+    </>
+  );
 }

@@ -18,3 +18,9 @@
 .notEmpty {
   font-style: italic;
 }
+
+.messageError {
+  margin: auto;
+  text-align: center;
+  color: red;
+}

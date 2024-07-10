@@ -1,28 +1,24 @@
 import authOptions from "@/libs/nextAuth";
 import { AuthenticatedSession, getServerSession } from "next-auth";
-import { notFound } from "next/navigation";
-import { getLinkById } from "@/services/testLinks";
 
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
 import ReturnUrlLink from "@/components/shared/ReturnUrlLink";
+import { redirect } from "next/navigation";
 
-export default async function MeLinkPage(req: LinkPageReq) {
+export default async function NewLinkPage() {
   const session = (await getServerSession(authOptions)) as AuthenticatedSession;
-  const link = await getLinkById(req.params.linkId);
 
-  if (session.user.email !== link?.owner.email) {
-    notFound();
+  if (!session) {
+    return redirect("/login");
   }
-
-  console.log(JSON.stringify(link, null, 2));
 
   return (
     <>
       <nav>
-        <ReturnUrlLink title="dashboard" />
+        <ReturnUrlLink title="dashboard" url="/me" />
       </nav>
       <main>
-        <LinkForm link={link} />
+        <LinkForm />
       </main>
     </>
   );

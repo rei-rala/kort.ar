@@ -1,12 +1,15 @@
 import React from "react";
 import { FieldErrors, FieldValues, useWatch } from "react-hook-form";
-import { FormControl } from "@mui/material";
+import { FormControl, Typography } from "@mui/material";
 import { HelperFormControl } from "./helperFormControl";
 import { HelperText } from "./helperText";
 import {
   redirectLinkLocales,
   type RedirectLinkLocale,
 } from "../../linkManager/linkTable/LinkTableHead/LinkTableHead";
+
+
+import styles from "./dynamicFormControl.module.css";
 
 type DynamicFormControlProps = React.ComponentProps<typeof FormControl> & {
   formField: string;
@@ -53,8 +56,12 @@ const DynamicFormControl = ({ formField, control, errors, register }: DynamicFor
         {...register(formField)}
       />
 
-      {hasErrors && <span>{String(errors[formField]?.message)}</span>}
       {formField === "from" && <HelperText currentValue={currentValue} hasErrors={hasErrors} />}
+      {hasErrors && (
+        <Typography fontSize={12} className={styles.messageError}>
+          {String(errors[formField]?.message)}
+        </Typography>
+      )}
     </FormControl>
   );
 };
