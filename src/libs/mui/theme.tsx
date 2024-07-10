@@ -15,12 +15,24 @@ const themeOptions: ThemeOptions = createTheme({
     MuiLink: {
       defaultProps: {
         component: LinkBehaviour,
+        underline: "none",
       } as any,
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            textDecoration: "underline", // Subrayado al pasar el mouse sobre el enlace
+          },
+        },
+      },
       variants: [
         {
           props: { variant: "navbar" },
           style: {
             color: "#fff",
+            textDecoration: "none", // Subrayado al pasar el mouse sobre el enlace
+            "&:hover": {
+              textDecoration: "none",
+            },
           },
         },
       ],
