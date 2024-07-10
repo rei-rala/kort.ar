@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box/Box";
-import LinkItem from "./LinkItem/LinkItem";
+import LinkItem from "./LinkItem";
 
 const LinkList: ExtendedComponent<{ links: RedirectLink[] }> = ({ links }) => {
   return (

@@ -3,7 +3,7 @@
 import Button from "@mui/material/Button/Button";
 import { signIn } from "next-auth/react";
 
-const LogInOptions = () => {
+export const LogInOptions = () => {
   function handleLoginChrome() {
     signIn("google");
   }
@@ -17,5 +17,3 @@ const LogInOptions = () => {
     </>
   );
 };
-
-export default LogInOptions;

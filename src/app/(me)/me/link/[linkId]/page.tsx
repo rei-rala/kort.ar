@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getLinkById } from "@/services/testLinks";
 
 import LinkForm from "@/components/me/linkForm/LinkForm";
-import GoBackLink from "@/components/shared/GoBackLink/GoBackLink";
+import ReturnUrlLink from "@/components/shared/ReturnUrlLink/ReturnUrlLink";
 
 export default async function MeLinkPage(req: LinkPageReq) {
   const session = (await getServerSession(authOptions)) as AuthenticatedSession;
@@ -18,7 +18,7 @@ export default async function MeLinkPage(req: LinkPageReq) {
     <>
       <section>
         <nav>
-          <GoBackLink title="dashboard" />
+          <ReturnUrlLink title="dashboard" />
         </nav>
       </section>
       <main>
