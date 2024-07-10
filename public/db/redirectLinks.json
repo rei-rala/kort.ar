@@ -1,0 +1,59 @@
+[
+    {
+        "owner": {
+            "name": "Ramon Irala",
+            "email": "ramoniralaa@gmail.com",
+            "username": "rei-rala",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/1004701?v=4"
+        },
+        "id": "1",
+        "hitCount": 5,
+        "alias": "GitHub",
+        "from": "rei_github",
+        "to": "https://www.google.com.ar/search?q=testtesttesttesttest",
+        "icon": "github",
+        "color": "#000000",
+        "canReturnToProfile": true,
+        "active": true,
+        "createdAt": "2024-07-10T00:00:00.000Z",
+        "updatedAt": "2024-07-10T00:00:00.000Z"
+    },
+    {
+        "owner": {
+            "name": "Ramon Irala",
+            "email": "ramoniralaa@gmail.com",
+            "username": "rei-rala",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/1004701?v=4"
+        },
+        "id": "2",
+        "hitCount": 7,
+        "alias": "mi linkedIn",
+        "from": "rei_linkedin",
+        "to": "https://www.bing.com/search?q=asd",
+        "icon": "linkedin",
+        "color": "#FFF",
+        "canReturnToProfile": true,
+        "active": false,
+        "createdAt": "2024-07-10T00:00:00.000Z",
+        "updatedAt": "2024-07-10T00:00:00.000Z"
+    },
+    {
+        "owner": {
+            "name": "Ramon Irala",
+            "email": "ramonirala@@@@",
+            "username": "rei-rala",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/1004701?v=4"
+        },
+        "id": "3",
+        "hitCount": 0,
+        "alias": "LinkedIn",
+        "from": "rei_linkedin",
+        "to": "https://www.google.com",
+        "icon": "linkedin",
+        "color": "#0077B5",
+        "canReturnToProfile": false,
+        "active": true,
+        "createdAt": "2024-07-10T00:00:00.000Z",
+        "updatedAt": "2024-07-10T00:00:00.000Z"
+    }
+]
