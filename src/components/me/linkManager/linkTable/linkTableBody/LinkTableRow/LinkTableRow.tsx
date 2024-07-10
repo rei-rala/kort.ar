@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import TableCell from "@mui/material/TableCell/TableCell";
 import TableRow from "@mui/material/TableRow/TableRow";
@@ -8,6 +8,7 @@ import { TableHeaderData, TableRowData } from "../../LinkTable";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import Box from "@mui/material/Box/Box";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import { useModal } from "@/contexts/modalContext";
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
 
 type RedirectLinkMappedToObject = { [key in keyof RedirectLink]?: string };
@@ -51,6 +52,12 @@ const LinkTableRow: ExtendedComponent<{
   headers: TableHeaderData[];
   row: TableRowData;
 }> = ({ headers, row }) => {
+  const { openNewModal } = useModal();
+
+  const handleEditLink = () => {
+    openNewModal("Editar link", <LinkForm link={row as RedirectLink} />);
+  };
+
   return (
     <TableRow key={row.alias} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       {headers.map((h, index) => (
@@ -70,7 +77,7 @@ const LinkTableRow: ExtendedComponent<{
       ))}
       <TableCell align="center">{getCellContent("active", row["active"])}</TableCell>
       <TableCell align="center">
-        <AutoFixHighIcon onClick={() => console.log('holi ')} />
+        <AutoFixHighIcon onClick={handleEditLink} />
       </TableCell>
     </TableRow>
   );

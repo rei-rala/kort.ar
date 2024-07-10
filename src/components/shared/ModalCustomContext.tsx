@@ -2,18 +2,17 @@
 
 import React from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
-import { useModal } from "@/contexts/ModalContext";
-import { LinkForm } from "@/components/me/linkForm/LinkForm";
+import { useModal } from "@/contexts/modalContext";
 
-export const ModalCustomContext: ExtendedComponent<{ link?: RedirectLink }> = ({ link }) => {
-  const { open, setOpen, modalTitle, openNewModal } = useModal();
+export const ModalCustomContext = () => {
+  const { open, setOpen, modalContent, modalTitle } = useModal();
 
-  const handleOpen = () => setOpen(true);
+  //const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -35,7 +34,8 @@ export const ModalCustomContext: ExtendedComponent<{ link?: RedirectLink }> = ({
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {modalTitle}
           </Typography>
-          <LinkForm link={link} />
+
+          {modalContent}
 
           <Button onClick={handleClose} sx={{ mt: 2 }}>
             Close modal

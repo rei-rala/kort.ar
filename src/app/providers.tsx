@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import { ThemeRegistry } from "@/libs/mui";
-import { ModalProvider } from "@/contexts/ModalContext";
+import { ModalProvider } from "@/contexts/modalContext";
 
 const Providers: DefaultComponent = ({ children }) => {
   return (
