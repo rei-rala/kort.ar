@@ -11,7 +11,7 @@ type Locales = "es" | "en";
 type AvailableLocales = { [locale in Locales]?: string } & { default: string };
 export type RedirectLinkLocale = { [key in TableHeaderData]: AvailableLocales } & {
   [key in keyof RedirectLink]?: AvailableLocales;
-} & { edit: AvailableLocales };
+} & { actions: AvailableLocales };
 
 export const redirectLinkLocales: RedirectLinkLocale = {
   id: {
@@ -38,8 +38,8 @@ export const redirectLinkLocales: RedirectLinkLocale = {
   canReturnToProfile: {
     default: "puede ver tu perfil",
   },
-  edit: {
-    default: "modificar",
+  actions: {
+    default: "acciones",
   },
   active: {
     default: "activo",
@@ -54,7 +54,7 @@ export const redirectLinkLocales: RedirectLinkLocale = {
 
 type LinkTableHeadCellProps = {
   center?: boolean;
-  header: TableHeaderData | "edit";
+  header: TableHeaderData | "actions";
 };
 
 const LinkTableHeadCell: ExtendedComponent<LinkTableHeadCellProps> = ({ header, center }) => {
@@ -75,7 +75,7 @@ const LinkTableHead: ExtendedComponent<{ headers: TableHeaderData[] }> = ({ head
           <LinkTableHeadCell header={h} center={index !== 0} key={"th" + String(h)} />
         ))}
         <LinkTableHeadCell header={"active"} center={true} />
-        <LinkTableHeadCell header={"edit"} center={true} />
+        <LinkTableHeadCell header={"actions"} center={true} />
       </TableRow>
     </TableHead>
   );

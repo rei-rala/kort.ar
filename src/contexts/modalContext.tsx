@@ -8,18 +8,30 @@ interface ModalContextType {
 
   modalTitle: string;
   modalContent: React.ReactNode | null;
+  actionRef: React.RefObject<HTMLButtonElement> | null;
+  modalAction: React.ReactNode | null;
 
-  openNewModal: (title: string, content: React.ReactNode) => void;
+  openNewModal: (
+    title: string,
+    content: React.ReactNode,
+    action?: React.ReactNode,
+    actionRef?: React.RefObject<HTMLButtonElement> | null
+  ) => void;
+
+  closeModal: () => void;
 }
 
 const modalContextDefaultValue: ModalContextType = {
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
 
   modalTitle: "",
   modalContent: null,
+  actionRef: null,
+  modalAction: null,
 
-  openNewModal: () => {},
+  openNewModal: () => { },
+  closeModal: () => { },
 };
 
 const ModalContext = createContext<ModalContextType>(modalContextDefaultValue);
@@ -29,14 +41,24 @@ export const ModalProvider: DefaultComponent = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
 
-  const openNewModal = (title: string, content: React.ReactNode) => {
+  const actionRef = React.createRef<HTMLButtonElement>();
+  const [modalAction, setModalAction] = useState<React.ReactNode | null>(null);
+
+  const openNewModal = (title: string, content: React.ReactNode, action?: React.ReactNode) => {
     setModalTitle(title);
     setModalContent(content);
+    setModalAction(Boolean(action) ? action : null);
     setOpen(true);
   };
 
+  const closeModal = () => {
+    setOpen(false);
+  };
+
   return (
-    <ModalContext.Provider value={{ open, setOpen, modalTitle, modalContent, openNewModal }}>
+    <ModalContext.Provider
+      value={{ open, setOpen, modalAction, actionRef, modalTitle, modalContent, openNewModal, closeModal }}
+    >
       <ModalCustomContent />
       {children}
     </ModalContext.Provider>
