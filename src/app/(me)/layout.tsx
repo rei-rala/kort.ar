@@ -1,5 +1,4 @@
 import React from "react";
-import { Rubik } from "next/font/google";
 import type { Metadata } from "next";
 
 import { getServerSession } from "next-auth";
@@ -8,7 +7,6 @@ import { redirect } from "next/navigation";
 import { MeLayout } from "@/layouts";
 import authOptions from "@/libs/nextAuth";
 
-const rubik = Rubik({ subsets: ["latin"] });
 const title = process.env.BRAND;
 
 export const metadata: Metadata = {
@@ -23,5 +21,5 @@ export default async function MePageLayout({ children }: { children: any }) {
     redirect("/auth/login");
   }
 
-  return <MeLayout brandFont={rubik.className}>{children}</MeLayout>;
+  return <MeLayout>{children}</MeLayout>;
 }

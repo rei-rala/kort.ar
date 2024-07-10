@@ -1,9 +1,9 @@
 import { Navbar } from "@/components/shared";
 
-const MeLayoutComponents: ExtendedComponent<{ brandFont: string }> = ({ children, brandFont }) => {
+const MeLayoutComponents: DefaultComponent = ({ children }) => {
   return (
     <>
-      <Navbar brandFont={brandFont} />
+      <Navbar />
       <section>{children}</section>
     </>
   );

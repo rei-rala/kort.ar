@@ -15,12 +15,13 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
+import { Rubik } from "next/font/google";
 
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const title = process.env.BRAND;
-
+const rubik = Rubik({ subsets: ["latin"] });
 import styles from "./Navbar.module.css";
 
 const iconsSx = {
@@ -28,7 +29,9 @@ const iconsSx = {
   height: "1.75rem",
 };
 
-export const Navbar: ExtendedComponent<{ brandFont: string }> = ({ brandFont }) => {
+export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
+  brandFont = rubik.className,
+}) => {
   const router = useRouter();
   const { data: session } = useSession();
 

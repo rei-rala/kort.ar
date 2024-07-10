@@ -1,12 +1,9 @@
 import { Navbar } from "@/components/shared";
 
-const ProfileLayoutComponents: ExtendedComponent<{ brandFont: string }> = ({
-  brandFont,
-  children,
-}) => {
+const ProfileLayoutComponents: DefaultComponent = ({ children }) => {
   return (
     <>
-      <Navbar brandFont={brandFont} />
+      <Navbar />
       <section>{children}</section>
     </>
   );

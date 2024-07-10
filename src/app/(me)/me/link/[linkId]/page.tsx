@@ -14,6 +14,8 @@ export default async function MeLinkPage(req: LinkPageReq) {
     notFound();
   }
 
+  console.log(JSON.stringify(link, null, 2));
+
   return (
     <>
       <section>
@@ -22,9 +24,6 @@ export default async function MeLinkPage(req: LinkPageReq) {
         </nav>
       </section>
       <main>
-        <main>
-          <pre>{JSON.stringify(link, null, 2)}</pre>
-        </main>
         <LinkForm link={link} />
       </main>
     </>

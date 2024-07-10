@@ -1,10 +1,8 @@
 import React from "react";
-import { Rubik } from "next/font/google";
 import type { Metadata } from "next";
 
 import { ProfileLayout } from "@/layouts";
 
-const rubik = Rubik({ subsets: ["latin"] });
 const title = process.env.BRAND;
 
 export const metadata: Metadata = {
@@ -13,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProfilePageLayout({ children }: { children: any }) {
-  return <ProfileLayout brandFont={rubik.className}>{children}</ProfileLayout>;
+  return <ProfileLayout>{children}</ProfileLayout>;
 }
