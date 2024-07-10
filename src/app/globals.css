@@ -36,7 +36,7 @@ ul {
   list-style-type: none;
 }
 
-body> :is(header, main, section, footer):not(.navbar) {
+body>section {
   margin: auto;
   width: var(--layout-max-width);
   max-width: 95%;
@@ -50,10 +50,6 @@ body> :is(header, main, section, footer):not(.navbar) {
   border-radius: var(--bd-radius);
   overflow: hidden;
   margin-bottom: 0.5rem;
-
-  & a:hover {
-    text-decoration: underline;
-  }
 }
 
 @media screen and (min-width: 600px) {

@@ -18,11 +18,9 @@ export default async function MeLinkPage(req: LinkPageReq) {
 
   return (
     <>
-      <section>
-        <nav>
-          <ReturnUrlLink title="dashboard" />
-        </nav>
-      </section>
+      <nav>
+        <ReturnUrlLink title="dashboard" />
+      </nav>
       <main>
         <LinkForm link={link} />
       </main>
