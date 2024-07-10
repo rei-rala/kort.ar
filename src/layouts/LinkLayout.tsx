@@ -1,6 +1,6 @@
 import { BrandWatermark } from "@/components/shared";
 
-const LinkLayoutComponents: ExtendedComponent<{ customBrand: string }> = ({
+const LinkLayoutComponent: ExtendedComponent<{ customBrand: string }> = ({
   children,
   customBrand,
   className,
@@ -13,4 +13,4 @@ const LinkLayoutComponents: ExtendedComponent<{ customBrand: string }> = ({
   );
 };
 
-export default LinkLayoutComponents;
+export default LinkLayoutComponent;

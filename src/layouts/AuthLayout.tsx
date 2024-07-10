@@ -2,7 +2,7 @@
 
 import { Container, Box } from "@mui/material";
 
-const AuthLayoutComponents: DefaultComponent = ({ children }) => {
+const AuthLayoutComponent: DefaultComponent = ({ children }) => {
   return (
     <Container
       maxWidth="sm"
@@ -34,4 +34,4 @@ const AuthLayoutComponents: DefaultComponent = ({ children }) => {
   );
 };
 
-export default AuthLayoutComponents;
+export default AuthLayoutComponent;

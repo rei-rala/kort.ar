@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/shared";
 
-const ProfileLayoutComponents: DefaultComponent = ({ children }) => {
+const ProfileLayoutComponent: DefaultComponent = ({ children }) => {
   return (
     <>
       <Navbar />
@@ -9,4 +9,4 @@ const ProfileLayoutComponents: DefaultComponent = ({ children }) => {
   );
 };
 
-export default ProfileLayoutComponents;
+export default ProfileLayoutComponent;

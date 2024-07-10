@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/shared";
 
-const MeLayoutComponents: DefaultComponent = ({ children }) => {
+const MeLayoutComponent: DefaultComponent = ({ children }) => {
   return (
     <>
       <Navbar />
@@ -9,4 +9,4 @@ const MeLayoutComponents: DefaultComponent = ({ children }) => {
   );
 };
 
-export default MeLayoutComponents;
+export default MeLayoutComponent;
