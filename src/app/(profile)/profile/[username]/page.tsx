@@ -4,7 +4,7 @@ import LinkList from "@/components/profile/LinkList/LinkList";
 import { Link } from "@mui/material";
 
 // Define the props for the ProfilePageComponent
-interface ProfilePageComponentProps {
+type ProfilePageComponentProps = {
   username: string;
   links?: RedirectLink[] | null;
 }
