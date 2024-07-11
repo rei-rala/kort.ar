@@ -38,8 +38,7 @@ const ProfilePageComponent: ExtendedComponent<ProfilePageComponentProps> = ({
 };
 
 // ProfilePage: Fetches user links and renders the ProfilePageComponent
-const ProfilePage: ExtendedComponent<ProfilePageReq> = async ({ params }) => {
-  const { username } = params;
+export default async function ProfilePage({ username }: ProfilePageComponentProps) {
   const { data: profileRedirectLinks } = await getRedirectLinksByUsername(username);
 
   return (
@@ -47,6 +46,4 @@ const ProfilePage: ExtendedComponent<ProfilePageReq> = async ({ params }) => {
       <ProfilePageComponent username={username} links={profileRedirectLinks} />
     </main>
   );
-};
-
-export default ProfilePage;
+}
