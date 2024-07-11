@@ -1,28 +1,25 @@
-import { getLinksByEmail } from "@/services/testLinks";
-
 import Typography from "@mui/material/Typography/Typography";
-import { LinkManager } from "@/components/me";
 import { TabsWithPanels } from "@/components/shared";
 import { auth } from "@/libs/auth";
-import { AuthenticatedSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { BtnTest } from "./BtnTest";
+import { MyLinksTab } from "./MyLinksTab";
 
 export default async function MeDashboardPage() {
-  const session = (await auth()) as AuthenticatedSession;
+  const session = await auth();
 
   if (!session || !session.user) {
     redirect("/login");
   }
-  const links = await getLinksByEmail(session.user.email);
 
   let testPanels = [
     {
       label: "Tus links",
-      children: <LinkManager links={links} />,
+      children: <MyLinksTab />,
     },
     {
       label: "Segunda",
-      children: <p>2</p>,
+      children: <BtnTest />,
     },
     {
       label: "Tercera(disabled)", // no children also disables the tab

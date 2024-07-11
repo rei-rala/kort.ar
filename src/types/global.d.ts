@@ -8,7 +8,7 @@ declare global {
 
   type RedirectLink = {
     id: string;
-    owner: Account;
+    owner?: Account;
     alias: string;
     from: string;
     to: string;

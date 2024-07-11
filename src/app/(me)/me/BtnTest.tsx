@@ -1,0 +1,28 @@
+"use client";
+
+import { createLink } from "@/services/testLinks";
+import { Typography, Button } from "@mui/material";
+import { useEffect, useState } from "react";
+
+export const BtnTest = () => {
+  let [testRedirectLink, setTestRedirectLink] = useState<RedirectLink | null>(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/db/redirectLinks.json")
+      .then((res) => res.json())
+      .then((links) => {
+        setTestRedirectLink(links[0]);
+      });
+  }, []);
+
+  if (testRedirectLink)
+    return (
+      <Button
+        onClick={() => {
+          createLink(testRedirectLink).then(console.log);
+        }}
+      >
+        <Typography variant="body1">Test</Typography>
+      </Button>
+    );
+};

@@ -1,3 +1,6 @@
+import { customAlphabet } from "nanoid";
+
+
 export function removeSpaces(inputString?: string | null) {
   let str = inputString ? inputString : "";
 
@@ -27,4 +30,15 @@ export function removeHTTPPrefix(inputString?: string | null) {
   const result = str.replace(regex, "");
 
   return result;
+}
+
+export function generateAlphanumericalId(totalRecords: number) {
+  const baseLength = 5;
+  const complexityIncreaseThreshold = 100;
+
+  const length = baseLength + Math.floor(totalRecords / complexityIncreaseThreshold);
+  const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const nanoid = customAlphabet(characters, length);
+
+  return nanoid();
 }

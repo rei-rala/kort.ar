@@ -1,28 +1,35 @@
-import { removeSpaces } from "@/utils/text";
+import { apiUrl } from ".";
 
-export async function getLinks() {
-  const res = await fetch(process.env.NEXTAUTH_URL + "/db/redirectLinks.json");
+type ApiResponse<T> = {
+  message: string;
+  status: number;
+  success: boolean;
+  data: T;
+};
 
-  return (await res.json()) as RedirectLink[];
+type RedirectLinkApiResponse = ApiResponse<RedirectLink>;
+type RedirectLinkListApiResponse = ApiResponse<RedirectLink[]>;
+
+export async function getLinks(): Promise<RedirectLinkApiResponse> {
+  const res = await fetch(apiUrl + "/link");
+
+  return await res.json();
 }
 
-export async function getLinksByEmail(email: string) {
-  return (await getLinks()).filter((l) => l.owner.email === email);
+export async function getUserLinks(): Promise<RedirectLinkListApiResponse> {
+  const res = await fetch(apiUrl + "/my-links");
+
+  return await res.json();
 }
 
-export async function getLinkByUsername(username: string) {
-  return (await getLinks()).filter((l) => l.owner.username === username);
-}
+export async function createLink(link: RedirectLink): Promise<RedirectLinkListApiResponse> {
+  const res = await fetch(apiUrl + "/link", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(link),
+  });
 
-export async function getLinkById(id: string) {
-  return (await getLinks()).find((l) => l.id === id);
-}
-
-export async function getLinkByOrigin(linkFrom: string) {
-  const aliasLower = removeSpaces(linkFrom).toLowerCase();
-  let found: RedirectLink | null = null;
-
-  if (aliasLower !== "") found = (await getLinks()).find((l) => l.from === aliasLower) || null;
-
-  return found;
+  return await res.json();
 }
