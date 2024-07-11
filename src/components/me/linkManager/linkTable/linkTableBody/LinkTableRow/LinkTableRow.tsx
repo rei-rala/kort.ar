@@ -8,7 +8,7 @@ import { TableHeaderData, TableRowData } from "../../LinkTable";
 import Box from "@mui/material/Box/Box";
 import { useModal } from "@/contexts/modalContext";
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -75,9 +75,16 @@ const LinkTableRow: ExtendedComponent<{
   const handleDeleteLink = () => {
     openNewModal(
       "Eliminar link",
-      <p>Desea eliminar el link {row.alias}?</p>,
+      <Typography>
+        Desea eliminar el link
+        <AlternateEmailIcon
+          htmlColor={row.color}
+          sx={{ verticalAlign: "middle", marginLeft: "0.5rem", color: row.color }}
+        />
+        {row.alias}?
+      </Typography>,
       <Button variant="contained" color="error" onClick={handleEditSubmit}>
-        Editar
+        Eliminar
       </Button>
     );
   };
@@ -94,7 +101,7 @@ const LinkTableRow: ExtendedComponent<{
               justifyContent: index === 0 ? "justify" : "center",
             }}
           >
-            {h === "alias" && <AlternateEmailIcon htmlColor={row.color ?? ""} color={"primary"} />}
+            {h === "alias" && <AlternateEmailIcon sx={{ color: row.color }} />}
             {getCellContent(h, row[h])}
           </Box>
         </TableCell>

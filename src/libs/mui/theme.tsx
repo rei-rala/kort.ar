@@ -70,7 +70,14 @@ const themeOptions: ThemeOptions = createTheme({
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          color: "white",
+          color: "inherit",
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          color: "inherit",
         },
       },
     },

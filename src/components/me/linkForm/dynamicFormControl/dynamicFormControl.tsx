@@ -8,7 +8,6 @@ import {
   type RedirectLinkLocale,
 } from "../../linkManager/linkTable/LinkTableHead/LinkTableHead";
 
-
 import styles from "./dynamicFormControl.module.css";
 
 type DynamicFormControlProps = React.ComponentProps<typeof FormControl> & {

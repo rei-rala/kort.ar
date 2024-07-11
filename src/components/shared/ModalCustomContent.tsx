@@ -25,19 +25,33 @@ export const ModalCustomContent = () => {
           transform: "translate(-50%, -50%)",
           minWidth: 330,
           width: "80vw",
-          maxWidth: "50svw",
-          bgcolor: "black",
+          maxWidth: "500px",
+          bgcolor: "#f9f9fa",
+          color: "#111827",
           boxShadow: 24,
-          p: 4,
+          p: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          borderRadius: 1,
         }}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
           {modalTitle}
         </Typography>
 
-        {modalContent}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            minWidth: "100%",
+          }}
+        >
+          {modalContent}
+        </Box>
 
-        <Box sx={{ mt: 2, display: "flex", justifyContent: "space-evenly" }}>
+        <Box sx={{ mt: 2, display: "flex", width: "100%", justifyContent: "space-evenly" }}>
           {modalAction && modalAction}
           <Button variant="outlined" onClick={handleClose}>
             Cerrar

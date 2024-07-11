@@ -36,7 +36,7 @@ export const redirectLinkLocales: RedirectLinkLocale = {
     default: "ícono",
   },
   canReturnToProfile: {
-    default: "puede ver tu perfil",
+    default: "acceso a tu perfil",
   },
   actions: {
     default: "acciones",

@@ -3,7 +3,12 @@
   text-transform: capitalize;
 }
 
+.input:hover::after {
+  border-color: red;
+}
+
 .previewValue {
+  margin-bottom: 0.5rem;
   text-transform: lowercase;
 }
 

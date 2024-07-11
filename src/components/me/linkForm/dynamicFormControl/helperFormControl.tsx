@@ -27,6 +27,7 @@ export const HelperFormControl = forwardRef<
           <Checkbox
             {...(props as CheckboxProps)}
             checked={Boolean(props.value)}
+            className={styles.input}
             inputRef={ref as React.RefObject<HTMLInputElement>}
           />
         }
@@ -41,7 +42,7 @@ export const HelperFormControl = forwardRef<
       <InputLabel className={styles.label} htmlFor={`formField:${formField}`}>
         {label}
       </InputLabel>
-      <Input type={type} {...props} inputRef={ref} {...props} />
+      <Input type={type} {...props} inputRef={ref} className={styles.input} {...props} />
     </>
   );
 });

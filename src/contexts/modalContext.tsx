@@ -57,7 +57,16 @@ export const ModalProvider: DefaultComponent = ({ children }) => {
 
   return (
     <ModalContext.Provider
-      value={{ open, setOpen, modalAction, actionRef, modalTitle, modalContent, openNewModal, closeModal }}
+      value={{
+        open,
+        setOpen,
+        modalAction,
+        actionRef,
+        modalTitle,
+        modalContent,
+        openNewModal,
+        closeModal,
+      }}
     >
       <ModalCustomContent />
       {children}
