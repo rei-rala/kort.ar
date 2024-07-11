@@ -1,13 +1,12 @@
 import React from "react";
-import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import authOptions from "@/libs/nextAuth";
 
 import { AuthLayout } from "@/layouts";
 import styles from "./layout.module.css";
+import { auth } from "@/libs/auth";
 
 export default async function AuthPageLayout({ children }: { children: any }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session?.user) {
     redirect("/me");

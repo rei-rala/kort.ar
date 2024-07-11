@@ -1,11 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
 
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import authOptions from "@/libs/nextAuth";
 import { Navbar } from "@/components/shared";
+import { auth } from "@/libs/auth";
 
 const title = process.env.BRAND;
 
@@ -15,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 export default async function MePageLayout({ children }: { children: any }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (!session?.user) {
+  if (!session || !session.user) {
     redirect("/auth/login");
   }
 

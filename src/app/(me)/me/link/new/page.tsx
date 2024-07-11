@@ -1,15 +1,16 @@
-import authOptions from "@/libs/nextAuth";
-import { AuthenticatedSession, getServerSession } from "next-auth";
+import { AuthenticatedSession } from "next-auth";
 
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
 import ReturnUrlLink from "@/components/shared/ReturnUrlLink";
 import { redirect } from "next/navigation";
+import { auth } from "@/libs/auth";
 
 export default async function NewLinkPage() {
-  const session = (await getServerSession(authOptions)) as AuthenticatedSession;
+  const session = await auth();
 
-  if (!session) {
-    return redirect("/login");
+
+  if (!session || !session.user) {
+    redirect("/auth/login");
   }
 
   return (

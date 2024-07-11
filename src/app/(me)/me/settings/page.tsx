@@ -1,8 +1,13 @@
-import authOptions from "@/libs/nextAuth";
-import { getServerSession } from "next-auth";
+import { auth } from "@/libs/auth";
+import { redirect } from "next/navigation";
 
 export default async function MeSettingsPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
+
+
+  if (!session || !session.user) {
+    redirect("/auth/login");
+  }
 
   return (
     <main>

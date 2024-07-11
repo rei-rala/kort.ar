@@ -1,13 +1,18 @@
-import authOptions from "@/libs/nextAuth";
-import { AuthenticatedSession, getServerSession } from "next-auth";
 import { getLinksByEmail } from "@/services/testLinks";
 
 import Typography from "@mui/material/Typography/Typography";
 import { LinkManager } from "@/components/me";
 import { TabsWithPanels } from "@/components/shared";
+import { auth } from "@/libs/auth";
+import { AuthenticatedSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function MeDashboardPage() {
-  const session = (await getServerSession(authOptions)) as AuthenticatedSession;
+  const session = (await auth()) as AuthenticatedSession;
+
+  if (!session || !session.user) {
+    redirect("/auth/login");
+  }
   const links = await getLinksByEmail(session.user.email);
 
   let testPanels = [

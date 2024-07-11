@@ -1,19 +1,18 @@
-"use client";
-
+import { signIn } from "@/libs/auth";
 import Button from "@mui/material/Button/Button";
-import { signIn } from "next-auth/react";
 
 export const LogInOptions = () => {
-  function handleLoginChrome() {
-    signIn("google");
-  }
-
   return (
-    <>
-      <Button variant="contained" color="primary" size="large" onClick={handleLoginChrome}>
+    <form
+      action={async () => {
+        "use server";
+        await signIn("google");
+      }}
+    >
+      <Button variant="contained" color="primary" size="large" type="submit">
         Iniciar sesion con google
       </Button>
       {/* ...other login options */}
-    </>
+    </form>
   );
 };

@@ -29,7 +29,7 @@ export default function HomePage() {
           <pre>{JSON.stringify(data, null, "\t")}</pre>
         </code>
 
-        <Link href="/auth/login">Login page</Link>
+        <Link href="/login">Login page</Link>
         <Link href="/me">Dashboard</Link>
         <Button onClick={() => signIn("google")}>Login</Button>
         <Button onClick={() => signOut()}>Logout</Button>

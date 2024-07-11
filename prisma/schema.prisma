@@ -43,7 +43,7 @@ model Account {
 }
 
 model RedirectLink {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  id     String @id @map("_id") @db.ObjectId
   userId String @db.ObjectId
   owner  User   @relation(fields: [userId], references: [id], onDelete: NoAction)
 

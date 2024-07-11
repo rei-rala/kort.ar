@@ -1,9 +1,12 @@
-import authOptions from "@/libs/nextAuth";
+import { redirect } from "next/navigation";
 import { LogInOptions } from "./LogInOptions";
-import { getServerSession } from "next-auth";
+import { auth } from "@/libs/auth";
 
 export default async function LoginPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
+  if (session?.user) {
+    redirect("/me");
+  }
 
   return session ? <b>Already logged in, redirecting 😊</b> : <LogInOptions />;
 }
