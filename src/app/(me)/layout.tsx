@@ -17,7 +17,7 @@ export default async function MePageLayout({ children }: { children: any }) {
   const session = await auth();
 
   if (!session || !session.user) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   return (

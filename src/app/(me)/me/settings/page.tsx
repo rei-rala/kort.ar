@@ -6,7 +6,7 @@ export default async function MeSettingsPage() {
 
 
   if (!session || !session.user) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   return (

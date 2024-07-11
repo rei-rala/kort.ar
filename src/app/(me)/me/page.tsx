@@ -11,7 +11,7 @@ export default async function MeDashboardPage() {
   const session = (await auth()) as AuthenticatedSession;
 
   if (!session || !session.user) {
-    redirect("/auth/login");
+    redirect("/login");
   }
   const links = await getLinksByEmail(session.user.email);
 

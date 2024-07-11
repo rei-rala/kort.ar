@@ -10,7 +10,7 @@ export default async function NewLinkPage() {
 
 
   if (!session || !session.user) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   return (

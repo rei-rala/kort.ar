@@ -68,7 +68,7 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
   const handleLogin = () => {
     handleMenuClose();
     handleMobileMenuClose();
-    router.push("/auth/login");
+    router.push("/login");
   };
 
   const handleLogout = () => {
