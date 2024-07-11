@@ -7,7 +7,7 @@ import { Link } from "@mui/material";
 type ProfilePageComponentProps = {
   username: string;
   links?: RedirectLink[] | null;
-}
+};
 
 // ProfilePageComponent: Renders the profile page with user links or an error message
 const ProfilePageComponent: ExtendedComponent<ProfilePageComponentProps> = ({
@@ -38,7 +38,11 @@ const ProfilePageComponent: ExtendedComponent<ProfilePageComponentProps> = ({
 };
 
 // ProfilePage: Fetches user links and renders the ProfilePageComponent
-export default async function ProfilePage({ username }: ProfilePageComponentProps) {
+export default async function ProfilePage({
+  params: { username },
+}: {
+  params: { username: string };
+}) {
   const { data: profileRedirectLinks } = await getRedirectLinksByUsername(username);
 
   return (

@@ -27,7 +27,6 @@ export async function getRedirectLinksByUsername(
   username: string
 ): Promise<RedirectLinkListApiResponse> {
   const res = await fetch(`${apiUrl}/link/profile/${username}`);
-
   return await res.json();
 }
 

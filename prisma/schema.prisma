@@ -1,31 +1,33 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String    @unique @db.String
-  emailVerified  DateTime?
-  image          String?
-  hashedPassword String?
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  username      String?   @unique @default(cuid())
+  email         String?   @unique @db.String
+  emailVerified DateTime?
+  image         String?
   accounts      Account[]
+  sessions      Session[]
+
+  public Boolean @default(false)
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   redirectLinks RedirectLink[]
+  hits          Hit[] // One-to-Many relation with Hit model (one User can have many Hits)
 }
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userEmail         String  @db.String
+  userId            String  @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -37,9 +39,32 @@ model Account {
   id_token          String? @db.String
   session_state     String?
 
-  user User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model RedirectLink {
@@ -48,7 +73,7 @@ model RedirectLink {
   owner     User   @relation(fields: [userEmail], references: [email], onDelete: NoAction)
 
   alias              String
-  from               String  @unique // Este sera autogenerado en caso de vacio, debe ser unico
+  from               String  @unique
   to                 String
   icon               String
   color              String
@@ -62,13 +87,23 @@ model RedirectLink {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+  hits      Hit[] // Many-to-Many relation with Hit model (one RedirectLink can have many Hits, and one Hit can belong to many RedirectLinks)
 }
 
 model Hit {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userEmail String?  @db.String
   date      DateTime @default(now())
   ip        String?
+  userAgent String?
+  referer   String?
+
+  visitedProfile  String? // Optional field to store the visited user's email
+  visitedLink     String? // Optional field to store the visited link URL
+  loggedUserEmail String? @db.String
+
+  user           User?         @relation(fields: [loggedUserEmail], references: [email], onDelete: SetNull) // One-to-Many relation with User model (one User can be logged in multiple Hits)
+  redirectLinkId String?       @db.ObjectId
+  redirectLink   RedirectLink? @relation(fields: [redirectLinkId], references: [id], onDelete: SetNull) // Many-to-Many relation with RedirectLink model (one Hit can belong to many RedirectLinks)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 
 declare global {
@@ -13,22 +12,53 @@ declare global {
     data?: T | null | undefined;
   };
 
+  type User = {
+    id?: string;
+    name: string;
+    username: string;
+    email: string;
+    emailVerified?: string;
+    image: String;
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
+
   type RedirectLink = {
-    id: string;
-    owner?: Account;
+    id?: string;
+    userEmail: string;
     alias: string;
-    from: string;
+    from?: string;
     to: string;
     icon: string;
     color: string;
-    canReturnToProfile: boolean;
-    active: boolean;
-    public: boolean;
     hitCount: number;
+    active?: boolean;
+    public?: boolean;
+    canReturnToProfile?: boolean;
+    flaggedAt?: Date | null;
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date | null;
+    owner?: User | null;
+  };
 
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt?: Date;
+  type Hit = {
+    id?: string;
+    userEmail: string | null;
+    date?: Date | null;
+    ip: string | null;
+    userAgent: string | null;
+    loggedUserEmail: string | null;
+    user: User | null;
+    redirectLinkId?: string | null;
+    redirectLink?: RedirectLink | null;
+    referer: string | null;
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date | null;
+
+    visitedLink?: string;
+    visitedProfile?: string;
   };
 
   type AccountNotification = {
@@ -49,7 +79,9 @@ declare global {
     username: string;
     avatarUrl: string;
     communications?: Communications;
+    public?: boolean;
   };
+
   type DefaultComponentProps = {
     children?: React.ReactNode;
     className?: string;

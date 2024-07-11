@@ -1,7 +1,10 @@
+import prisma from "@/db/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 
 const config = {
+  adapter: PrismaAdapter(prisma),
   providers: [Google],
   pages: {
     signIn: "/login",
