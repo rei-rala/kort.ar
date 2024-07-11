@@ -80,22 +80,10 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
   const menuItems = () => {
     if (session?.user) {
       return [
-        <Link
-          underline="none"
-          href="/me"
-          key="Dashboard"
-          onClick={handleMenuClose}
-          variant="navbar"
-        >
+        <Link href="/me" key="Dashboard" onClick={handleMenuClose} variant="navbarLink">
           <MenuItem>Dashboard</MenuItem>
         </Link>,
-        <Link
-          underline="none"
-          href="/me/settings"
-          key="Ajustes"
-          onClick={handleMenuClose}
-          variant="navbar"
-        >
+        <Link href="/me/settings" key="Ajustes" onClick={handleMenuClose} variant="navbarLink">
           <MenuItem>Ajustes</MenuItem>
         </Link>,
         <MenuItem key="Cerrar sesión" onClick={handleLogout}>
@@ -145,7 +133,7 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {session?.user?.name && session?.user.image ? (
+      {session?.user?.name && session.user.image ? (
         <MenuItem onClick={handleProfileMenuOpen}>
           <IconButton
             size="large"

@@ -26,10 +26,20 @@ const themeOptions: ThemeOptions = createTheme({
       },
       variants: [
         {
+          props: { variant: "navbarLink" },
+          style: {
+            color: "#000",
+            textDecoration: "none",
+            "&:hover": {
+              textDecoration: "none",
+            },
+          },
+        },
+        {
           props: { variant: "navbar" },
           style: {
             color: "#fff",
-            textDecoration: "none", // Subrayado al pasar el mouse sobre el enlace
+            textDecoration: "none",
             "&:hover": {
               textDecoration: "none",
             },
