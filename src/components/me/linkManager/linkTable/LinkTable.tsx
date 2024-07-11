@@ -9,7 +9,15 @@ export type TableRowData = Omit<RedirectLink, ommitedModelData>;
 export type TableHeaderData = keyof TableRowData;
 
 const LinkTable: ExtendedComponent<{ rows: RedirectLink[] }> = ({ rows }) => {
-  let pickedHeaders: TableHeaderData[] = ["alias", "to", "canReturnToProfile", "hitCount"];
+  let pickedHeaders: TableHeaderData[] = [
+    "alias",
+    "from",
+    "to",
+    "active",
+    "public",
+    "canReturnToProfile",
+    "hitCount",
+  ];
   let pickedRows: TableRowData[] = rows;
 
   return (

@@ -16,10 +16,9 @@ const getRedirectLinks = async (email: string) => {
 const createResponse = (links: RedirectLink[]) => {
   const linksFound = links.length > 0;
   const message = linksFound ? "Mostrando links" : "No hay links";
-  const status = linksFound ? 200 : 204;
   const data = linksFound ? links : [];
 
-  return NextResponse.json({ message, data }, { status });
+  return NextResponse.json({ message, data }, { status: 200 });
 };
 
 export const GET = auth(async function GET(req) {

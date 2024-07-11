@@ -7,7 +7,8 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   const session = await auth();
 
-  console.warn({ session });
+  console.info({ session });
+
   const links = await prisma.redirectLink.findMany();
   return NextResponse.json(links);
 }

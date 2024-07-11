@@ -25,6 +25,7 @@ const getCellDataType = (header: keyof RedirectLink) => {
     to: "externalUrl",
     color: "color",
     icon: "icon",
+    public: "boolean",
     canReturnToProfile: "boolean",
     active: "boolean",
     hitCount: "number",
@@ -106,7 +107,6 @@ const LinkTableRow: ExtendedComponent<{
           </Box>
         </TableCell>
       ))}
-      <TableCell align="center">{getCellContent("active", row["active"])}</TableCell>
       <TableCell sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
         <EditNoteIcon color="secondary" onClick={handleEditLink} sx={{ cursor: "pointer" }} />
         <DeleteForeverIcon color="primary" onClick={handleDeleteLink} sx={{ cursor: "pointer" }} />

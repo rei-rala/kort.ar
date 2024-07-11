@@ -6,6 +6,13 @@ declare global {
     [K in keyof T]?: T[K];
   };
 
+  type ApiResponse<T> = {
+    message: string;
+    status: number;
+    success: boolean;
+    data?: T | null | undefined;
+  };
+
   type RedirectLink = {
     id: string;
     owner?: Account;
@@ -16,6 +23,7 @@ declare global {
     color: string;
     canReturnToProfile: boolean;
     active: boolean;
+    public: boolean;
     hitCount: number;
 
     createdAt: Date;

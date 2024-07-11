@@ -1,48 +1,52 @@
-import Link from "next/link";
-import { getLinkByUsername } from "@/services/testLinks";
-import Typography from "@mui/material/Typography/Typography";
+import { getRedirectLinksByUsername } from "@/services/testLinks";
+import Typography from "@mui/material/Typography";
 import LinkList from "@/components/profile/LinkList/LinkList";
+import { Link } from "@mui/material";
 
-const ProfilePageComponent: ExtendedComponent<{
+// Define the props for the ProfilePageComponent
+interface ProfilePageComponentProps {
   username: string;
-  links: RedirectLink[];
-}> = ({ username, links }) => {
-  if (links.length === 0) {
+  links?: RedirectLink[] | null;
+}
+
+// ProfilePageComponent: Renders the profile page with user links or an error message
+const ProfilePageComponent: ExtendedComponent<ProfilePageComponentProps> = ({
+  username,
+  links = [],
+}) => {
+  if (!links || links.length === 0) {
     return (
-      <>
-        <Typography component={"h2"} variant="h4">
-          Ups no encontramos a {username} =P
+      <div>
+        <Typography component="h2" variant="h4">
+          Ups, no encontramos a {username} =P
         </Typography>
         <div>
           <Link href="/">Ir a home</Link>
         </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
-      <Typography component={"h2"} variant="h4">
+    <div>
+      <Typography component="h2" variant="h4">
         Los links de {username}
       </Typography>
-      <div>
-        <ul>
-          <LinkList links={links} />
-        </ul>
-      </div>
-    </>
+      <LinkList links={links} />
+    </div>
   );
 };
 
-export default async function ProfilePage(req: ProfilePageReq) {
-  const { username } = req.params;
-  const linksFromProfile = await getLinkByUsername(username);
-
-  let activeLinks = linksFromProfile.filter((l) => l.active);
+// ProfilePage: Fetches user links and renders the ProfilePageComponent
+const ProfilePage: ExtendedComponent<ProfilePageReq> = async ({ params }) => {
+  const { username } = params;
+  const { data: profileRedirectLinks } = await getRedirectLinksByUsername(username);
 
   return (
     <main>
-      <ProfilePageComponent username={username} links={activeLinks} />
+      <ProfilePageComponent username={username} links={profileRedirectLinks} />
     </main>
   );
-}
+};
+
+export default ProfilePage;

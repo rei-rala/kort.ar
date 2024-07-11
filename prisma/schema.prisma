@@ -48,13 +48,14 @@ model RedirectLink {
   owner     User   @relation(fields: [userEmail], references: [email], onDelete: NoAction)
 
   alias              String
-  from               String // Este sera autogenerado en caso de vacio
+  from               String  @unique // Este sera autogenerado en caso de vacio, debe ser unico
   to                 String
   icon               String
   color              String
   canReturnToProfile Boolean @default(false)
   active             Boolean @default(true)
   hitCount           Int     @default(0)
+  public             Boolean @default(false)
 
   flaggedAt DateTime?
 

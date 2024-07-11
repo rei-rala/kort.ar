@@ -1,6 +1,6 @@
 "use client";
 
-import { createLink } from "@/services/testLinks";
+import { createRedirectLink } from "@/services/testLinks";
 import { Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -19,7 +19,7 @@ export const BtnTest = () => {
     return (
       <Button
         onClick={() => {
-          createLink(testRedirectLink).then(console.log);
+          createRedirectLink(testRedirectLink).then(console.log);
         }}
       >
         <Typography variant="body1">Test</Typography>

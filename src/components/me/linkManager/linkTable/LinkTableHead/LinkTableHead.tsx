@@ -38,6 +38,9 @@ export const redirectLinkLocales: RedirectLinkLocale = {
   canReturnToProfile: {
     default: "acceso a tu perfil",
   },
+  public: {
+    default: "público",
+  },
   actions: {
     default: "acciones",
   },
@@ -74,7 +77,6 @@ const LinkTableHead: ExtendedComponent<{ headers: TableHeaderData[] }> = ({ head
         {headers.map((h, index) => (
           <LinkTableHeadCell header={h} center={index !== 0} key={"th" + String(h)} />
         ))}
-        <LinkTableHeadCell header={"active"} center={true} />
         <LinkTableHeadCell header={"actions"} center={true} />
       </TableRow>
     </TableHead>

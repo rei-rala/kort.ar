@@ -12,6 +12,7 @@ const initialRedirectLinkValues: OptionalPropsOf<RedirectLink> = {
   color: "#000000",
   icon: "",
   canReturnToProfile: false,
+  public: false,
   active: true,
   hitCount: 0,
 };
@@ -42,6 +43,10 @@ const redirectLinkSchema = z.object({
   color: z.string().regex(hexColorRegex, "Color invalido"),
   icon: z.string(),
   canReturnToProfile: z.preprocess(
+    (boolean) => boolean == "true",
+    z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
+  ),
+  public: z.preprocess(
     (boolean) => boolean == "true",
     z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
   ),

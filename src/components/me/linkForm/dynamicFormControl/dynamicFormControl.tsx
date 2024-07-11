@@ -25,6 +25,7 @@ const getInputType = (formField: string) => {
   switch (formField) {
     case "active":
     case "canReturnToProfile":
+    case "public":
       return "checkbox";
     case "color":
       return "color";

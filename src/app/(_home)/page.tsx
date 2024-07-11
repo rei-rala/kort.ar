@@ -1,6 +1,6 @@
 "use client";
 
-import { getLinks } from "@/services/testLinks";
+import { getRedirectLinks } from "@/services/testLinks";
 import { Link, Button } from "@mui/material";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -14,8 +14,8 @@ export default function HomePage() {
     if (!status || status !== "authenticated") return;
 
     const fetchData = async () => {
-      const result = await getLinks();
-      setRedirectLinks(result);
+      const { data } = await getRedirectLinks();
+      setRedirectLinks((data || []) as RedirectLink[]);
     };
     fetchData();
   }, [status]);

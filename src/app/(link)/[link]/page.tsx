@@ -1,33 +1,37 @@
-import Link from "next/link";
-import { getLinkByOrigin } from "@/services/testLinks";
+import { getRedirectLinkByRedirectPage } from "@/services/testLinks";
 import { removeHTTPPrefix } from "@/utils/text";
+import { Link } from "@mui/material";
 import { notFound } from "next/navigation";
 
-const getLinkComponent = (link: string, profileLink: RedirectLink | null) => {
-  if (!profileLink) {
+type LinkDisplayProps = {
+  redirectLink?: RedirectLink | null;
+};
+
+const LinkDisplay = ({ redirectLink }: LinkDisplayProps) => {
+  if (!redirectLink) {
     notFound();
   }
 
   return (
     <>
       <h2>
-        {profileLink.owner.name} quiere llevarte a{" "}
-        <Link href={`${profileLink.to}`} target="_blank">
-          {removeHTTPPrefix(profileLink.to)}
+        {redirectLink.owner?.name} quiere llevarte a{" "}
+        <Link href={`${redirectLink.to}`} target="_blank">
+          {removeHTTPPrefix(redirectLink.to)}
         </Link>
       </h2>
-      {profileLink?.canReturnToProfile ? (
+      {redirectLink?.canReturnToProfile ? (
         <div>
           Redireccionando en <b id="redirectSeconds">3</b>
           {/* countdown XD */}...
         </div>
       ) : (
         <div>
-          {profileLink.canReturnToProfile && (
+          {redirectLink.canReturnToProfile && (
             <div>
               <p>
                 O visualiza todos sus links desde{" "}
-                <Link href={`/profile/${profileLink.owner.username}`}>
+                <Link href={`/profile/${redirectLink.owner?.name}`}>
                   <b>aqui</b>
                 </Link>
               </p>
@@ -35,14 +39,17 @@ const getLinkComponent = (link: string, profileLink: RedirectLink | null) => {
           )}
         </div>
       )}
-      <footer>{link}</footer>
+      <footer>
+        <pre>
+          <code>{JSON.stringify(redirectLink, null, 2)}</code>
+        </pre>
+      </footer>
     </>
   );
 };
 
 export default async function LinkPage(req: LinkPageReq) {
-  const found: RedirectLink | null = await getLinkByOrigin(req.params.link);
-  const linkComponent = getLinkComponent(req.params.link, found);
-
-  return <section>{linkComponent}</section>;
+  const { data: redirectLink } = await getRedirectLinkByRedirectPage(req.params.link);
+  
+  return <LinkDisplay redirectLink={redirectLink} />;
 }
