@@ -13,7 +13,7 @@ const sensitiveKeys: (keyof RedirectLink)[] = [
   //"updatedAt",
   "deletedAt",
   "hitCount",
-] as const;
+];
 
 function buildResponse<T>(
   statusCode: number,
