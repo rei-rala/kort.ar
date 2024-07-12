@@ -43,15 +43,15 @@ const redirectLinkSchema = z.object({
   color: z.string().regex(hexColorRegex, "Color invalido"),
   icon: z.string(),
   canReturnToProfile: z.preprocess(
-    (boolean) => boolean == "true",
+    (boolean) => String(boolean) === "true",
     z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
   ),
   public: z.preprocess(
-    (boolean) => boolean == "true",
+    (boolean) => String(boolean) === "true",
     z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
   ),
   active: z.preprocess(
-    (boolean) => boolean == "true",
+    (boolean) => String(boolean) === "true",
     z.boolean({ invalid_type_error: "Debe ser verdadero o falso" })
   ),
 });

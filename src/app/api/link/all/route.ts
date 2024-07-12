@@ -2,14 +2,8 @@ import prisma from "@/db/prisma";
 import { auth } from "@/libs/auth";
 import { NextResponse } from "next/server";
 
-const getRedirectLinks = async (email: string) => {
-  return await prisma.redirectLink.findMany({
-    where: {
-      owner: {
-        email,
-      },
-    },
-  });
+const getRedirectLinks = async () => {
+  return await prisma.redirectLink.findMany({});
 };
 
 // Función para construir la respuesta
@@ -29,7 +23,7 @@ export const GET = auth(async function GET(req) {
   }
 
   try {
-    const links = await getRedirectLinks(session.user.email);
+    const links = await getRedirectLinks();
     return createResponse(links as RedirectLink[]);
   } catch (error) {
     console.error("Error fetching redirect links:", error);

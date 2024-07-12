@@ -10,6 +10,19 @@ import {
 
 import styles from "./dynamicFormControl.module.css";
 
+const getInputType = (formField?: string) => {
+  switch (formField) {
+    case "active":
+    case "canReturnToProfile":
+    case "public":
+      return "checkbox";
+    case "color":
+      return "color";
+    default:
+      return "text";
+  }
+};
+
 type HelperFormControlProps = InputProps &
   CheckboxProps & {
     label?: string;
@@ -19,7 +32,9 @@ type HelperFormControlProps = InputProps &
 export const HelperFormControl = forwardRef<
   HTMLInputElement | HTMLTextAreaElement | HTMLInputElement,
   HelperFormControlProps
->(({ type, label, formField, ...props }, ref) => {
+>(({ label, formField, ...props }, ref) => {
+  const type = getInputType(formField);
+
   if (type === "checkbox") {
     return (
       <FormControlLabel
@@ -27,8 +42,11 @@ export const HelperFormControl = forwardRef<
           <Checkbox
             {...(props as CheckboxProps)}
             checked={Boolean(props.value)}
+            value={Boolean(props.value)}
             className={styles.input}
             inputRef={ref as React.RefObject<HTMLInputElement>}
+            name={formField}
+            id={`formField:${formField}`}
           />
         }
         className={styles.label}

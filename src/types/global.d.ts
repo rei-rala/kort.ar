@@ -8,8 +8,8 @@ declare global {
   type ApiResponse<T> = {
     message: string;
     status: number;
-    success: boolean;
     data?: T | null | undefined;
+    error?: string;
   };
 
   type User = {
@@ -39,7 +39,7 @@ declare global {
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date | null;
-    owner?: User | null;
+    owner: User;
   };
 
   type Hit = {

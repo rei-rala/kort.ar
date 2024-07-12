@@ -8,11 +8,12 @@ import { TableHeaderData, TableRowData } from "../../LinkTable";
 import Box from "@mui/material/Box/Box";
 import { useModal } from "@/contexts/modalContext";
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { deleteRedirectLink } from "@/services/testLinks";
 
 type RedirectLinkMappedToObject = { [key in keyof RedirectLink]?: string };
 
@@ -59,15 +60,15 @@ const LinkTableRow: ExtendedComponent<{
   const actionRef = React.useRef<HTMLButtonElement>(null);
   const { openNewModal } = useModal();
 
-  const handleEditSubmit = () => {
+  const handleSubmit = () => {
     actionRef.current?.click();
   };
 
   const handleEditLink = () => {
     openNewModal(
       "Editar link",
-      <LinkForm link={row as RedirectLink} ref={actionRef} />,
-      <Button variant="contained" color="info" onClick={handleEditSubmit}>
+      <LinkForm action="update" link={row as RedirectLink} ref={actionRef} />,
+      <Button variant="contained" color="info" onClick={handleSubmit}>
         Editar
       </Button>
     );
@@ -76,22 +77,15 @@ const LinkTableRow: ExtendedComponent<{
   const handleDeleteLink = () => {
     openNewModal(
       "Eliminar link",
-      <Typography>
-        Desea eliminar el link
-        <AlternateEmailIcon
-          htmlColor={row.color}
-          sx={{ verticalAlign: "middle", marginLeft: "0.5rem", color: row.color }}
-        />
-        {row.alias}?
-      </Typography>,
-      <Button variant="contained" color="error" onClick={handleEditSubmit}>
+      <LinkForm action="delete" link={row as RedirectLink} ref={actionRef} fieldsDisabled={true} />,
+      <Button variant="contained" color="error" onClick={handleSubmit}>
         Eliminar
       </Button>
     );
   };
 
   return (
-    <TableRow key={row.alias} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+    <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       {headers.map((h, index) => (
         <TableCell key={h + index} component="th" scope={index === 0 ? "row" : ""}>
           <Box

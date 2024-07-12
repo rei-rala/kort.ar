@@ -84,8 +84,8 @@ model RedirectLink {
 
   flaggedAt DateTime?
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   deletedAt DateTime?
   hits      Hit[] // Many-to-Many relation with Hit model (one RedirectLink can have many Hits, and one Hit can belong to many RedirectLinks)
 }

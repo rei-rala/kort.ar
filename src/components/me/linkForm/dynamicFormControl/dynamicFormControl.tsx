@@ -21,27 +21,19 @@ const getLabel = (formField: string) => {
   return redirectLinkLocales[formField as keyof RedirectLinkLocale]?.default || formField;
 };
 
-const getInputType = (formField: string) => {
-  switch (formField) {
-    case "active":
-    case "canReturnToProfile":
-    case "public":
-      return "checkbox";
-    case "color":
-      return "color";
-    default:
-      return "text";
-  }
-};
-
-const DynamicFormControl = ({ formField, control, errors, register }: DynamicFormControlProps) => {
+const DynamicFormControl = ({
+  formField,
+  control,
+  errors,
+  register,
+  disabled,
+}: DynamicFormControlProps) => {
   const currentValue = useWatch({
     control,
     name: formField,
   });
 
   const label = getLabel(formField);
-  const inputType = getInputType(formField);
   const hasErrors = Boolean(errors[formField]);
 
   return (
@@ -49,10 +41,10 @@ const DynamicFormControl = ({ formField, control, errors, register }: DynamicFor
       <HelperFormControl
         id={`formField:${formField}`}
         aria-invalid={errors[formField] ? "true" : "false"}
-        type={inputType}
         label={label}
         formField={formField}
         value={currentValue}
+        disabled={disabled}
         {...register(formField)}
       />
 

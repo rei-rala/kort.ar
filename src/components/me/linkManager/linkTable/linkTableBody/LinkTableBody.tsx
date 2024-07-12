@@ -9,7 +9,7 @@ const LinkTableBody: ExtendedComponent<{ headers: TableHeaderData[]; rows: Table
   return (
     <TableBody>
       {rows.map((row) => (
-        <LinkTableRow key={`link-row:${row.alias}`} headers={headers} row={row} />
+        <LinkTableRow key={`link-row:${row.from}`} headers={headers} row={row} />
       ))}
     </TableBody>
   );

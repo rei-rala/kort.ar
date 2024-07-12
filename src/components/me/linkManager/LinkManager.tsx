@@ -18,8 +18,13 @@ const LinkManager: React.FC<{ links: RedirectLink[] }> = ({ links }) => {
   const handleAddNewLink = () => {
     openNewModal(
       "Nuevo link",
-      <LinkForm ref={actionRef} />,
-      <Button variant="contained" color="success" onClick={handleModalClick}>
+      <LinkForm action="create" ref={actionRef} />,
+      <Button
+        variant="contained"
+        color="success"
+        disabled={actionRef?.current?.disabled}
+        onClick={handleModalClick}
+      >
         Guardar
       </Button>
     );
