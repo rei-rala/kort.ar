@@ -1,5 +1,4 @@
 import { getRedirectLinkByRedirectPage } from "@/services/testLinks";
-import { removeHTTPPrefix } from "@/utils/text";
 import { Link } from "@mui/material";
 import { notFound } from "next/navigation";
 
@@ -15,10 +14,12 @@ const LinkDisplay = ({ redirectLink }: LinkDisplayProps) => {
   return (
     <>
       <h2>
-        {redirectLink.owner?.name} quiere llevarte a{" "}
-        <Link href={`${redirectLink.to}`} target="_blank">
-          {removeHTTPPrefix(redirectLink.to)}
-        </Link>
+        {redirectLink.owner?.name} quiere llevarte a
+        <div>
+          <Link href={`${redirectLink.to}`} target="_blank">
+            {redirectLink.to}
+          </Link>
+        </div>
       </h2>
       {redirectLink?.canReturnToProfile ? (
         <div>

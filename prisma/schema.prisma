@@ -84,8 +84,8 @@ model RedirectLink {
 
   flaggedAt DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
   hits      Hit[] // Many-to-Many relation with Hit model (one RedirectLink can have many Hits, and one Hit can belong to many RedirectLinks)
 }
@@ -97,7 +97,10 @@ model Hit {
   userAgent String?
   referer   String?
 
+  originalProfile String? // 
   visitedProfile  String? // Optional field to store the visited user's email
+  originalFrom    String? // Optional field to store the original from URL
+  originalDestiny String? // Optional field to store the original link URL
   visitedLink     String? // Optional field to store the visited link URL
   loggedUserEmail String? @db.String
 

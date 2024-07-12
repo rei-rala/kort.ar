@@ -6,7 +6,10 @@ type ApiResponse<T> = { message: string, status: number, data: T | null; error?:
 const buildUrl = (...path: string[]) => `${apiUrl}${path.join("/")}`;
 
 async function fetchData<T>(options: { url: string; method?: string; data?: any }): Promise<ApiResponse<T>> {
-  const headers = { "Content-Type": "application/json" };
+  const headers = {
+    "Content-Type": "application/json",
+    origin: process.env.NEXTAUTH_URL || "",
+  };
   const body = options.data ? JSON.stringify(options.data) : null;
   const response = await fetch(options.url, { method: options.method, headers, body });
 

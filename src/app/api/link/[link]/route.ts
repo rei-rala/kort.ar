@@ -1,6 +1,5 @@
 import prisma from "@/db/prisma";
 import { auth } from "@/libs/auth";
-import { generateAlphanumericalId } from "@/utils/text";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,6 +10,18 @@ type routeParams = {
 };
 
 export async function GET(req: NextRequest, { params: { link } }: routeParams) {
+  const originURL = req.headers.get("origin");
+
+  if (originURL !== process.env.NEXTAUTH_URL) {
+    return NextResponse.json(
+      {
+        data: null,
+        message: "Error inesperado. Por favor, intenta de nuevo.",
+      },
+      { status: 500 }
+    );
+  }
+
   if (!link) {
     return NextResponse.json(
       {
@@ -21,19 +32,29 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     );
   }
 
-  const linkFound = await prisma.redirectLink.findFirst({ where: { from: link } });
+  const linkFound = await prisma.redirectLink.findFirst({
+    where: { from: link },
+    include: {
+      owner: true,
+    },
+  });
 
   auth().then((session) => {
-    prisma.hit.create({
+    const forwarded = req.headers.get("x-forwarded-for");
+    const realIp = req.headers.get("x-real-ip");
+    const referer = req.headers.get("referer");
+    const userAgent = req.headers.get("user-agent");
+
+    return prisma.hit.create({
       data: {
-        ip:
-          String(req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || req.ip) ||
-          null,
-        referer: req.headers.get("referer"),
-        userAgent: req.headers.get("user-agent"),
+        ip: forwarded || realIp || null,
+        referer,
+        userAgent,
         loggedUserEmail: session?.user?.email || null,
-        redirectLinkId: link,
+        redirectLinkId: linkFound?.id || null,
         visitedLink: link,
+        originalFrom: linkFound?.from || null,
+        originalDestiny: linkFound?.to || null,
       },
     });
   });

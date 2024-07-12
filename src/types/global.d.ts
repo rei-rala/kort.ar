@@ -44,15 +44,20 @@ declare global {
 
   type Hit = {
     id?: string;
-    userEmail: string | null;
     date?: Date | null;
     ip: string | null;
     userAgent: string | null;
+    referer: string | null;
+    userEmail: string | null;
+    originalUsername?: string | null;
     loggedUserEmail: string | null;
     user: User | null;
+
     redirectLinkId?: string | null;
     redirectLink?: RedirectLink | null;
-    referer: string | null;
+    originalFrom?: String;
+    originalDestiny?: String;
+
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date | null;
