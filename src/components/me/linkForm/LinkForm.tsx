@@ -31,12 +31,12 @@ export const LinkForm = forwardRef(
       defaultValues: link ?? initialRedirectLinkValues,
     });
 
-    const { closeModal, actionRef } = useModal();
-    const [isLoading, setIsLoading] = useState(false); // Use a descriptive variable name
+    const { closeModal, modalActionRef } = useModal();
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (data: any) => {
-      console.log(actionRef?.current); // Log the actionRef instead of a warning
-      const newRedirectLink = { ...data, id: link?.id }; // Destructuring for clarity
+      console.log(modalActionRef?.current);
+      const newRedirectLink = { ...data, id: link?.id };
 
       try {
         Promise.resolve()

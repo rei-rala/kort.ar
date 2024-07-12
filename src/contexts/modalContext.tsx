@@ -2,56 +2,70 @@
 import { ModalCustomContent } from "@/components/shared";
 import React, { createContext, useContext, useState } from "react";
 
+type ModalCustomChildrenComponent = React.ReactNode | React.ReactNode[];
+
 interface ModalContextType {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
-  modalTitle: string;
-  modalContent: React.ReactNode | null;
-  actionRef: React.RefObject<HTMLButtonElement> | null;
+  modalTitle: ModalCustomChildrenComponent;
+  modalContent: ModalCustomChildrenComponent;
+  modalActionRef: React.RefObject<HTMLButtonElement> | null;
   modalAction: React.ReactNode | null;
 
   openNewModal: (
-    title: string,
-    content: React.ReactNode,
-    action?: React.ReactNode,
-    actionRef?: React.RefObject<HTMLButtonElement> | null
+    title: ModalCustomChildrenComponent,
+    content: ModalCustomChildrenComponent,
+    action?: React.ReactNode
   ) => void;
 
   closeModal: () => void;
+  hideModal: () => void;
 }
 
 const modalContextDefaultValue: ModalContextType = {
   open: false,
   setOpen: () => {},
 
-  modalTitle: "",
+  modalTitle: null,
   modalContent: null,
-  actionRef: null,
+  modalActionRef: null,
   modalAction: null,
 
   openNewModal: () => {},
   closeModal: () => {},
+  hideModal: () => {},
 };
 
 const ModalContext = createContext<ModalContextType>(modalContextDefaultValue);
 
 export const ModalProvider: DefaultComponent = ({ children }) => {
-  const [modalTitle, setModalTitle] = useState("");
   const [open, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
+  const [modalTitle, setModalTitle] = useState<ModalCustomChildrenComponent>(null);
+  const [modalContent, setModalContent] = useState<ModalCustomChildrenComponent>(null);
 
-  const actionRef = React.createRef<HTMLButtonElement>();
+  const modalActionRef = React.createRef<HTMLButtonElement>();
   const [modalAction, setModalAction] = useState<React.ReactNode | null>(null);
 
-  const openNewModal = (title: string, content: React.ReactNode, action?: React.ReactNode) => {
+  const openNewModal = (
+    title: ModalCustomChildrenComponent,
+    content: ModalCustomChildrenComponent,
+    action?: React.ReactNode
+  ) => {
     setModalTitle(title);
     setModalContent(content);
-    setModalAction(Boolean(action) ? action : null);
+    setModalAction(action);
     setOpen(true);
   };
 
   const closeModal = () => {
+    setOpen(false);
+    setModalTitle(null);
+    setModalContent(null);
+    setModalAction(null);
+  };
+
+  const hideModal = () => {
     setOpen(false);
   };
 
@@ -61,11 +75,12 @@ export const ModalProvider: DefaultComponent = ({ children }) => {
         open,
         setOpen,
         modalAction,
-        actionRef,
+        modalActionRef,
         modalTitle,
         modalContent,
         openNewModal,
         closeModal,
+        hideModal,
       }}
     >
       <ModalCustomContent />

@@ -1,21 +1,20 @@
 "use client";
 
 import React from "react";
-import { Button, Modal, Box, Typography } from "@mui/material";
+import { Button, Modal, Box } from "@mui/material";
 import { useModal } from "@/contexts/modalContext";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ModalCustomContent = () => {
-  const { open, setOpen, modalTitle, modalContent, modalAction } = useModal();
-
-  //const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { open, hideModal, modalTitle, modalContent, modalAction } = useModal();
 
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={hideModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      aria-modal="true"
     >
       <Box
         sx={{
@@ -36,9 +35,23 @@ const ModalCustomContent = () => {
           borderRadius: 1,
         }}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+        <Box sx={{ m: 2, marginLeft: "auto", top: 0, right: 0, position: "absolute" }}>
+          <Button onClick={hideModal} sx={{ p: 0, minWidth: "fit-content" }}>
+            <CloseIcon width="auto" />
+          </Button>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 1,
+            minWidth: "100%",
+          }}
+        >
           {modalTitle}
-        </Typography>
+        </Box>
 
         <Box
           sx={{
@@ -51,9 +64,16 @@ const ModalCustomContent = () => {
           {modalContent}
         </Box>
 
-        <Box sx={{ mt: 2, display: "flex", width: "100%", justifyContent: "space-evenly" }}>
+        <Box
+          sx={{
+            mt: 2,
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-evenly",
+          }}
+        >
           {modalAction && modalAction}
-          <Button variant="outlined" onClick={handleClose}>
+          <Button variant="outlined" onClick={hideModal}>
             Cerrar
           </Button>
         </Box>

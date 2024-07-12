@@ -8,12 +8,11 @@ import { TableHeaderData, TableRowData } from "../../LinkTable";
 import Box from "@mui/material/Box/Box";
 import { useModal } from "@/contexts/modalContext";
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { deleteRedirectLink } from "@/services/testLinks";
 
 type RedirectLinkMappedToObject = { [key in keyof RedirectLink]?: string };
 
@@ -57,17 +56,24 @@ const LinkTableRow: ExtendedComponent<{
   headers: TableHeaderData[];
   row: TableRowData;
 }> = ({ headers, row }) => {
-  const actionRef = React.useRef<HTMLButtonElement>(null);
+  const modalActionRef = React.useRef<HTMLButtonElement>(null);
   const { openNewModal } = useModal();
 
   const handleSubmit = () => {
-    actionRef.current?.click();
+    modalActionRef.current?.click();
   };
 
   const handleEditLink = () => {
     openNewModal(
-      "Editar link",
-      <LinkForm action="update" link={row as RedirectLink} ref={actionRef} />,
+      [
+        <Typography key="editLinkTitle" variant="h5" component="h2">
+          Editar link
+        </Typography>,
+        <Typography key="editLinkSubtitle" variant="body2" component="p">
+          Modifica los datos del link
+        </Typography>,
+      ],
+      <LinkForm action="update" link={row as RedirectLink} ref={modalActionRef} />,
       <Button variant="contained" color="info" onClick={handleSubmit}>
         Editar
       </Button>
@@ -76,8 +82,20 @@ const LinkTableRow: ExtendedComponent<{
 
   const handleDeleteLink = () => {
     openNewModal(
-      "Eliminar link",
-      <LinkForm action="delete" link={row as RedirectLink} ref={actionRef} fieldsDisabled={true} />,
+      [
+        <Typography key="deleteLinkTitle" variant="h5" component="h2">
+          Eliminar link
+        </Typography>,
+        <Typography key="deleteLinkSubtitle" variant="body2" component="p">
+          ¿Estás seguro que deseas eliminar este link?
+        </Typography>,
+      ],
+      <LinkForm
+        action="delete"
+        link={row as RedirectLink}
+        ref={modalActionRef}
+        fieldsDisabled={true}
+      />,
       <Button variant="contained" color="error" onClick={handleSubmit}>
         Eliminar
       </Button>
