@@ -1,5 +1,5 @@
 "use client";
-import { ModalCustomContent } from "@/components/shared/ModalCustomContent";
+import { ModalCustomContent } from "@/components/shared";
 import React, { createContext, useContext, useState } from "react";
 
 interface ModalContextType {
@@ -23,15 +23,15 @@ interface ModalContextType {
 
 const modalContextDefaultValue: ModalContextType = {
   open: false,
-  setOpen: () => { },
+  setOpen: () => {},
 
   modalTitle: "",
   modalContent: null,
   actionRef: null,
   modalAction: null,
 
-  openNewModal: () => { },
-  closeModal: () => { },
+  openNewModal: () => {},
+  closeModal: () => {},
 };
 
 const ModalContext = createContext<ModalContextType>(modalContextDefaultValue);

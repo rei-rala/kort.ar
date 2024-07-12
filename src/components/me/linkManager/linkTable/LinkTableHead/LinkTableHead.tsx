@@ -53,6 +53,12 @@ export const redirectLinkLocales: RedirectLinkLocale = {
   createdAt: {
     default: "fecha creación",
   },
+  userEmail: {
+    default: "correo electrónico del usuario",
+  },
+  flaggedAt: {
+    default: "denunciado el",
+  },
 };
 
 type LinkTableHeadCellProps = {

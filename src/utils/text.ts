@@ -1,6 +1,5 @@
 import { customAlphabet } from "nanoid";
 
-
 export function removeSpaces(inputString?: string | null) {
   let str = inputString ? inputString : "";
 

@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 export default async function MeSettingsPage() {
   const session = await auth();
 
-
   if (!session || !session.user) {
     redirect("/login");
   }

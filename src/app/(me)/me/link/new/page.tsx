@@ -8,7 +8,6 @@ import { auth } from "@/libs/auth";
 export default async function NewLinkPage() {
   const session = await auth();
 
-
   if (!session || !session.user) {
     redirect("/login");
   }

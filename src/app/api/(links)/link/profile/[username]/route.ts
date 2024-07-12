@@ -14,8 +14,6 @@ export async function GET(req: NextRequest, { params: { username } }: pageParams
 
   console.log("asdasdasdasd!!");
 
-
-
   links = (await prisma.redirectLink.findMany({
     where: {
       owner: {

@@ -50,6 +50,5 @@ const LinkDisplay = ({ redirectLink }: LinkDisplayProps) => {
 
 export default async function LinkPage(req: LinkPageReq) {
   const { data: redirectLink } = await getRedirectLinkByRedirectPage(req.params.link);
-  
   return <LinkDisplay redirectLink={redirectLink} />;
 }

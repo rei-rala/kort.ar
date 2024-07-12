@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
 import { useModal } from "@/contexts/modalContext";
 
-export const ModalCustomContent = () => {
+const ModalCustomContent = () => {
   const { open, setOpen, modalTitle, modalContent, modalAction } = useModal();
 
   //const handleOpen = () => setOpen(true);
@@ -61,3 +61,5 @@ export const ModalCustomContent = () => {
     </Modal>
   );
 };
+
+export default ModalCustomContent;
