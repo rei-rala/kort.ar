@@ -5,7 +5,7 @@ import { Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export const BtnTest = () => {
-  let [testRedirectLink, setTestRedirectLink] = useState<RedirectLink | null>(null);
+  let [testRedirectLink, setTestRedirectLink] = useState<RedirectLink>();
 
   useEffect(() => {
     fetch("http://localhost:3000/db/redirectLinks.json")
@@ -19,7 +19,7 @@ export const BtnTest = () => {
     return (
       <Button
         onClick={() => {
-          createRedirectLink(testRedirectLink).then(console.log);
+          testRedirectLink && createRedirectLink(testRedirectLink).then(console.log);
         }}
       >
         <Typography variant="body1">Test</Typography>
