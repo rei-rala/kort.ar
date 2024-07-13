@@ -21,6 +21,20 @@ const nextConfig = {
       (process.env.NODE_ENV !== "production" ? " [dev]" : ""),
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/@[username]",
+        destination: "/user/[username]",
+        permanent: true,
+      },
+      {
+        source: "/u/[username]",
+        destination: "/user/[username]",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
