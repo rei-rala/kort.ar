@@ -45,7 +45,12 @@ function buildResponse<T>(
     ? statusMessages[statusCode] || "Error desconocido"
     : statusMessages[statusCode][action ?? "default"] || "Error desconocido";
 
-  return NextResponse.json({ data, message, error, status: statusCode }, { status: statusCode });
+  const success = statusCode < 400; // XD
+
+  return NextResponse.json(
+    { data, message, error, status: statusCode, success },
+    { status: statusCode }
+  );
 }
 
 async function generateFrom(fromInput?: string, totalRedirectLinks = 10000, maxAttempts = 10) {
@@ -232,7 +237,7 @@ export async function PUT(req: Request) {
 
     const newRedirectLink = utils.removeKeysFromObject(updatedRedirectLink, sensitiveKeys);
 
-    return buildResponse(201, newRedirectLink, "update");
+    return buildResponse(200, newRedirectLink, "update");
   } catch (error: any) {
     return buildResponse(500, null, undefined, error.message);
   }

@@ -9,8 +9,13 @@ import { initialRedirectLinkValues, redirectLinkSchema } from "@/db/schemas";
 import Button from "@mui/material/Button";
 
 import styles from "./linkForm.module.css";
-import { createRedirectLink, deleteRedirectLink, updateRedirectLink } from "@/services/redirectLink.services";
+import {
+  createRedirectLink,
+  deleteRedirectLink,
+  updateRedirectLink,
+} from "@/services/redirectLink.services";
 import { useModal } from "@/contexts/modalContext";
+import toast from "react-hot-toast";
 
 type LinkFormProps = {
   link?: RedirectLink;
@@ -31,35 +36,38 @@ export const LinkForm = forwardRef(
       defaultValues: link ?? initialRedirectLinkValues,
     });
 
-    const { closeModal, modalActionRef } = useModal();
+    const { closeModal } = useModal();
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (data: any) => {
-      console.log(modalActionRef?.current);
       const newRedirectLink = { ...data, id: link?.id };
 
+      const actions = {
+        delete: deleteRedirectLink,
+        update: updateRedirectLink,
+        create: createRedirectLink,
+      };
+
       try {
-        Promise.resolve()
-          .then(() => setIsLoading(true))
-          .then(() => {
-            switch (action) {
-              case "delete":
-                return deleteRedirectLink(newRedirectLink);
-              case "update":
-                return updateRedirectLink(newRedirectLink);
-              case "create":
-                return createRedirectLink(newRedirectLink);
-            }
-          })
+        setIsLoading(true);
+        toast.loading("En proceso...");
+
+        await Promise.resolve(actions[action](newRedirectLink))
           .then((response) => {
-            if (response) {
-              reset();
-              console.log(response);
-              closeModal();
+            toast.dismiss();
+            if (!response.success) {
+              throw new Error(JSON.stringify(response, null, 2));
             }
+            toast.success("Guardado correctamente");
+            reset();
+            closeModal();
+          })
+          .catch((err) => {
+            //console.error(err);
+            toast.error("Error al guardar");
           });
       } catch (error) {
-        console.error(error); // Handle potential errors
+        console.error(error);
       } finally {
         setIsLoading(false);
       }

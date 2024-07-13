@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { API_URL, NEXTAUTH_URL } from "@/constants";
-type ApiResponse<T> = { message: string, status: number, data: T | null; error?: string };
 
 const buildUrl = (...path: string[]) => `${API_URL}${path.join("/")}`;
 
@@ -18,7 +17,8 @@ async function fetchData<T>(options: { url: string; method?: string; data?: any 
         message: `Error ${response.statusText} en la petición`,
         data: null,
         error: response.statusText,
-        status: response.status
+        status: response.status,
+        success: false,
       }
     );
   }
