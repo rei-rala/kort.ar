@@ -1,11 +1,16 @@
 .navbar {
-    border-radius: var(--bd-radius);
-    overflow: hidden;
-    margin: var(--outer-margin) auto;
-    width: 95%;
-    max-width: var(--layout-max-width);
+  border-radius: var(--bd-radius);
+  overflow: hidden;
+  margin: var(--outer-margin) auto;
+  width: calc(100svw - 2 * var(--outer-margin));
+  max-width: var(--layout-max-width);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.navbar.hidden {
+  opacity: 0;
 }
 
 .navbarBrand {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }

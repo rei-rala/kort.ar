@@ -1,6 +1,6 @@
 :root {
   --layout-max-width: 1200px;
-  --outer-margin: 1.5rem;
+  --outer-margin: 0.75rem;
   --inner-margin: 16px;
   /* as MUI*/
   --bd-radius: 0.25rem;
@@ -17,10 +17,10 @@ html,
 body {
   min-height: 100vh;
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-body {
+html {
   overflow-y: scroll !important;
 }
 
@@ -36,14 +36,13 @@ ul {
 
 body>section.section {
   margin: auto;
-  width: var(--layout-max-width);
-  max-width: 95%;
+  width: calc(100svw - 2 * var(--outer-margin));
+  max-width: var(--layout-max-width);
   /* DEV */
   background-color: rgba(255, 255, 255, 0.1);
   /* END DEV */
 
   padding: var(--inner-margin);
-  overflow: hidden;
 
   border-radius: var(--bd-radius);
   overflow: hidden;
@@ -54,5 +53,12 @@ body>section.section {
   :root {
     --navbar-height: 56px;
     --inner-margin: 24px;
+    --outer-margin: 1.25rem;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  :root {
+    --outer-margin: 2rem;
   }
 }

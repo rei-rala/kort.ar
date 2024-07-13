@@ -23,14 +23,16 @@ import { useRouter } from "next/navigation";
 const rubik = Rubik({ subsets: ["latin"] });
 import styles from "./Navbar.module.css";
 import { BRAND } from "@/constants";
+import { cn } from "@/utils/classnames";
 
 const iconsSx = {
   width: "1.75rem",
   height: "1.75rem",
 };
 
-export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
+export const Navbar: ExtendedComponent<{ brandFont?: string; hidden?: boolean }> = ({
   brandFont = rubik.className,
+  hidden = false,
 }) => {
   const router = useRouter();
   const { data: session } = useSession();
@@ -177,7 +179,7 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
   );
 
   return (
-    <Box className={styles.navbar}>
+    <Box className={cn(styles.navbar, hidden && styles.hidden, "sticky")}>
       <AppBar position="sticky">
         <Toolbar>
           <IconButton
