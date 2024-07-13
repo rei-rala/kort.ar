@@ -1,4 +1,6 @@
+import { BRAND, NEXTAUTH_URL } from "@/constants";
 import prisma from "@/db/prisma";
+import { urlRegex } from "@/db/schemas";
 import { auth } from "@/libs/auth";
 import utils from "@/utils";
 
@@ -14,6 +16,40 @@ const sensitiveKeys: (keyof RedirectLink)[] = [
   "deletedAt",
   "hitCount",
 ];
+
+const validateFromField = (from?: string) => {
+  if (!from || from === "") return; // omitimos cuando no hay from
+
+  if (from.length < 5) {
+    throw new Error("El origen debe tener al menos 5 caracteres");
+  }
+  if (["@", "/", "\\"].includes(from[0])) {
+    throw new Error("El origen no puede empezar con @, /, o \\");
+  }
+  if (!from || from.length < 5) throw new Error("El origen debe tener al menos 5 caracteres");
+
+  if (["@", "/", "\\"].includes(from[0]))
+    throw new Error("El origen no puede empezar con @, /, o \\");
+};
+
+const validateToField = (to?: string) => {
+  if (!to) throw new Error("El destino no puede estar vacio");
+  if (urlRegex.test(to) === false) throw new Error("Ingrese una URL valida");
+  if (to.startsWith(NEXTAUTH_URL)) throw new Error(`No puedes redireccionar a una URL de ${BRAND}`);
+};
+
+/**
+ * Valida los campos de entrada de un RedirectLink, lanzando errores en caso de que no cumplan con las condiciones
+ * @param redirectLink: objeto RedirectLink a validar
+ */
+const validateInput = (redirectLink?: RedirectLink) => {
+  if (!redirectLink) throw new Error("No se recibieron datos");
+
+  const { from, to } = redirectLink;
+
+  validateFromField(from);
+  validateToField(to);
+};
 
 function buildResponse<T>(
   statusCode: number,
@@ -53,7 +89,22 @@ function buildResponse<T>(
   );
 }
 
-async function generateFrom(fromInput?: string, totalRedirectLinks = 10000, maxAttempts = 10) {
+/**
+ * Genera un valor aleatorio para el campo "from" de la tabla RedirectLink.
+ * La cantidad maxima de intentos y bucles se incrementa en caso de que se agoten para generar un valor único y evitar colisiones.
+ * La cantidad maxima esta determinada por los parametros maxAttempts * maxLoops
+ * @param fromInput: valor opcional para el campo "from"
+ * @param totalRecords: cantidad total de registros en la tabla RedirectLink
+ * @param maxAttempts: cantidad máxima de intentos para generar un valor único
+ * @param maxLoops: cantidad máxima de bucles para generar un valor único
+ * @returns un valor único para el campo "from"
+ */
+async function generateFrom(
+  fromInput?: string,
+  totalRecords = 10000,
+  maxAttempts = 3,
+  maxLoops = 3
+) {
   const getByFromAndNotDeleted = async (from: string) =>
     await prisma.redirectLink.findFirst({
       where: {
@@ -62,6 +113,8 @@ async function generateFrom(fromInput?: string, totalRedirectLinks = 10000, maxA
     });
 
   let from;
+  let attempts = 0;
+  let loops = 0;
 
   if (fromInput) {
     const exists = await getByFromAndNotDeleted(fromInput);
@@ -71,16 +124,21 @@ async function generateFrom(fromInput?: string, totalRedirectLinks = 10000, maxA
     }
     from = fromInput;
   } else {
-    let attempts = 0;
     do {
-      from = utils.generateAlphanumericalId(totalRedirectLinks);
-      attempts++;
-    } while ((await getByFromAndNotDeleted(from)) && attempts < maxAttempts);
+      attempts = 0;
+      do {
+        from = utils.generateAlphanumericalId(totalRecords);
+        attempts++;
+      } while ((await getByFromAndNotDeleted(from)) && attempts < maxAttempts);
 
-    if (attempts === maxAttempts) {
-      throw new Error(
-        `Failed to generate unique "from" value after maximum attempts (${maxAttempts})`
-      );
+      if (attempts === maxAttempts) {
+        loops++;
+        totalRecords *= 10;
+      }
+    } while (!from && loops < maxLoops);
+
+    if (!from) {
+      throw new Error(`Failed to generate unique "from" value after maximum attempts and loops`);
     }
   }
 
@@ -123,6 +181,13 @@ export async function POST(req: Request) {
     }
 
     const redirectLinkJson: RedirectLink = await req.json();
+
+    try {
+      validateInput(redirectLinkJson);
+    } catch (err: any) {
+      return buildResponse(400, null, undefined, err.message);
+    }
+
     const redirectLink = utils.removeKeysFromObject(redirectLinkJson, sensitiveKeys);
     const totalRedirectLinks = await prisma.redirectLink.count();
     try {
@@ -154,20 +219,25 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const session = await auth();
-    const json = await req.json();
+    const json: RedirectLink = await req.json();
 
     if (!session || !session.user || !session.user.email) {
       return buildResponse(401, null);
     }
 
+    try {
+      validateInput(json);
+    } catch (err: any) {
+      return buildResponse(400, null, undefined, err.message);
+    }
+
     const {
-      userId,
       owner,
       flaggedAt,
       createdAt,
       updatedAt,
       deletedAt,
-      hits,
+      hitCount,
 
       from: inputFrom, // descartamos lo anterior a esto
       id: inputId,
@@ -253,6 +323,10 @@ export async function DELETE(req: Request) {
 
     const json = await req.json();
     const { id } = json;
+
+    if (!id) {
+      return buildResponse(400, null);
+    }
 
     // verifico que el id a eliminar le pertenezca al usuario y que no este eliminado
     const redirectLinkFound = await prisma.redirectLink.findUnique({

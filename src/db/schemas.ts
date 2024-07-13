@@ -1,37 +1,40 @@
+import { NEXTAUTH_URL } from "@/constants";
 import { z } from "zod";
 
-const pathRegex = /^[a-zA-Z0-9\-_\?\!\*\.,]*$/;
-const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+export const pathRegex = /^(?![@\/\\])[a-zA-Z0-9\-_\?\!\*\.,]{5,}$/;
+export const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+// URLs opcionales con http, https, o ftp protocolos, dominios válidos con subdominios, y rutas opcionales sin espacios ni barras consecutivas.
 // quiza despues hacer que acepte urls sin https://
-const urlRegex = /^(?:(?:http|https|ftp):\/\/)?(?:[\w\-]+\.)+[a-zA-Z]{2,}(?:\/(?:[^/\s]*\/?)*)?$/;
+export const urlRegex =
+  /^(?:(?:http|https|ftp):\/\/)?(?:[\w\-]+\.)+[a-zA-Z]{2,}(?:\/(?:[^/\s]*\/?)*)?$/;
 
-const initialRedirectLinkValues: OptionalPropsOf<RedirectLink> = {
-  alias: "",
-  from: "",
-  to: "",
-  color: "#000000",
-  icon: "",
-  canReturnToProfile: false,
-  public: false,
-  active: true,
-  hitCount: 0,
-};
+export const invalidStartingCharacters = ["@", "/", "\\", " "];
 
-const redirectLinkSchema = z.object({
+export const redirectLinkSchema = z.object({
   alias: z.string(),
   from: z.preprocess(
     (val) => (typeof val === "string" ? val.trim() : val),
     z
       .string()
-      .regex(
-        pathRegex,
-        "Solo se permiten caracteres alfanuméricos y los siguientes signos: - _ ? ! * . ,"
-      )
+      .min(5, "Debe tener al menos 5 caracteres o estar vacío para generación automática")
       .max(50, "No puede exceder 50 caracteres")
-      .refine((val) => val === "" || val.length >= 3, {
+      .regex(/^(?!@)/, "No puede empezar con @")
+      .refine((val) => val.trim() === "" || val.length >= 5, {
         message:
-          "El campo debe tener al menos 3 caracteres o estar vacío para generación automática",
+          "El campo debe tener al menos 5 caracteres o estar vacío para generación automática",
       })
+      .refine(
+        (val) => !invalidStartingCharacters.includes(val[0]),
+        "No puede empezar con @, /, o \\"
+      )
+      .refine((val) => !val.startsWith(NEXTAUTH_URL), {
+        message: "No puede redireccionar a la URL de la aplicación",
+      })
+      .refine((val) => pathRegex.test(val), {
+        message:
+          "Sólo se permiten caracteres alfanuméricos y los siguientes signos: - _ ? ! * . , @",
+      })
+      .optional()
   ),
   to: z
     .string()
@@ -56,4 +59,13 @@ const redirectLinkSchema = z.object({
   ),
 });
 
-export { pathRegex, urlRegex, hexColorRegex, initialRedirectLinkValues, redirectLinkSchema };
+export const initialRedirectLinkValues: OptionalPropsOf<RedirectLink> = {
+  alias: "",
+  to: "",
+  color: "#000000",
+  icon: "",
+  canReturnToProfile: false,
+  public: false,
+  active: true,
+  hitCount: 0,
+};
