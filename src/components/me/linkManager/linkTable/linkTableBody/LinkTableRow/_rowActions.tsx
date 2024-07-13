@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Button, TableCell, Typography } from "@mui/material";
+import React from "react";
+import { Button, TableCell, Tooltip, Typography } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -93,11 +93,28 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
     );
   };
 
+  const actions = [
+    {
+      title: "Copiar link",
+      component: <ContentCopyIcon color="success" onClick={handleCopyToClipboard} />,
+    },
+    {
+      title: "Editar link",
+      component: <EditNoteIcon color="secondary" onClick={handleEditLink} />,
+    },
+    {
+      title: "Eliminar link",
+      component: <DeleteForeverIcon color="error" onClick={handleDeleteLink} />,
+    },
+  ];
+
   return (
     <TableCell sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
-      <ContentCopyIcon color="success" onClick={handleCopyToClipboard} sx={{ cursor: "pointer" }} />
-      <EditNoteIcon color="secondary" onClick={handleEditLink} sx={{ cursor: "pointer" }} />
-      <DeleteForeverIcon color="error" onClick={handleDeleteLink} sx={{ cursor: "pointer" }} />
+      {actions.map(({ title, component }) => (
+        <div key={`action-tooltip:${redirectLink.alias}:${title}`}>
+          <Tooltip title={title}>{component}</Tooltip>
+        </div>
+      ))}
     </TableCell>
   );
 };
