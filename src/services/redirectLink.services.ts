@@ -1,14 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { apiUrl } from ".";
-
+import { API_URL, NEXTAUTH_URL } from "@/constants";
 type ApiResponse<T> = { message: string, status: number, data: T | null; error?: string };
 
-const buildUrl = (...path: string[]) => `${apiUrl}${path.join("/")}`;
+const buildUrl = (...path: string[]) => `${API_URL}${path.join("/")}`;
 
 async function fetchData<T>(options: { url: string; method?: string; data?: any }): Promise<ApiResponse<T>> {
   const headers = {
     "Content-Type": "application/json",
-    origin: process.env.NEXTAUTH_URL || "",
+    origin: NEXTAUTH_URL,
   };
   const body = options.data ? JSON.stringify(options.data) : null;
   const response = await fetch(options.url, { method: options.method, headers, body });

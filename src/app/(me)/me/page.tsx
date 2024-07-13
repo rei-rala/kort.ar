@@ -4,6 +4,7 @@ import { auth } from "@/libs/auth";
 import { redirect } from "next/navigation";
 import { BtnTest } from "./BtnTest";
 import { MyLinksTab } from "./MyLinksTab";
+import { API_URL } from "@/constants";
 
 export default async function MeDashboardPage() {
   const session = await auth();

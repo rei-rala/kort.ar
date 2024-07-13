@@ -1,3 +1,4 @@
+import { NEXTAUTH_URL } from "@/constants";
 import prisma from "@/db/prisma";
 import { auth } from "@/libs/auth";
 
@@ -11,7 +12,7 @@ type routeParams = {
 
 export async function GET(req: NextRequest, { params: { link } }: routeParams) {
   // rechazando conexiones que no provengan de la app
-  if (req.headers.get("origin") !== process.env.NEXTAUTH_URL) {
+  if (req.headers.get("origin") !== NEXTAUTH_URL) {
     return NextResponse.json(
       {
         data: null,

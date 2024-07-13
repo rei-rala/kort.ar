@@ -6,10 +6,10 @@ import { RedirectLinkHeader, RedirectLinkBody } from "./redirectLinkPageComponen
 
 import styles from "./linkStyles.module.css";
 import { BrandWatermark } from "@/components/shared";
+import { BRAND } from "@/constants";
 
-const title = String(process.env.BRAND);
 export const metadata: Metadata = {
-  title,
+  title: BRAND,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
@@ -29,7 +29,7 @@ export default async function LinkPage(req: LinkPageReq) {
         <RedirectLinkHeader redirectLink={redirectLink} />
         <RedirectLinkBody redirectLink={redirectLink} />
       </main>
-      <BrandWatermark customBrand={title} />
+      <BrandWatermark />
     </section>
   );
 }

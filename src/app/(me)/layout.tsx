@@ -5,11 +5,10 @@ import { redirect } from "next/navigation";
 
 import { Navbar } from "@/components/shared";
 import { auth } from "@/libs/auth";
-
-const title = process.env.BRAND;
+import { BRAND } from "@/constants";
 
 export const metadata: Metadata = {
-  title,
+  title: BRAND,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 

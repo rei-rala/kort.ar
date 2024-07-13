@@ -8,5 +8,5 @@ export default async function LoginPage() {
     redirect("/me");
   }
 
-  return session ? <b>Already logged in, redirecting 😊</b> : <LogInOptions />;
+  return session?.user ? <b>Already logged in, redirecting 😊</b> : <LogInOptions />;
 }

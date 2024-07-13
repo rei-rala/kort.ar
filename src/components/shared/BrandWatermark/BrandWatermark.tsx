@@ -3,14 +3,11 @@ import Typography from "@mui/material/Typography/Typography";
 
 import styles from "./brandWatermark.module.css";
 import { cn } from "@/utils/classnames";
+import { BRAND } from "@/constants";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-const BrandWatermark: ExtendedComponent<{
-  customBrand?: string;
-  position?: "";
-}> = ({ customBrand }) => {
-  const brand = customBrand ?? process.env.BRAND ?? "unbranded :3";
+const BrandWatermark = () => {
   return (
     <div className={styles.waterMarkContainer}>
       <Typography
@@ -18,7 +15,7 @@ const BrandWatermark: ExtendedComponent<{
         component="h1"
         className={cn(rubik.className, styles.brandWatermarkText)}
       >
-        {brand}
+        {BRAND}
       </Typography>
     </div>
   );

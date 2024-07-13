@@ -2,12 +2,11 @@ import "./globals.css";
 import type { Metadata } from "next/types";
 
 import Providers from "./providers";
-
-const title = process.env.BRAND;
+import { BRAND } from "@/constants";
 
 export const metadata: Metadata = {
-  title,
-  description: `Inicia sesion ${title}`,
+  title: BRAND,
+  description: `Inicia sesión en ${BRAND}`,
   icons: [
     {
       rel: "icon",

@@ -20,9 +20,9 @@ import { Rubik } from "next/font/google";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const title = process.env.BRAND;
 const rubik = Rubik({ subsets: ["latin"] });
 import styles from "./Navbar.module.css";
+import { BRAND } from "@/constants";
 
 const iconsSx = {
   width: "1.75rem",
@@ -195,7 +195,7 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
               className={styles.navbarBrand}
               sx={{ fontSize: { xs: "1.25em", sm: "1.5em", md: "1.75em" } }}
             >
-              <span className={brandFont}>{title}</span>
+              <span className={brandFont}>{BRAND}</span>
             </Typography>
           </Link>
 

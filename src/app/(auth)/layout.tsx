@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { AuthLayout } from "@/layouts";
 import styles from "./layout.module.css";
 import { auth } from "@/libs/auth";
+import { BRAND } from "@/constants";
 
 export default async function AuthPageLayout({ children }: { children: any }) {
   const session = await auth();
@@ -14,7 +15,7 @@ export default async function AuthPageLayout({ children }: { children: any }) {
 
   return (
     <AuthLayout>
-      <h1 className={styles.brand}>{process.env.BRAND}</h1>
+      <h1 className={styles.brand}>{BRAND}</h1>
       {children}
     </AuthLayout>
   );

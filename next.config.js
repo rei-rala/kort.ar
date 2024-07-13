@@ -15,7 +15,11 @@ const nextConfig = {
     ],
   },
   env: {
-    BRAND: process.env.BRAND + (process.env.NODE_ENV !== "production" && "[dev]"),
+    API_URL: process.env.API_URL ? process.env.API_URL : "http://localhost:3000/api",
+    BRAND:
+      (process.env.BRAND ? process.env.BRAND : "{unbranded}") +
+      (process.env.NODE_ENV !== "production" ? " [dev]" : ""),
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
   },
 };
 
