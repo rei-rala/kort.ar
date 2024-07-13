@@ -80,7 +80,7 @@ export const Navbar: ExtendedComponent<{ brandFont?: string }> = ({
   const menuItems = () => {
     if (session?.user) {
       return [
-        <Link href="/me" key="Dashboard" onClick={handleMenuClose} variant="navbarLink">
+        <Link href="/dashboard" key="Dashboard" onClick={handleMenuClose} variant="navbarLink">
           <MenuItem>Dashboard</MenuItem>
         </Link>,
         <Link href="/me/settings" key="Ajustes" onClick={handleMenuClose} variant="navbarLink">

@@ -30,7 +30,7 @@ export default function HomePage() {
         </code>
 
         <Link href="/login">Login page</Link>
-        <Link href="/me">Dashboard</Link>
+        <Link href="/dashboard">Dashboard</Link>
         <Button onClick={() => signIn("google")}>Login</Button>
         <Button onClick={() => signOut()}>Logout</Button>
       </div>

@@ -5,7 +5,7 @@ import { auth } from "@/libs/auth";
 export default async function LoginPage() {
   const session = await auth();
   if (session?.user) {
-    redirect("/me");
+    redirect("/dashboard");
   }
 
   return session?.user ? <b>Already logged in, redirecting 😊</b> : <LogInOptions />;
