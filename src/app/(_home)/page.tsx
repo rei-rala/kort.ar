@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllRedirectLinks } from "@/services/testLinks";
+import { getAllRedirectLinks } from "@/services/redirectLink.services";
 import { Link, Button } from "@mui/material";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";

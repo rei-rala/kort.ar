@@ -1,4 +1,4 @@
-import { getRedirectLinkByRedirectPage } from "@/services/testLinks";
+import { getRedirectLinkByRedirectPage } from "@/services/redirectLink.services";
 import { hexToRgba } from "@/utils/text";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";

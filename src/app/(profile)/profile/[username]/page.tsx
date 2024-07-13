@@ -1,4 +1,4 @@
-import { getRedirectLinksByUsername } from "@/services/testLinks";
+import { getRedirectLinksByUsername } from "@/services/redirectLink.services";
 import Typography from "@mui/material/Typography";
 import LinkList from "@/components/profile/LinkList/LinkList";
 import { Link } from "@mui/material";

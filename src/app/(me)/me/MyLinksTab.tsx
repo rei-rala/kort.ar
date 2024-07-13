@@ -1,7 +1,7 @@
 "use client";
 
 import { LinkManager } from "@/components/me";
-import { getOwnedRedirectLinks } from "@/services/testLinks";
+import { getOwnedRedirectLinks } from "@/services/redirectLink.services";
 import { useEffect, useState } from "react";
 
 export const MyLinksTab = () => {

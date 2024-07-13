@@ -1,6 +1,6 @@
 "use client";
 
-import { createRedirectLink } from "@/services/testLinks";
+import { createRedirectLink } from "@/services/redirectLink.services";
 import { Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 

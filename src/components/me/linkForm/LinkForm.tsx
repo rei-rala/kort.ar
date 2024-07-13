@@ -9,7 +9,7 @@ import { initialRedirectLinkValues, redirectLinkSchema } from "@/db/schemas";
 import Button from "@mui/material/Button";
 
 import styles from "./linkForm.module.css";
-import { createRedirectLink, deleteRedirectLink, updateRedirectLink } from "@/services/testLinks";
+import { createRedirectLink, deleteRedirectLink, updateRedirectLink } from "@/services/redirectLink.services";
 import { useModal } from "@/contexts/modalContext";
 
 type LinkFormProps = {
