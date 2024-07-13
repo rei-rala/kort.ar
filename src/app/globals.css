@@ -34,7 +34,7 @@ ul {
   list-style-type: none;
 }
 
-body>section {
+body>section.section {
   margin: auto;
   width: var(--layout-max-width);
   max-width: 95%;

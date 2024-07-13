@@ -90,6 +90,7 @@ declare global {
   type DefaultComponentProps = {
     children?: React.ReactNode;
     className?: string;
+    style?: React.CSSProperties;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   };
 

@@ -4,7 +4,7 @@ const ProfileLayoutComponent: DefaultComponent = ({ children }) => {
   return (
     <>
       <Navbar />
-      <section>{children}</section>
+      <section className="section">{children}</section>
     </>
   );
 };

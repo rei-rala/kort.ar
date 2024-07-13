@@ -41,3 +41,55 @@ export function generateAlphanumericalId(totalRecords: number) {
 
   return nanoid();
 }
+
+export function getPartsOfUrl(url: string) {
+  // returns an object with 3 parts, protocol, domain and rest
+  let result = {
+    protocol: "",
+    domain: "",
+    rest: "",
+  };
+
+  if (url.includes("://")) {
+    // Split the URL by "://"
+    const [protocol, rest] = url.split("://");
+
+    // Split the rest by "/"
+    const [domain, ...restParts] = rest.split("/");
+
+    result = {
+      protocol,
+      domain,
+      rest: restParts.join("/"),
+    };
+  } else {
+    // Split the URL by "/"
+    const [domain, ...restParts] = url.split("/");
+
+    result = {
+      protocol: "",
+      domain,
+      rest: restParts.join("/"),
+    };
+  }
+
+  return result;
+}
+
+export function shortifyUrl(url: string) {
+  const { domain, rest } = getPartsOfUrl(url);
+  const shortRest = truncateString(rest, 20);
+
+  return domain + "/" + shortRest;
+}
+
+export function hexToRgba(hex: string, alpha = 1) {
+  hex = hex.replace(/^#/, "");
+
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}

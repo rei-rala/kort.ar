@@ -1,4 +1,12 @@
+.waterMarkContainer {
+  position: fixed;
+  bottom: 1svh;
+  width: 100svw;
+  text-align: center;
+}
+
 .brandWatermarkText {
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.4;
+  filter: invert(1) mix-blend-mode(difference);
 }

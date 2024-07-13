@@ -10,9 +10,8 @@ type routeParams = {
 };
 
 export async function GET(req: NextRequest, { params: { link } }: routeParams) {
-  const originURL = req.headers.get("origin");
-
-  if (originURL !== process.env.NEXTAUTH_URL) {
+  // rechazando conexiones que no provengan de la app
+  if (req.headers.get("origin") !== process.env.NEXTAUTH_URL) {
     return NextResponse.json(
       {
         data: null,
@@ -39,25 +38,36 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     },
   });
 
-  auth().then((session) => {
-    const forwarded = req.headers.get("x-forwarded-for");
-    const realIp = req.headers.get("x-real-ip");
-    const referer = req.headers.get("referer");
-    const userAgent = req.headers.get("user-agent");
+  auth()
+    .then((session) => {
+      const forwarded = req.headers.get("x-forwarded-for");
+      const realIp = req.headers.get("x-real-ip");
+      const referer = req.headers.get("referer");
+      const userAgent = req.headers.get("user-agent");
 
-    return prisma.hit.create({
-      data: {
-        ip: forwarded || realIp || null,
-        referer,
-        userAgent,
-        loggedUserEmail: session?.user?.email || null,
-        redirectLinkId: linkFound?.id || null,
-        visitedLink: link,
-        originalFrom: linkFound?.from || null,
-        originalDestiny: linkFound?.to || null,
-      },
+      return prisma.hit.create({
+        data: {
+          ip: forwarded || realIp || null,
+          referer,
+          userAgent,
+          loggedUserEmail: session?.user?.email || null,
+          redirectLinkId: linkFound?.id || null,
+          visitedLink: link,
+          originalFrom: linkFound?.from || null,
+          originalDestiny: linkFound?.to || null,
+        },
+      });
+    })
+    .then(() => {
+      return prisma.redirectLink.update({
+        where: { from: link },
+        data: { hitCount: { increment: 1 } },
+      });
+    })
+    .catch((err) => {
+      console.error("Error trying to create hit or update hitCount in redirectLink");
+      console.error(err);
     });
-  });
 
   return NextResponse.json({ data: linkFound });
 }

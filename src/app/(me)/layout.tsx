@@ -24,7 +24,9 @@ export default async function MePageLayout({ children }: { children: any }) {
     <>
       <Navbar />
       {React.Children.map(children, (child, index) => (
-        <section key={`me-layout-child:${index + 1}`}>{child}</section>
+        <section key={`me-layout-child:${index + 1}`} className={"section"}>
+          {child}
+        </section>
       ))}
     </>
   );

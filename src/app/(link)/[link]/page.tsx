@@ -1,55 +1,35 @@
 import { getRedirectLinkByRedirectPage } from "@/services/testLinks";
-import { Link } from "@mui/material";
+import { hexToRgba } from "@/utils/text";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { RedirectLinkHeader, RedirectLinkBody } from "./redirectLinkPageComponents";
 
-type LinkDisplayProps = {
-  redirectLink?: RedirectLink | null;
+import styles from "./linkStyles.module.css";
+import { BrandWatermark } from "@/components/shared";
+
+const title = String(process.env.BRAND);
+export const metadata: Metadata = {
+  title,
+  description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-const LinkDisplay = ({ redirectLink }: LinkDisplayProps) => {
+export default async function LinkPage(req: LinkPageReq) {
+  const { data: redirectLink } = await getRedirectLinkByRedirectPage(req.params.link);
+
   if (!redirectLink) {
     notFound();
   }
 
   return (
-    <>
-      <h2>
-        {redirectLink.owner?.name} quiere llevarte a
-        <div>
-          <Link href={`${redirectLink.to}`} target="_blank">
-            {redirectLink.to}
-          </Link>
-        </div>
-      </h2>
-      {redirectLink?.canReturnToProfile ? (
-        <div>
-          Redireccionando en <b id="redirectSeconds">3</b>
-          {/* countdown XD */}...
-        </div>
-      ) : (
-        <div>
-          {redirectLink.canReturnToProfile && (
-            <div>
-              <p>
-                O visualiza todos sus links desde{" "}
-                <Link href={`/profile/${redirectLink.owner?.name}`}>
-                  <b>aqui</b>
-                </Link>
-              </p>
-            </div>
-          )}
-        </div>
-      )}
-      <footer>
-        <pre>
-          <code>{JSON.stringify(redirectLink, null, 2)}</code>
-        </pre>
-      </footer>
-    </>
+    <section className={styles.linkPage}>
+      <main
+        className={styles.linkPageInner}
+        style={{ backgroundColor: hexToRgba(redirectLink?.color || "#000000", 0.05) }}
+      >
+        <RedirectLinkHeader redirectLink={redirectLink} />
+        <RedirectLinkBody redirectLink={redirectLink} />
+      </main>
+      <BrandWatermark customBrand={title} />
+    </section>
   );
-};
-
-export default async function LinkPage(req: LinkPageReq) {
-  const { data: redirectLink } = await getRedirectLinkByRedirectPage(req.params.link);
-  return <LinkDisplay redirectLink={redirectLink} />;
 }

@@ -43,7 +43,7 @@ const getCellContent = (header: keyof RedirectLink, data: any) => {
       content = <TruthyIcon value={data} />;
       break;
     case "externalUrl":
-      content = <ExternalLink value={data} />;
+      content = <ExternalLink href={data} />;
       break;
     default:
       content = <>{String(data)}</>;
