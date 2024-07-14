@@ -16,13 +16,16 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  hitCount      Int       @default(0)
 
-  public Boolean @default(false)
-
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  public        Boolean        @default(false)
   redirectLinks RedirectLink[]
   hits          Hit[] // One-to-Many relation with Hit model (one User can have many Hits)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  flaggedAt DateTime?
 }
 
 model Account {
