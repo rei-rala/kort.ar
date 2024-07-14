@@ -62,7 +62,6 @@ async function featuredUserAndLink() {
       await featured.set("featured:UserAndLink", [{ featuredLink, featuredUser }], {
         ex: expirationTtl,
       });
-      console.log({ featuredLink, featuredUser });
     }
 
     return {
@@ -71,7 +70,7 @@ async function featuredUserAndLink() {
     };
   } catch (error) {
     console.error("Error trying to get featured link and user");
-    console.error(error);
+    console.error(JSON.stringify(error, null, 2));
   }
 
   return {
@@ -90,7 +89,7 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
-
+  
   let { featuredLink, featuredUser } = await featuredUserAndLink();
 
   return NextResponse.json({

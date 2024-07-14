@@ -145,20 +145,25 @@ export async function GET(_: Request) {
     return buildResponse(401, null);
   }
 
-  const links: RedirectLink[] = await prisma.redirectLink.findMany({
-    where: {
-      owner: {
-        email: session.user.email, // Filter by email matching the provided value
+  try {
+    const links: RedirectLink[] = await prisma.redirectLink.findMany({
+      where: {
+        owner: {
+          email: session.user.email, // Filter by email matching the provided value
+        },
+        deletedAt: null,
+        flaggedAt: null,
       },
-      deletedAt: null,
-      flaggedAt: null,
-    },
-    include: {
-      owner: true,
-    },
-  });
+      include: {
+        owner: true,
+      },
+    });
 
-  return buildResponse(200, links);
+    return buildResponse(200, links);
+  } catch (error: any) {
+    console.error(JSON.stringify(error, null, 2));
+    return buildResponse(500, null);
+  }
 }
 
 export async function POST(req: Request) {
@@ -215,6 +220,7 @@ export async function POST(req: Request) {
 
     return buildResponse(201, savedRedirectLink);
   } catch (error: any) {
+    console.error(JSON.stringify(error, null, 2));
     return buildResponse(500, null, error.message);
   }
 }
@@ -310,6 +316,7 @@ export async function PUT(req: Request) {
 
     return buildResponse(200, updatedRedirectLink, "update");
   } catch (error: any) {
+    console.error(JSON.stringify(error, null, 2));
     return buildResponse(500, null, undefined, error.message);
   }
 }
@@ -354,7 +361,7 @@ export async function DELETE(req: Request) {
 
     return buildResponse(200, deletedRedirectLink, "delete");
   } catch (error: any) {
-    console.log(error);
+    console.error(JSON.stringify(error, null, 2));
     return buildResponse(500, null, undefined);
   }
 }

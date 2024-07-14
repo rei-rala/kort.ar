@@ -26,7 +26,8 @@ export const GET = auth(async function GET(req) {
     const links: RedirectLink[] = await getRedirectLinks();
     return createResponse(links);
   } catch (error) {
-    console.error("Error fetching redirect links:", error);
+    console.error("Error fetching redirect links:");
+    console.error(JSON.stringify(error, null, 2));
     return NextResponse.json({ message: "Error interno del servidor" }, { status: 500 });
   }
 });

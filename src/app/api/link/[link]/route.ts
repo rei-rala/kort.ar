@@ -92,7 +92,7 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     })
     .catch((err) => {
       console.error("Error trying to create hit or update hitCount in redirectLink");
-      console.error(err);
+      console.error(JSON.stringify(err, null, 2));
     });
 
   return NextResponse.json({ data: linkFound });

@@ -12,8 +12,6 @@ type pageParams = {
 export async function GET(req: NextRequest, { params: { username } }: pageParams) {
   let links: RedirectLink[] = [];
 
-  console.log("asdasdasdasd!!");
-
   links = (await prisma.redirectLink.findMany({
     where: {
       owner: {
