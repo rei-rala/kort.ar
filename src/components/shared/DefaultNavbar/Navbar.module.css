@@ -4,11 +4,24 @@
   margin: var(--outer-margin) auto;
   width: calc(100svw - 2 * var(--outer-margin));
   max-width: var(--layout-max-width);
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.2s ease-out;
 }
 
 .navbar.hidden {
+  top: -100%;
   opacity: 0;
+}
+
+.navbar.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  margin: var(--outer-margin) auto;
+  width: calc(100svw - 2 * var(--outer-margin));
+  max-width: var(--layout-max-width);
 }
 
 .navbarBrand {

@@ -1,21 +1,10 @@
 import { BRAND, NEXTAUTH_URL } from "@/constants";
 import prisma from "@/db/prisma";
-import { urlRegex } from "@/db/schemas";
+import { redirectLinkSensitiveKeys, urlRegex } from "@/db/schemas";
 import { auth } from "@/libs/auth";
 import utils from "@/utils";
 
 import { NextResponse } from "next/server";
-
-const sensitiveKeys: (keyof RedirectLink)[] = [
-  //"id",
-  "userEmail",
-  "owner",
-  "flaggedAt",
-  //"createdAt",
-  //"updatedAt",
-  "deletedAt",
-  "hitCount",
-];
 
 const validateFromField = (from?: string) => {
   if (!from || from === "") return; // omitimos cuando no hay from
@@ -78,8 +67,8 @@ function buildResponse<T>(
   message = overrideMessage
     ? overrideMessage
     : action === undefined
-    ? statusMessages[statusCode] || "Error desconocido"
-    : statusMessages[statusCode][action ?? "default"] || "Error desconocido";
+      ? statusMessages[statusCode] || "Error desconocido"
+      : statusMessages[statusCode][action ?? "default"] || "Error desconocido";
 
   const success = statusCode < 400; // XD
 
@@ -88,6 +77,17 @@ function buildResponse<T>(
     { status: statusCode }
   );
 }
+
+const getValidRedirectLinkByFrom = async (from: string) =>
+  await prisma.redirectLink.findFirst({
+    where: {
+      AND: [
+        { from, active: true, public: true },
+        { deletedAt: null, flaggedAt: null },
+      ],
+    },
+  });
+
 
 /**
  * Genera un valor aleatorio para el campo "from" de la tabla RedirectLink.
@@ -105,19 +105,12 @@ async function generateFrom(
   maxAttempts = 3,
   maxLoops = 3
 ) {
-  const getByFromAndNotDeleted = async (from: string) =>
-    await prisma.redirectLink.findFirst({
-      where: {
-        AND: [{ from }, { deletedAt: null }],
-      },
-    });
-
   let from;
   let attempts = 0;
   let loops = 0;
 
   if (fromInput) {
-    const exists = await getByFromAndNotDeleted(fromInput);
+    const exists = await getValidRedirectLinkByFrom(fromInput);
 
     if (exists) {
       throw new Error(`'${fromInput}' ya fue tomado, intente con otro origen`);
@@ -129,7 +122,7 @@ async function generateFrom(
       do {
         from = utils.generateAlphanumericalId(totalRecords);
         attempts++;
-      } while ((await getByFromAndNotDeleted(from)) && attempts < maxAttempts);
+      } while ((await getValidRedirectLinkByFrom(from)) && attempts < maxAttempts);
 
       if (attempts === maxAttempts) {
         loops++;
@@ -158,13 +151,17 @@ export async function GET(_: Request) {
         email: session.user.email, // Filter by email matching the provided value
       },
       deletedAt: null,
+      flaggedAt: null,
+    },
+    include: {
+      owner: true,
     },
   });
 
   const sanitizedRedirectLinks = linksRaw.map((link) => {
     const { hitCount } = link;
 
-    utils.removeKeysFromObject(link, sensitiveKeys); // remueve claves del mismo obj
+    utils.removeKeysFromObject(link, redirectLinkSensitiveKeys); // remueve claves del mismo obj
     link.hitCount = hitCount;
 
     return link;
@@ -188,7 +185,7 @@ export async function POST(req: Request) {
       return buildResponse(400, null, undefined, err.message);
     }
 
-    const redirectLink = utils.removeKeysFromObject(redirectLinkJson, sensitiveKeys);
+    const redirectLink = utils.removeKeysFromObject(redirectLinkJson, redirectLinkSensitiveKeys);
     const totalRedirectLinks = await prisma.redirectLink.count();
     try {
       redirectLink.from = await generateFrom(redirectLink.from, totalRedirectLinks);
@@ -205,10 +202,14 @@ export async function POST(req: Request) {
           },
         },
         deletedAt: null,
+        flaggedAt: null,
       },
     });
 
-    const newRedirectLink = utils.removeKeysFromObject(savedRedirectLink, sensitiveKeys);
+    const newRedirectLink = utils.removeKeysFromObject(
+      savedRedirectLink,
+      redirectLinkSensitiveKeys
+    );
 
     return buildResponse(201, newRedirectLink);
   } catch (error: any) {
@@ -305,7 +306,10 @@ export async function PUT(req: Request) {
       },
     });
 
-    const newRedirectLink = utils.removeKeysFromObject(updatedRedirectLink, sensitiveKeys);
+    const newRedirectLink = utils.removeKeysFromObject(
+      updatedRedirectLink,
+      redirectLinkSensitiveKeys
+    );
 
     return buildResponse(200, newRedirectLink, "update");
   } catch (error: any) {

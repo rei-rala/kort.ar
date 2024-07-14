@@ -1,0 +1,169 @@
+.landingMain {
+  position: relative;
+  min-height: 85svh;
+  width: 100svw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+  background: linear-gradient(270deg, #ff5252, #526eff);
+  background-size: 300% 300%;
+  transition: filter 0.2s ease-in;
+}
+
+.animated {
+  -webkit-animation: gradient 10s ease infinite;
+  -moz-animation: gradient 10s ease infinite;
+  -o-animation: gradient 10s ease infinite;
+  animation: gradient 10s ease infinite;
+}
+
+.darken {
+  filter: brightness(0.25);
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+
+  max-width: var(--layout-max-width);
+  height: 100%;
+  width: 100%;
+}
+
+.container>* {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  flex-grow: 1;
+  border-radius: 3px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  text-align: center;
+}
+
+
+.content:first-child .contentInner:first-child,
+.content:last-child .contentInner:last-child {
+  flex-grow: 1;
+}
+
+.contentInner {
+  border: 1px inset rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.contentInner {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.actionContainer label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.actionContainer label :last-child {
+  flex-grow: 1;
+}
+
+@media (min-width: 576px) {
+  .content {
+    text-align: left;
+  }
+
+  .actionContainer {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 0%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 0%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-o-keyframes gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 0%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 0%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}

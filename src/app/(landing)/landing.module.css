@@ -1,0 +1,14 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background-color: linear-gradient(90deg, #f12711 0%, #f5af19 100%);
+}
+
+
+.landing>:not(header) {
+  width: 100svw;
+  max-width: var(--layout-max-width);
+}

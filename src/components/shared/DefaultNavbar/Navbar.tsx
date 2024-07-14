@@ -30,10 +30,11 @@ const iconsSx = {
   height: "1.75rem",
 };
 
-export const Navbar: ExtendedComponent<{ brandFont?: string; hidden?: boolean }> = ({
-  brandFont = rubik.className,
-  hidden = false,
-}) => {
+export const Navbar: ExtendedComponent<{
+  brandFont?: string;
+  hidden?: boolean;
+  fixed?: boolean;
+}> = ({ brandFont = rubik.className, hidden = false, fixed }) => {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -179,8 +180,8 @@ export const Navbar: ExtendedComponent<{ brandFont?: string; hidden?: boolean }>
   );
 
   return (
-    <Box className={cn(styles.navbar, hidden && styles.hidden, "sticky")}>
-      <AppBar position="sticky">
+    <Box className={cn(styles.navbar, hidden && styles.hidden, fixed && styles.fixed)}>
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             size="large"

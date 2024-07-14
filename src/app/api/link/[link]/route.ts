@@ -33,11 +33,25 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
   }
 
   const linkFound = await prisma.redirectLink.findFirst({
-    where: { from: link },
+    where: {
+      from: link,
+      active: true,
+      deletedAt: null,
+    },
     include: {
       owner: true,
     },
   });
+
+  if (!linkFound) {
+    return NextResponse.json(
+      {
+        data: null,
+        message: "Link not found",
+      },
+      { status: 404 }
+    );
+  }
 
   auth()
     .then((session) => {

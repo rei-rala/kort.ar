@@ -20,21 +20,23 @@ const nextConfig = {
       (process.env.BRAND ? process.env.BRAND : "{unbranded}") +
       (process.env.NODE_ENV !== "production" ? " [dev]" : ""),
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
+    EXPIRATION_CACHED_DAYS_FEATURED: process.env.EXPIRATION_CACHED_DAYS_FEATURED ?? "10",
   },
-  redirects: async () => {
-    return [
-      {
-        source: "/@[username]",
-        destination: "/user/[username]",
-        permanent: true,
-      },
-      {
-        source: "/u/[username]",
-        destination: "/user/[username]",
-        permanent: true,
-      },
-    ];
-  },
+  // disabled by now, not tested lol
+  // redirects: async () => {
+  //   return [
+  //     {
+  //       source: "/@[username]",
+  //       destination: "/user/[username]",
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: "/u/[username]",
+  //       destination: "/user/[username]",
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;

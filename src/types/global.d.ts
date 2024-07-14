@@ -20,8 +20,11 @@ declare global {
     email: string;
     emailVerified?: string;
     image: String;
+    public: boolean;
     createdAt?: Date;
     updatedAt?: Date;
+    deletedAt?: Date | null;
+    flaggedAt?: Date | null;
   };
 
   type RedirectLink = {

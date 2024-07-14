@@ -36,7 +36,7 @@ export function generateAlphanumericalId(totalRecords: number) {
   const complexityIncreaseThreshold = 100;
 
   const length = baseLength + Math.floor(totalRecords / complexityIncreaseThreshold);
-  const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const nanoid = customAlphabet(characters, length);
 
   return nanoid();
