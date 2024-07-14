@@ -11,7 +11,7 @@ model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   username      String?   @unique @default(cuid())
-  email         String?   @unique @db.String
+  email         String    @unique @db.String
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -90,9 +90,10 @@ model RedirectLink {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
-  hits      Hit[] // Many-to-Many relation with Hit model (one RedirectLink can have many Hits, and one Hit can belong to many RedirectLinks)
+  hits      Hit[] // One-to-Many relation with Hit model (one RedirectLink can have many Hits)
 }
 
+//TODO Añadir un "SELF-COUNT" a HIT que obtenga el hitcount de redirectLink o de user segun corresponda
 model Hit {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   date      DateTime @default(now())
@@ -100,16 +101,14 @@ model Hit {
   userAgent String?
   referer   String?
 
-  originalProfile String? // 
-  visitedProfile  String? // Optional field to store the visited user's email
-  originalFrom    String? // Optional field to store the original from URL
-  originalDestiny String? // Optional field to store the original link URL
-  visitedLink     String? // Optional field to store the visited link URL
-  loggedUserEmail String? @db.String
+  visitedUserId String? @db.ObjectId //  refiere al id del perfil visitado
+  originalFrom  String? // refiere a la URL original de donde se hizo el click
+  originalTo    String? // refiere a la URL original de destino
 
-  user           User?         @relation(fields: [loggedUserEmail], references: [email], onDelete: SetNull) // One-to-Many relation with User model (one User can be logged in multiple Hits)
-  redirectLinkId String?       @db.ObjectId
-  redirectLink   RedirectLink? @relation(fields: [redirectLinkId], references: [id], onDelete: SetNull) // Many-to-Many relation with RedirectLink model (one Hit can belong to many RedirectLinks)
+  visitingUserEmail     String?       @db.String
+  user                  User?         @relation(fields: [visitingUserEmail], references: [email], onDelete: SetNull) // One-to-Many relation with User model (one User can be logged in multiple Hits)
+  visitedRedirectLinkId String?       @db.ObjectId
+  visitedRedirectLink   RedirectLink? @relation(fields: [visitedRedirectLinkId], references: [id], onDelete: SetNull) // Many-to-Many relation with RedirectLink model (one Hit can belong to many RedirectLinks)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

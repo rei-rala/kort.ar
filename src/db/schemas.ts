@@ -10,17 +10,6 @@ export const urlRegex =
 
 export const invalidStartingCharacters = ["@", "/", "\\", " "];
 
-export const redirectLinkSensitiveKeys: (keyof RedirectLink)[] = [
-  //"id",
-  "userEmail",
-  "owner",
-  "flaggedAt",
-  //"createdAt",
-  //"updatedAt",
-  "deletedAt",
-  "hitCount",
-];
-
 export const redirectLinkSchema = z.object({
   alias: z.string(),
   from: z.preprocess(
@@ -29,7 +18,7 @@ export const redirectLinkSchema = z.object({
       .string()
       .max(50, "No puede exceder 50 caracteres")
       .regex(/^(?!@)/, "No puede empezar con @")
-      .refine((val) => val.trim() === "" || val.length > 5, {
+      .refine((val) => val.trim() === "" || val.length >= 5, {
         message:
           "El campo debe tener al menos 5 caracteres o estar vacío para generación automática",
       })

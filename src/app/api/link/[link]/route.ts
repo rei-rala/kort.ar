@@ -38,8 +38,20 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
       active: true,
       deletedAt: null,
     },
-    include: {
-      owner: true,
+    select: {
+      id: true,
+      from: true,
+      to: true,
+      hitCount: true,
+      color: true,
+      canReturnToProfile: true,
+      owner: {
+        select: {
+          username: true,
+          name: true,
+          image: true,
+        },
+      },
     },
   });
 
@@ -53,31 +65,30 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     );
   }
 
-  auth()
+  await auth()
     .then((session) => {
       const forwarded = req.headers.get("x-forwarded-for");
       const realIp = req.headers.get("x-real-ip");
       const referer = req.headers.get("referer");
       const userAgent = req.headers.get("user-agent");
 
-      return prisma.hit.create({
-        data: {
-          ip: forwarded || realIp || null,
-          referer,
-          userAgent,
-          loggedUserEmail: session?.user?.email || null,
-          redirectLinkId: linkFound?.id || null,
-          visitedLink: link,
-          originalFrom: linkFound?.from || null,
-          originalDestiny: linkFound?.to || null,
-        },
-      });
-    })
-    .then(() => {
-      return prisma.redirectLink.update({
-        where: { from: link },
-        data: { hitCount: { increment: 1 } },
-      });
+      return Promise.all([
+        prisma.hit.create({
+          data: {
+            ip: forwarded || realIp || null,
+            referer,
+            userAgent,
+            originalFrom: linkFound.from,
+            originalTo: linkFound.to,
+            visitedRedirectLink: { connect: { id: linkFound.id } },
+            user: session?.user?.email ? { connect: { id: session.user.email } } : undefined,
+          },
+        }),
+        prisma.redirectLink.update({
+          where: { id: linkFound.id },
+          data: { hitCount: { increment: 1 } },
+        }),
+      ]);
     })
     .catch((err) => {
       console.error("Error trying to create hit or update hitCount in redirectLink");

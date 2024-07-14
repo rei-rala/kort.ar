@@ -4,8 +4,7 @@ import prisma from "@/db/prisma";
 
 import { createClient } from "@vercel/kv";
 import utils from "@/utils";
-import { redirectLinkSensitiveKeys } from "@/db/schemas";
-//TODO Añadir un "SELF-COUNT" a HIT que obtenga el hitcount de redirectLink o de user segun corresponda
+
 type FeaturedResponse = { featuredLink: RedirectLink; featuredUser: User };
 
 async function featuredUserAndLink() {
@@ -15,56 +14,69 @@ async function featuredUserAndLink() {
   });
 
   const featuredUserAndLinkFound = await featured.get<FeaturedResponse>("featured:UserAndLink");
-  console.warn({ featuredUserAndLinkFound });
+
   if (featuredUserAndLinkFound?.featuredLink && featuredUserAndLinkFound.featuredUser) {
-    console.log("OBTENIDO REDIS");
     return featuredUserAndLinkFound;
   }
 
-  const featuredLink: Omit<RedirectLink, "owner"> | null = await prisma.redirectLink.findFirst({
-    where: {
-      active: true,
-      public: true,
+  try {
+    const featuredLinkFound: RedirectLink | null = (await prisma.redirectLink.findFirst({
+      where: {
+        active: true,
+        public: true,
+        deletedAt: null,
+        flaggedAt: null,
+      },
+      orderBy: {
+        hitCount: "desc",
+      },
+    })) as unknown as RedirectLink;
 
-      deletedAt: null,
-      flaggedAt: null,
-    },
-    orderBy: {
-      hitCount: "desc",
-    },
-    include: {
-      owner: true,
-    },
-  });
+    const featuredUserFound: User | null = (await prisma.user.findFirst({
+      where: {
+        public: true,
+        deletedAt: null,
+        flaggedAt: null,
+      },
+      orderBy: { hitCount: "desc" },
+    })) as unknown as User;
 
-  const featuredUser: User | null | any = await prisma.user.findFirst({
-    where: {
-      public: true,
-      deletedAt: null,
-      flaggedAt: null,
-    },
-    orderBy: { hitCount: "desc" },
-  });
+    const featuredLink = utils.getObjectWithSomeKeys(featuredLinkFound, [
+      "alias",
+      "from",
+      "to",
+      "hitCount",
+    ]);
+    const featuredUser = utils.getObjectWithSomeKeys(featuredUserFound, [
+      "username",
+      "image",
+      "hitCount",
+    ]);
 
-  console.log(
-    "OBTENIDO MONGO",
-    {
+    if (
+      featuredLink &&
+      featuredUser &&
+      [featuredLink, featuredUser].every((x) => JSON.stringify(x) !== "{}")
+    ) {
+      const expirationTtl = EXPIRATION_CACHED_DAYS_FEATURED * 60 * 60 * 24;
+      await featured.set("featured:UserAndLink", [{ featuredLink, featuredUser }], {
+        ex: expirationTtl,
+      });
+      console.log({ featuredLink, featuredUser });
+    }
+
+    return {
       featuredLink,
       featuredUser,
-    },
-    "OBTENIDO MONGO"
-  );
-
-  if (featuredLink && featuredUser) {
-    const expirationTtl = EXPIRATION_CACHED_DAYS_FEATURED * 60 * 60 * 24;
-    await featured.set("featured:UserAndLink", [{ featuredLink, featuredUser }], {
-      ex: expirationTtl,
-    });
-    console.warn("GUARDADO REDIS");
+    };
+  } catch (error) {
+    console.error("Error trying to get featured link and user");
+    console.error(error);
   }
+
   return {
-    featuredLink,
-    featuredUser,
+    featuredLink: null,
+    featuredUser: null,
   };
 }
 
@@ -81,20 +93,10 @@ export async function GET(req: NextRequest) {
 
   let { featuredLink, featuredUser } = await featuredUserAndLink();
 
-  let featuredLinkNotSensitive = utils.removeKeysFromObject(
-    featuredLink,
-    redirectLinkSensitiveKeys
-  );
-  let featuredUserNotSensitive = utils.removeKeysFromObject(featuredUser, [
-    "name",
-    "email",
-    "emailVerified",
-  ]);
-
   return NextResponse.json({
     data: {
-      featuredLink: featuredLinkNotSensitive,
-      featuredUser: featuredUserNotSensitive,
+      featuredLink,
+      featuredUser,
     },
   });
 }

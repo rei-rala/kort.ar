@@ -1,6 +1,6 @@
 // para que quede bonito asi como esta, que se yo
 /* eslint-disable prettier/prettier */
-import { buildApiUrl, fetchData } from ".";
+import { fetchData } from ".";
 
 export async function getAllRedirectLinks(): Promise<ApiResponse<RedirectLink[]>> {
   return await fetchData("link/all");

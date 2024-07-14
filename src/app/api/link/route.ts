@@ -1,6 +1,6 @@
 import { BRAND, NEXTAUTH_URL } from "@/constants";
 import prisma from "@/db/prisma";
-import { redirectLinkSensitiveKeys, urlRegex } from "@/db/schemas";
+import { urlRegex } from "@/db/schemas";
 import { auth } from "@/libs/auth";
 import utils from "@/utils";
 
@@ -66,10 +66,11 @@ function buildResponse<T>(
 
   message = overrideMessage
     ? overrideMessage
-    : action === undefined
-      ? statusMessages[statusCode] || "Error desconocido"
-      : statusMessages[statusCode][action ?? "default"] || "Error desconocido";
+    : statusCode === 200
+      ? statusMessages[statusCode][action ?? "default"]
+      : statusMessages[statusCode];
 
+  message ??= "Error desconocido";
   const success = statusCode < 400; // XD
 
   return NextResponse.json(
@@ -87,7 +88,6 @@ const getValidRedirectLinkByFrom = async (from: string) =>
       ],
     },
   });
-
 
 /**
  * Genera un valor aleatorio para el campo "from" de la tabla RedirectLink.
@@ -145,7 +145,7 @@ export async function GET(_: Request) {
     return buildResponse(401, null);
   }
 
-  const linksRaw = await prisma.redirectLink.findMany({
+  const links: RedirectLink[] = await prisma.redirectLink.findMany({
     where: {
       owner: {
         email: session.user.email, // Filter by email matching the provided value
@@ -158,16 +158,7 @@ export async function GET(_: Request) {
     },
   });
 
-  const sanitizedRedirectLinks = linksRaw.map((link) => {
-    const { hitCount } = link;
-
-    utils.removeKeysFromObject(link, redirectLinkSensitiveKeys); // remueve claves del mismo obj
-    link.hitCount = hitCount;
-
-    return link;
-  });
-
-  return buildResponse(200, sanitizedRedirectLinks);
+  return buildResponse(200, links);
 }
 
 export async function POST(req: Request) {
@@ -177,41 +168,52 @@ export async function POST(req: Request) {
       return buildResponse(401, null);
     }
 
-    const redirectLinkJson: RedirectLink = await req.json();
+    const redirectLinkInput: RedirectLink = await req.json();
 
     try {
-      validateInput(redirectLinkJson);
+      const existingRedirectLink = await prisma.redirectLink.findFirst({
+        where: {
+          from: redirectLinkInput.from,
+          deletedAt: null,
+        },
+      });
+
+      if (existingRedirectLink) {
+        return buildResponse(
+          400,
+          null,
+          undefined,
+          `El origen ${redirectLinkInput.from} ya fue tomado, intente con otro`
+        );
+      }
+
+      validateInput(redirectLinkInput);
     } catch (err: any) {
       return buildResponse(400, null, undefined, err.message);
     }
 
-    const redirectLink = utils.removeKeysFromObject(redirectLinkJson, redirectLinkSensitiveKeys);
     const totalRedirectLinks = await prisma.redirectLink.count();
     try {
-      redirectLink.from = await generateFrom(redirectLink.from, totalRedirectLinks);
+      redirectLinkInput.from = await generateFrom(redirectLinkInput.from, totalRedirectLinks);
     } catch (error: any) {
       return buildResponse(400, null, undefined, error.message);
     }
 
     const savedRedirectLink = await prisma.redirectLink.create({
       data: {
-        ...(redirectLink as any), // TODO: any, hoy te convertis en heroe
+        ...redirectLinkInput, // TODO: any, hoy te convertis en heroe
         owner: {
           connect: {
             email: session.user.email,
           },
         },
+        hitCount: 0,
         deletedAt: null,
         flaggedAt: null,
       },
     });
 
-    const newRedirectLink = utils.removeKeysFromObject(
-      savedRedirectLink,
-      redirectLinkSensitiveKeys
-    );
-
-    return buildResponse(201, newRedirectLink);
+    return buildResponse(201, savedRedirectLink);
   } catch (error: any) {
     return buildResponse(500, null, error.message);
   }
@@ -306,12 +308,7 @@ export async function PUT(req: Request) {
       },
     });
 
-    const newRedirectLink = utils.removeKeysFromObject(
-      updatedRedirectLink,
-      redirectLinkSensitiveKeys
-    );
-
-    return buildResponse(200, newRedirectLink, "update");
+    return buildResponse(200, updatedRedirectLink, "update");
   } catch (error: any) {
     return buildResponse(500, null, undefined, error.message);
   }
@@ -350,6 +347,7 @@ export async function DELETE(req: Request) {
     const deletedRedirectLink = await prisma.redirectLink.update({
       where: { id },
       data: {
+        active: false,
         deletedAt: new Date(),
       },
     });

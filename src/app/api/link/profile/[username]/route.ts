@@ -25,7 +25,7 @@ export async function GET(req: NextRequest, { params: { username } }: pageParams
     },
   })) as any;
 
-  // save the hit if more than 0 links are found
+  // save the hit to the visited profile if more than 0 links are found
   if (links.length > 0) {
     auth().then((session) => {
       prisma.hit.create({
@@ -35,13 +35,12 @@ export async function GET(req: NextRequest, { params: { username } }: pageParams
             null,
           referer: req.headers.get("referer"),
           userAgent: req.headers.get("user-agent"),
-          loggedUserEmail: session?.user?.email || null,
-          visitedProfile: links[0].owner?.email || null,
+          visitingUserEmail: session?.user?.email || null,
+          visitedUserId: links[0].owner?.id || null,
         },
       });
     });
   }
-  console.log({ links });
 
   return NextResponse.json({ data: links });
 }

@@ -21,6 +21,7 @@ declare global {
     emailVerified?: string;
     image: String;
     public: boolean;
+    hitCount: number;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date | null;
@@ -29,45 +30,37 @@ declare global {
 
   type RedirectLink = {
     id?: string;
-    userEmail: string;
     alias: string;
-    from?: string;
+    from: string;
     to: string;
     icon: string;
     color: string;
-    hitCount: number;
-    active?: boolean;
-    public?: boolean;
     canReturnToProfile?: boolean;
-    flaggedAt?: Date | null;
-    createdAt?: Date;
-    updatedAt?: Date;
-    deletedAt?: Date | null;
-    owner: User;
+    active?: boolean;
+    hitCount?: number;
+    public?: boolean;
+    flaggedAt?: Date | string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    deletedAt?: Date | string | null;
+    owner: UserCreateNestedOneWithoutRedirectLinksInput | User | null;
+    hits?: HitCreateNestedManyWithoutRedirectLinkInput | Hit[] | null;
   };
 
   type Hit = {
     id?: string;
-    date?: Date | null;
-    ip: string | null;
-    userAgent: string | null;
-    referer: string | null;
-    userEmail: string | null;
-    originalUsername?: string | null;
-    loggedUserEmail: string | null;
-    user: User | null;
-
-    redirectLinkId?: string | null;
-    redirectLink?: RedirectLink | null;
-    originalFrom?: String;
-    originalDestiny?: String;
-
-    createdAt?: Date;
-    updatedAt?: Date;
-    deletedAt?: Date | null;
-
-    visitedLink?: string;
-    visitedProfile?: string;
+    date?: Date | string;
+    ip?: string | null;
+    userAgent?: string | null;
+    referer?: string | null;
+    visitedUserId?: string | null;
+    originalFrom?: string | null;
+    originalTo?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    deletedAt?: Date | string | null;
+    user?: UserCreateNestedOneWithoutHitsInput | User | null;
+    redirectLink?: RedirectLinkCreateNestedOneWithoutHitsInput | RedirectLink | null;
   };
 
   type AccountNotification = {

@@ -21,13 +21,24 @@ export async function fetchData<T>(
   });
 
   if (!response.ok) {
-    return {
-      message: `Error ${response.statusText} en la petición`,
-      data: null,
-      error: response.statusText,
-      status: response.status,
-      success: false,
-    };
+    try {
+      const error = await response.json();
+      return {
+        message: error.message,
+        data: null,
+        error: error.message,
+        status: response.status,
+        success: false,
+      };
+    } catch (error) {
+      return {
+        message: response.statusText,
+        data: null,
+        error: response.statusText,
+        status: response.status,
+        success: false,
+      };
+    }
   }
 
   return await response.json();
