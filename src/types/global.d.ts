@@ -43,7 +43,7 @@ declare global {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     deletedAt?: Date | string | null;
-    owner: UserCreateNestedOneWithoutRedirectLinksInput | User | null;
+    owner?: UserCreateNestedOneWithoutRedirectLinksInput | User | null;
     hits?: HitCreateNestedManyWithoutRedirectLinkInput | Hit[] | null;
   };
 
