@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default async function MePageLayout({ children }: { children: any }) {
+export default async function MePageLayout({ children }: { readonly children: React.ReactNode }) {
   const session = await auth();
 
   if (!session || !session.user) {

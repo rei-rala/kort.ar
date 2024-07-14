@@ -9,6 +9,6 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default function ProfilePageLayout({ children }: { children: any }) {
+export default function ProfilePageLayout({ children }: { readonly children: React.ReactNode }) {
   return <ProfileLayout>{children}</ProfileLayout>;
 }

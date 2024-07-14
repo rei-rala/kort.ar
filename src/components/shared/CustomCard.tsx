@@ -6,17 +6,25 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
 
 type CustomCardProps = {
-  imageSrc: string;
+  imageSrc?: string | null;
   title: string;
-  description: string;
-  actions?: React.ReactNode;
+  description: React.ReactNode | null;
+  actions?: React.ReactNode | null;
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-export const CustomCard = ({ imageSrc, title, description, actions }: CustomCardProps) => {
+export const CustomCard = ({
+  imageSrc,
+  title,
+  description,
+  actions,
+  ...props
+}: CustomCardProps) => {
   return (
-    <Card>
+    <Card {...props}>
       <CardActionArea>
-        <CardMedia component="img" height="140" image={imageSrc} alt={title} />
+        {imageSrc && <CardMedia component="img" height="140" image={imageSrc} alt={title} />}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}

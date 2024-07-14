@@ -20,7 +20,7 @@ async function featuredUserAndLink() {
   }
 
   try {
-    const featuredLinkFound: RedirectLink | null = (await prisma.redirectLink.findFirst({
+    const featuredLink: FeaturedLink | null = await prisma.redirectLink.findFirst({
       where: {
         active: true,
         public: true,
@@ -30,28 +30,27 @@ async function featuredUserAndLink() {
       orderBy: {
         hitCount: "desc",
       },
-    })) as unknown as RedirectLink;
+      select: {
+        alias: true,
+        from: true,
+        to: true,
+        hitCount: true,
+      },
+    });
 
-    const featuredUserFound: User | null = (await prisma.user.findFirst({
+    const featuredUser: FeaturedUser | null = await prisma.user.findFirst({
       where: {
         public: true,
         deletedAt: null,
         flaggedAt: null,
       },
       orderBy: { hitCount: "desc" },
-    })) as unknown as User;
-
-    const featuredLink = utils.getObjectWithSomeKeys(featuredLinkFound, [
-      "alias",
-      "from",
-      "to",
-      "hitCount",
-    ]);
-    const featuredUser = utils.getObjectWithSomeKeys(featuredUserFound, [
-      "username",
-      "image",
-      "hitCount",
-    ]);
+      select: {
+        username: true,
+        image: true,
+        hitCount: true,
+      },
+    });
 
     if (
       featuredLink &&
@@ -80,22 +79,8 @@ async function featuredUserAndLink() {
 }
 
 export async function GET(req: NextRequest) {
-  if (req.headers.get("origin") !== NEXTAUTH_URL) {
-    return NextResponse.json(
-      {
-        data: null,
-        message: "Error inesperado. Por favor, intenta de nuevo.",
-      },
-      { status: 500 }
-    );
-  }
-  
-  let { featuredLink, featuredUser } = await featuredUserAndLink();
-
+  const featured = await featuredUserAndLink();
   return NextResponse.json({
-    data: {
-      featuredLink,
-      featuredUser,
-    },
+    data: featured,
   });
 }

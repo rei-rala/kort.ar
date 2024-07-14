@@ -1,14 +1,10 @@
 .landingMain {
   position: relative;
   min-height: 85svh;
-  width: 100svw;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-
   background: linear-gradient(270deg, #ff5252, #526eff);
   background-size: 300% 300%;
   transition: filter 0.2s ease-in;
@@ -25,56 +21,47 @@
   filter: brightness(0.25);
 }
 
-
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   padding: 1rem;
-  flex-wrap: nowrap;
   gap: 0.75rem;
-
   max-width: var(--layout-max-width);
+  margin: auto;
   height: 100%;
-  width: 100%;
-}
-
-.container>* {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-
-  flex-grow: 1;
-  border-radius: 3px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
   text-align: center;
+  flex: 1;
 }
 
+.contentInner:not(.featured) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 0.75rem;
 
-.content:first-child .contentInner:first-child,
-.content:last-child .contentInner:last-child {
-  flex-grow: 1;
-}
-
-.contentInner {
-  border: 1px inset rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 1rem;
   width: 100%;
-  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.contentInner {
-  background-color: rgba(0, 0, 0, 0.5);
+.contentInner:first-child:not(.featured) {
+  height: 100%;
+}
+
+.shadowed {
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75) !important;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75) !important;
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75) !important;
+  border: 1px inset rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }
 
 .actionContainer {
@@ -96,9 +83,33 @@
   flex-grow: 1;
 }
 
+.featuredContainer {
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.featured {
+  min-width: 200px;
+  flex-grow: 1;
+}
+
 @media (min-width: 576px) {
   .content {
     text-align: left;
+  }
+
+  .featuredContainer {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .content.featuredContainer {
+    flex: 0;
+  }
+
+  .featured {
+    width: 100%;
+    max-width: 350px;
   }
 
   .actionContainer {
@@ -109,6 +120,16 @@
 @media (min-width: 768px) {
   .container {
     flex-direction: row;
+  }
+
+  .content {
+    flex: 1;
+    max-width: 60%;
+  }
+
+  .featuredContainer {
+    flex: 1;
+    flex-direction: column;
   }
 }
 

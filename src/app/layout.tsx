@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   ],
 };
 
-const RootLayout: DefaultComponent = ({ children }) => {
+function RootLayout({ children }: { readonly children: React.ReactNode }) {
   return (
     <html lang="es">
       <body>
@@ -24,6 +24,6 @@ const RootLayout: DefaultComponent = ({ children }) => {
       </body>
     </html>
   );
-};
+}
 
 export default RootLayout;

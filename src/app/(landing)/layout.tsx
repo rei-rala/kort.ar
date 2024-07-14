@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   ],
 };
 
-const RootLayout: DefaultComponent = ({ children }) => {
+function LandingLayout({ children }: { readonly children: React.ReactNode }) {
   return <div className={styles.landing}>{children}</div>;
-};
+}
 
-export default RootLayout;
+export default LandingLayout;

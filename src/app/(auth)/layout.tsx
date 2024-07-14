@@ -6,7 +6,7 @@ import styles from "./layout.module.css";
 import { auth } from "@/libs/auth";
 import { BRAND } from "@/constants";
 
-export default async function AuthPageLayout({ children }: { children: any }) {
+export default async function AuthPageLayout({ children }: { readonly children: React.ReactNode }) {
   const session = await auth();
 
   if (session?.user) {

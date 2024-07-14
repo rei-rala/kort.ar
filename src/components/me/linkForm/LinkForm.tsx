@@ -56,15 +56,14 @@ export const LinkForm = forwardRef(
           .then((response) => {
             toast.dismiss();
             if (!response.success) {
-              throw new Error(JSON.stringify(response, null, 2));
+              throw new Error(response.message);
             }
             toast.success("Guardado correctamente");
             reset();
             closeModal();
           })
           .catch((err) => {
-            //console.error(err);
-            toast.error("Error al guardar");
+            toast.error(err.message);
           });
       } catch (error) {
         console.error(error);

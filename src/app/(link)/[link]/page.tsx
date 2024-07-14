@@ -13,10 +13,10 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default async function LinkPage(req: LinkPageReq) {
-  const { data: redirectLink } = await getRedirectLinkByRedirectPage(req.params.link);
+export default async function LinkPage({ params: { link } }: { params: { link: string } }) {
+  const { data: redirectLink } = await getRedirectLinkByRedirectPage(link);
 
-  if (!redirectLink) {
+  if (!link || !redirectLink) {
     notFound();
   }
 

@@ -2,13 +2,21 @@ import { API_URL, NEXTAUTH_URL } from "@/constants";
 
 export const buildApiUrl = (...path: string[]) => `${API_URL}/${path.join("/")}`;
 
-export async function fetchData<T>(
+type FetchResult<T> = { read: () => T };
+type FetchOptions = {
+  method?: string;
+  data?: any;
+};
+
+type FetchDataFunction = <T>(url: string, options?: FetchOptions) => Promise<ApiResponse<T>>;
+
+export const fetchData: FetchDataFunction = async <T>(
   url: string,
   options?: {
     method?: string;
     data?: any;
   }
-): Promise<ApiResponse<T>> {
+) => {
   const headers = {
     "Content-Type": "application/json",
     origin: NEXTAUTH_URL,
@@ -42,4 +50,36 @@ export async function fetchData<T>(
   }
 
   return await response.json();
+};
+
+function suspenseFetch<T>(promise: Promise<T>): FetchResult<T> {
+  let status: "pending" | "success" | "error" = "pending";
+  let result: T;
+  let error: any;
+
+  const suspender = promise.then(
+    (r) => {
+      status = "success";
+      result = r;
+    },
+    (e) => {
+      status = "error";
+      error = e;
+    }
+  );
+
+  return {
+    read() {
+      if (status === "pending") {
+        throw suspender;
+      } else if (status === "error") {
+        throw error;
+      } else if (status === "success") {
+        return result;
+      }
+      throw new Error("Unexpected status");
+    },
+  };
 }
+
+export { suspenseFetch };

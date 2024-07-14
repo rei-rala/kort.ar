@@ -60,7 +60,7 @@ export const RedirectLinkPageContentBody = ({ redirectLink }: { redirectLink: Re
       />
       <p>
         Visualiza todos sus links desde{" "}
-        <Link href={`/profile/${redirectLink.owner?.name}`} style={{ color: redirectLink?.color }}>
+        <Link href={`/user/${redirectLink.owner?.username}`} style={{ color: redirectLink?.color }}>
           aqui
         </Link>
       </p>

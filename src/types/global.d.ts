@@ -16,10 +16,10 @@ declare global {
   type User = {
     id?: string;
     name: string;
-    username: string;
+    username: string | null;
     email: string;
     emailVerified?: string;
-    image: String;
+    image: string | null;
     public: boolean;
     hitCount: number;
     createdAt?: Date;
@@ -45,6 +45,13 @@ declare global {
     deletedAt?: Date | string | null;
     owner?: UserCreateNestedOneWithoutRedirectLinksInput | User | null;
     hits?: HitCreateNestedManyWithoutRedirectLinkInput | Hit[] | null;
+  };
+
+  type FeaturedUser = Pick<User, "username" | "image" | "hitCount">;
+  type FeaturedLink = Pick<RedirectLink, "alias" | "from" | "to" | "hitCount">;
+  type Featured = {
+    featuredLink: FeaturedLink;
+    featuredUser: FeaturedUser;
   };
 
   type Hit = {
