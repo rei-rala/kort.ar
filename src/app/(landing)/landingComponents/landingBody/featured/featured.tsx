@@ -13,20 +13,25 @@ type FeaturedProps = {
 };
 
 const FeaturedDescription = ({
+  description,
   icon,
   tooltip,
   text,
 }: {
+  description: React.ReactNode;
   icon: React.ReactNode;
   tooltip: string;
   text: string;
 }) => {
   return (
-    <Tooltip title={tooltip}>
-      <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-        {icon} {text}
-      </Typography>
-    </Tooltip>
+    <div>
+      {description}
+      <Tooltip title={tooltip}>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+          {icon} {text}
+        </Typography>
+      </Tooltip>
+    </div>
   );
 };
 
@@ -45,37 +50,35 @@ export const Featured = ({ featured }: FeaturedProps) => {
     <div className={cn(styles.content, styles.featuredContainer)}>
       <CustomCard
         className={cn(styles.contentInner, styles.featured, styles.shadowed)}
-        title={
-          <>
-            Enlace destacado: <span style={{ color: featuredLink.color }}>/</span>
-            <b>{featuredLink.from}</b>
-          </>
-        }
+        title={<Typography fontWeight={500}>Enlace destacado</Typography>}
         description={
           <FeaturedDescription
+            description={
+              <Typography color={"primary"}>
+                <span style={{ color: featuredLink.color }}>/</span>
+                {featuredLink.from}
+              </Typography>
+            }
             icon={<LinkIcon />}
             tooltip="Redirige hacia"
             text={featuredLink.hitCount.toString()}
           />
         }
-        actions={<Button href={`/${featuredLink.from}`}>Visitar</Button>}
+        actions={<Button href={`/${featuredLink.from}`}> Visitar</Button>}
       />
       <CustomCard
         className={cn(styles.contentInner, styles.featured, styles.shadowed)}
-        title={
-          <>
-            Usuario destacado: <b>{featuredUser.username}</b>
-          </>
-        }
+        title={<Typography fontWeight={500}>Usuario destacado</Typography>}
         description={
           <FeaturedDescription
+            description={<Typography color="primary">{featuredUser.username}</Typography>}
             icon={<RemoveRedEyeIcon />}
             tooltip="Vistas"
             text={featuredUser.hitCount.toString()}
           />
         }
         imageSrc={featuredUser.image}
-        actions={<Button href={`/user/${featuredUser.username}`}>Visitar</Button>}
+        actions={<Button href={`/user/${featuredUser.username}`}> Visitar</Button>}
       />
     </div>
   );

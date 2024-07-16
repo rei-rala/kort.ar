@@ -85,9 +85,10 @@ export const CustomCardSkeleton = ({
         )}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            <Skeleton variant="text" sx={{ backgroundColor }} />
+            <Skeleton variant="text" height={"2rem"} sx={{ backgroundColor }} />
           </Typography>
           <Typography variant="body2">
+            <Skeleton variant="text" sx={{ backgroundColor }} />
             <Skeleton variant="text" sx={{ backgroundColor }} />
           </Typography>
         </CardContent>
