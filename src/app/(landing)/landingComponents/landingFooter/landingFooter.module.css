@@ -1,0 +1,29 @@
+.footer {
+  padding: 2rem 0;
+  position: relative;
+}
+
+.footerContent {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 1.5rem;
+}
+
+.footerBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.1) 70%, transparent 100%);
+}
+
+@media screen and (min-width: 576px) {
+  .footerContent {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
