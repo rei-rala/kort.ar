@@ -1,8 +1,8 @@
 import TableBody from "@mui/material/TableBody/TableBody";
 import LinkTableRow from "./LinkTableRow/LinkTableRow";
-import { TableHeaderData, TableRowData } from "../LinkTable";
+import type { TableHeaderData } from "../LinkTable";
 
-const LinkTableBody: ExtendedComponent<{ headers: TableHeaderData[]; rows: TableRowData[] }> = ({
+const LinkTableBody: ExtendedComponent<{ headers: TableHeaderData[]; rows: RedirectLink[] }> = ({
   headers,
   rows,
 }) => {

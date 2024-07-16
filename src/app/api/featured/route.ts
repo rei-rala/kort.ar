@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/db/prisma";
 
 import { createClient } from "@vercel/kv";
-import utils from "@/utils";
 
 type FeaturedResponse = { featuredLink: RedirectLink; featuredUser: User };
 

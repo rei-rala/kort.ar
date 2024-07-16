@@ -3,14 +3,14 @@ import React from "react";
 import TableCell from "@mui/material/TableCell/TableCell";
 import TableRow from "@mui/material/TableRow/TableRow";
 
-import { TableHeaderData, TableRowData } from "../../LinkTable";
+import { TableHeaderData } from "../../LinkTable";
 
 import { RowActions } from "./_rowActions";
 import { CellContent } from "./_cellContent";
 
 const LinkTableRow: ExtendedComponent<{
   headers: TableHeaderData[];
-  row: TableRowData;
+  row: RedirectLink;
 }> = ({ headers, row }) => {
   return (
     <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>

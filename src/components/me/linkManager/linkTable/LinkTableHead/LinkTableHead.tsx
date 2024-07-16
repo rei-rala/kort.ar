@@ -7,8 +7,8 @@ import type { TableHeaderData } from "../LinkTable";
 
 let localeTest: Locales = "es";
 
-type Locales = "es" | "en";
-type AvailableLocales = { [locale in Locales]?: string } & { default: string };
+type Locales = "es" | "en" | "default";
+type AvailableLocales = { [locale in Locales]?: string };
 export type RedirectLinkLocale = { [key in TableHeaderData]: AvailableLocales } & {
   [key in keyof RedirectLink]?: AvailableLocales;
 } & { actions: AvailableLocales };
@@ -50,11 +50,17 @@ export const redirectLinkLocales: RedirectLinkLocale = {
   hitCount: {
     default: "visitas",
   },
+  hits: {
+    default: "lista visitas",
+  },
   createdAt: {
     default: "fecha creación",
   },
-  userEmail: {
-    default: "correo electrónico del usuario",
+  updatedAt: {
+    default: "última actualización",
+  },
+  deletedAt: {
+    default: "eliminado el",
   },
   flaggedAt: {
     default: "denunciado el",

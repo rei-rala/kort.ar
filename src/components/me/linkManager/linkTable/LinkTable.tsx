@@ -4,9 +4,7 @@ import Paper from "@mui/material/Paper";
 import LinkTableHead from "./LinkTableHead/LinkTableHead";
 import LinkTableBody from "./linkTableBody/LinkTableBody";
 
-type ommitedModelData = "owner" | "updatedAt" | "deletedAt";
-export type TableRowData = Omit<RedirectLink, ommitedModelData>;
-export type TableHeaderData = keyof TableRowData;
+export type TableHeaderData = keyof RedirectLink;
 
 const LinkTable: ExtendedComponent<{ rows: RedirectLink[] }> = ({ rows }) => {
   let pickedHeaders: TableHeaderData[] = [
@@ -18,7 +16,7 @@ const LinkTable: ExtendedComponent<{ rows: RedirectLink[] }> = ({ rows }) => {
     "canReturnToProfile",
     "hitCount",
   ];
-  let pickedRows: TableRowData[] = rows;
+  let pickedRows: RedirectLink[] = rows;
 
   return (
     <TableContainer component={Paper}>
