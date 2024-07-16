@@ -72,7 +72,7 @@ export const CustomCardSkeleton = ({
 } & CardPartialProps) => {
   return (
     <Card {...props}>
-      <CardActionArea>
+      <CardActionArea role="presentation">
         {hasImage && (
           <Skeleton
             variant="rectangular"
@@ -94,7 +94,7 @@ export const CustomCardSkeleton = ({
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button>
+        <Button role="presentation">
           <Skeleton variant="text" sx={{ width: "100%", backgroundColor }} />
         </Button>
       </CardActions>

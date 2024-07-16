@@ -15,12 +15,10 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
-import { Rubik } from "next/font/google";
 
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const rubik = Rubik({ subsets: ["latin"] });
 import styles from "./Navbar.module.css";
 import { BRAND } from "@/constants";
 import { cn } from "@/utils/classnames";
@@ -34,7 +32,7 @@ export const Navbar: ExtendedComponent<{
   brandFont?: string;
   hidden?: boolean;
   fixed?: boolean;
-}> = ({ brandFont = rubik.className, hidden = false, fixed }) => {
+}> = ({ brandFont, hidden = false, fixed }) => {
   const router = useRouter();
   const { data: session } = useSession();
 
