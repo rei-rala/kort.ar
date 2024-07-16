@@ -1,4 +1,6 @@
-import React from "react";
+"use state";
+
+import React, { useEffect, useState } from "react";
 import { Button, Tooltip, Typography } from "@mui/material";
 import { CustomCard } from "@/components/shared/CustomCard";
 import { cn } from "@/utils/classnames";
@@ -7,6 +9,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LinkIcon from "@mui/icons-material/Link";
 import styles from "../../landingHeader/landingHeaderMain/landingHeaderMain.module.css";
 import { FeaturedSkeleton } from "./featuredSkeleton";
+import { getFeaturedLinkAndProfile } from "@/services/featured.services";
 
 type FeaturedProps = {
   featured: Featured | null;
@@ -35,8 +38,25 @@ const FeaturedDescription = ({
   );
 };
 
-export const Featured = ({ featured }: FeaturedProps) => {
-  if (!featured) {
+export const Featured = () => {
+  const [isClient, setIsClient] = useState(false);
+  const [featured, setFeatured] = useState<Featured | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await getFeaturedLinkAndProfile();
+        setFeatured(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+    setIsClient(true);
+  }, []);
+
+  if (!isClient || featured === null || featured === undefined) {
     return (
       <div className={cn(styles.content, styles.featuredContainer)}>
         <FeaturedSkeleton />
@@ -55,7 +75,7 @@ export const Featured = ({ featured }: FeaturedProps) => {
           <FeaturedDescription
             description={
               <Typography color={"primary"}>
-                <span style={{ color: featuredLink.color }}>/</span>
+                <span style={{ color: featuredLink?.color || "#000" }}>/</span>
                 {featuredLink.from}
               </Typography>
             }

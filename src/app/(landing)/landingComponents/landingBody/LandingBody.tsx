@@ -1,30 +1,11 @@
-"use client";
-
-import React, { Suspense, useEffect, useState } from "react";
+import React from "react";
+import { BRAND } from "@/constants";
 import { Featured } from "./featured/featured";
-import { getFeaturedLinkAndProfile } from "@/services/featured.services";
+import { Typography } from "@mui/material";
 
 import styles from "./landingBody.module.css";
-import { BRAND } from "@/constants";
-import { Typography } from "@mui/material";
-import { FeaturedSkeleton } from "./featured/featuredSkeleton";
 
 export const LandingBody = () => {
-  const [featuredData, setFeaturedData] = useState<Featured | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await getFeaturedLinkAndProfile();
-        setFeaturedData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <section className={styles.landingBody}>
       <section className={styles.container}>
@@ -39,9 +20,7 @@ export const LandingBody = () => {
           </Typography>
         </div>
 
-        <Suspense fallback={<FeaturedSkeleton />}>
-          <Featured featured={featuredData} />
-        </Suspense>
+        <Featured />
       </section>
     </section>
   );

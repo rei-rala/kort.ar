@@ -16,6 +16,11 @@ const config = {
       return !!auth;
     },
   },
+  session: {
+    strategy: "database",
+    maxAge: 7 * 24 * 60 * 60,
+  },
+  trustHost: true, // TODO: remover - solo para deploy de producción
 } satisfies NextAuthConfig;
 
 export const { auth, handlers, signIn, signOut } = NextAuth(config);
