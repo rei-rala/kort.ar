@@ -6,7 +6,7 @@ import { cn } from "@/utils/classnames";
 import styles from "../../landingHeader/landingHeaderMain/landingHeaderMain.module.css";
 import { FeaturedSkeleton } from "./featuredSkeleton";
 import { getFeaturedLinkAndProfile } from "@/services/featured.services";
-import { FeaturedRedirectLink, FeaturedUser } from "./_featured";
+import { FeaturedRedirectLink, FeaturedUser } from "./_featuredParts";
 
 export const Featured = () => {
   const [isClient, setIsClient] = useState(false);
