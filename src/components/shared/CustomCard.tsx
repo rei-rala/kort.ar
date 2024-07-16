@@ -39,7 +39,9 @@ export const CustomCard = ({
   return (
     <Card {...props}>
       <CardActionArea>
-        {imageSrc && <CardMedia component="img" height="140" image={imageSrc} alt={title} />}
+        {imageSrc && (
+          <CardMedia component="img" height="140" image={imageSrc} alt={String(title) /* sorry*/} />
+        )}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" align={alignment?.title || align}>
             {title}

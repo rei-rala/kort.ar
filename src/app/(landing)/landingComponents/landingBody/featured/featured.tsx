@@ -54,8 +54,7 @@ export const Featured = ({ featured }: FeaturedProps) => {
         className={cn(styles.contentInner, styles.featured, styles.shadowed)}
         title={
           <>
-            Enlace destacado:
-            <span style={{ color: featuredLink.color }}>/</span>
+            Enlace destacado: <span style={{ color: featuredLink.color }}>/</span>
             <b>{featuredLink.from}</b>
           </>
         }
@@ -70,7 +69,11 @@ export const Featured = ({ featured }: FeaturedProps) => {
       />
       <CustomCard
         className={cn(styles.contentInner, styles.featured, styles.shadowed)}
-        title={"Usuario destacado: " + featuredUser.username}
+        title={
+          <>
+            Usuario destacado: <b>{featuredUser.username}</b>
+          </>
+        }
         description={
           <FeaturedDescription
             icon={<RemoveRedEyeIcon />}

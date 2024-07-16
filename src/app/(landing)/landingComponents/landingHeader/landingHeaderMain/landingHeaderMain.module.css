@@ -87,13 +87,15 @@
   flex-direction: column;
   flex-grow: 1;
   gap: 2.5rem;
-
-  min-width: 30%;
-  max-width: 400px;
+  margin: auto;
+  min-width: 300px;
+  max-width: 100%;
 }
 
 .featured {
   flex-grow: 1;
+  width: 100%;
+  margin: auto;
 }
 
 
@@ -111,8 +113,13 @@
     flex: 0;
   }
 
+  .featuredContainer {
+    width: 100%;
+  }
+
   .featured {
     width: 100%;
+    flex-grow: 1;
     max-width: 350px;
   }
 
@@ -134,6 +141,7 @@
   .featuredContainer {
     flex: 1;
     flex-direction: column;
+    margin: 0 auto;
   }
 }
 
