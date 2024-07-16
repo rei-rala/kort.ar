@@ -67,8 +67,8 @@ function buildResponse<T>(
   message = overrideMessage
     ? overrideMessage
     : statusCode === 200
-      ? statusMessages[statusCode][action ?? "default"]
-      : statusMessages[statusCode];
+    ? statusMessages[statusCode][action ?? "default"]
+    : statusMessages[statusCode];
 
   message ??= "Error desconocido";
   const success = statusCode < 400; // XD
