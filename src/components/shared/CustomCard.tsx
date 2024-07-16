@@ -24,7 +24,7 @@ type CustomCardProps = {
 };
 
 type CardPartialProps = Partial<OverridableComponent<CardTypeMap<{}, "div">>> & {
-  className: string;
+  className?: string;
 };
 
 const imgSize = { height: 140, width: 245 };
