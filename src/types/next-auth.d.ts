@@ -24,7 +24,7 @@ declare module "next-auth" {
    * };
    */
   interface AuthenticatedSession extends DefaultSession {
-    user: {
+    user: User & {
       name: string;
       email: string;
       image: string;

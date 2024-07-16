@@ -5,9 +5,10 @@ import { Box, Button, Input, InputLabel, Typography } from "@mui/material";
 import styles from "./landingHeaderMain.module.css";
 import { BRAND } from "@/constants";
 import { cn } from "@/utils/classnames";
-import { Featured } from "./_featured";
+import { Featured } from "./featured/featured";
 import { getFeaturedLinkAndProfile } from "@/services/featured.services";
 import { suspenseFetch } from "@/services";
+import { useSession } from "next-auth/react";
 
 const featuredResource = suspenseFetch(getFeaturedLinkAndProfile());
 
@@ -18,6 +19,8 @@ const FeaturedContent = () => {
 
 export const LandingMain = forwardRef(
   ({ isNavbarVisible, ...props }: any, ref: ForwardedRef<HTMLElement>) => {
+    const { data: session } = useSession();
+
     return (
       <main
         className={cn(styles.landingMain, styles.animated, !isNavbarVisible && styles.darken)}
@@ -25,7 +28,9 @@ export const LandingMain = forwardRef(
       >
         <Box {...props} className={styles.container}>
           <div className={styles.content}>
-            {/* Contenido principal */}
+            <Typography variant="subtitle2" component="h1">
+              Bienvenido {session?.user?.name ? session.user.name : ""}!
+            </Typography>
             <div className={cn(styles.contentInner, styles.shadowed)}>
               <Typography variant="h3" component="h2">
                 Crea y comparte enlaces cortos con <strong>{BRAND}</strong>
@@ -48,10 +53,6 @@ export const LandingMain = forwardRef(
               </div>
             </div>
           </div>
-
-          <Suspense fallback={<div>Loading...</div>}>
-            <FeaturedContent />
-          </Suspense>
         </Box>
       </main>
     );

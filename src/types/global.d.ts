@@ -37,7 +37,7 @@ declare global {
     color: string;
     canReturnToProfile?: boolean;
     active?: boolean;
-    hitCount?: number;
+    hitCount: number;
     public?: boolean;
     flaggedAt?: Date | string | null;
     createdAt?: Date | string;

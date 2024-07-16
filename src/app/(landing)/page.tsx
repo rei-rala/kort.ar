@@ -4,8 +4,6 @@ import { LandingHeader } from "./landingComponents/landingHeader/LandingHeader";
 import { auth } from "@/libs/auth";
 
 export default async function HomePage() {
-  const session = await auth();
-
   return (
     <>
       <LandingHeader />
@@ -15,7 +13,7 @@ export default async function HomePage() {
         </main>
         <div>
           <code>
-            <pre>{JSON.stringify(session, null, "\t")}</pre>
+
           </code>
 
           <Link href="/login">Login page</Link>

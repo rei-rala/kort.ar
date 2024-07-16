@@ -5,16 +5,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(270deg, #ff5252, #526eff);
-  background-size: 300% 300%;
+  background: radial-gradient(#ff5252, #526eff);
+  background-size: 500% 500%;
   transition: filter 0.2s ease-in;
 }
 
 .animated {
-  -webkit-animation: gradient 10s ease infinite;
-  -moz-animation: gradient 10s ease infinite;
-  -o-animation: gradient 10s ease infinite;
-  animation: gradient 10s ease infinite;
+  -webkit-animation: gradient 30s ease-in-out infinite;
+  -moz-animation: gradient 30s ease-in-out infinite;
+  -o-animation: gradient 30s ease-in-out infinite;
+  animation: gradient 30s ease-in-out infinite;
 }
 
 .darken {
@@ -89,9 +89,11 @@
 }
 
 .featured {
+  background: rgba(255, 255, 255, 0.8) !important;
   min-width: 200px;
   flex-grow: 1;
 }
+
 
 @media (min-width: 576px) {
   .content {
@@ -124,7 +126,7 @@
 
   .content {
     flex: 1;
-    max-width: 60%;
+    max-width: 80%;
   }
 
   .featuredContainer {
@@ -135,56 +137,88 @@
 
 @-webkit-keyframes gradient {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
+  }
+
+  25% {
+    background-position: -50% 0%;
   }
 
   50% {
-    background-position: 100% 0%
+    background-position: 150% -50%;
+  }
+
+  75% {
+    background-position: 50% 50%;
   }
 
   100% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
   }
 }
 
 @-moz-keyframes gradient {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
+  }
+
+  25% {
+    background-position: -50% 0%;
   }
 
   50% {
-    background-position: 100% 0%
+    background-position: 150% -50%;
+  }
+
+  75% {
+    background-position: 50% 50%;
   }
 
   100% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
   }
 }
 
 @-o-keyframes gradient {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
+  }
+
+  25% {
+    background-position: -50% 0%;
   }
 
   50% {
-    background-position: 100% 0%
+    background-position: 150% -50%;
+  }
+
+  75% {
+    background-position: 50% 50%;
   }
 
   100% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
   }
 }
 
 @keyframes gradient {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
+  }
+
+  25% {
+    background-position: -50% 0%;
   }
 
   50% {
-    background-position: 100% 0%
+    background-position: 150% -50%;
+  }
+
+  75% {
+    background-position: 50% 50%;
   }
 
   100% {
-    background-position: 0% 50%
+    background-position: 0% 0%;
   }
 }
