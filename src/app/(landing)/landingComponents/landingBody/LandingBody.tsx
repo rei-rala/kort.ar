@@ -1,19 +1,28 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { Featured } from "./featured/featured";
 import { suspenseFetch } from "@/services";
 import { getFeaturedLinkAndProfile } from "@/services/featured.services";
-import { Featured } from "./featured/featured";
-import { Typography } from "@mui/material";
-import { BRAND } from "@/constants";
 
 import styles from "./landingBody.module.css";
+import { BRAND } from "@/constants";
+import { Typography } from "@mui/material";
 
 const featuredResource = suspenseFetch(getFeaturedLinkAndProfile());
 
-const FeaturedContent = () => {
-  const { data: featured } = featuredResource.read();
-  return <Featured featured={featured} />;
-};
-
 export const LandingBody = () => {
+  const [featuredData, setFeaturedData] = useState<Featured | null>(null);
+
+  useEffect(() => {
+    const fetchData = () => {
+      const { data } = featuredResource.read();
+      setFeaturedData(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <section className={styles.landingBody}>
       <section className={styles.container}>
@@ -27,7 +36,8 @@ export const LandingBody = () => {
             en redes sociales, correo electrónico o cualquier otra plataforma.
           </Typography>
         </div>
-        <FeaturedContent />
+
+        <Featured featured={featuredData} />
       </section>
     </section>
   );

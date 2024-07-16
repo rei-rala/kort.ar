@@ -9,7 +9,7 @@ import { BrandWatermark } from "@/components/shared";
 import { BRAND } from "@/constants";
 
 export const metadata: Metadata = {
-  title: BRAND,
+  title: `${BRAND} - Link acortado`,
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 

@@ -1,6 +1,5 @@
-"use client";
+import React from "react";
 import { Button, Tooltip, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
 import { CustomCard, CustomCardSkeleton } from "@/components/shared/CustomCard";
 import { cn } from "@/utils/classnames";
 
@@ -30,23 +29,20 @@ const FeaturedDescription = ({
   );
 };
 
-export const Featured = ({ featured }: FeaturedProps) => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient || featured === null) {
+export const Featured = (props: FeaturedProps) => {
+  if (!props.featured) {
     return (
       <div className={cn(styles.content, styles.featuredContainer)}>
-        <CustomCardSkeleton className={styles.featured} />
-        <CustomCardSkeleton className={styles.featured} hasImage />
+        <CustomCardSkeleton className={cn(styles.contentInner, styles.featured, styles.shadowed)} />
+        <CustomCardSkeleton
+          className={cn(styles.contentInner, styles.featured, styles.shadowed)}
+          hasImage
+        />
       </div>
     );
   }
 
-  const { featuredLink, featuredUser } = featured;
+  const { featuredLink, featuredUser } = props.featured;
 
   return (
     <div className={cn(styles.content, styles.featuredContainer)}>
