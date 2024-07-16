@@ -1,11 +1,16 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { redirect } from "next/navigation";
 
-import { Navbar } from "@/components/shared";
 import { auth } from "@/libs/auth";
 import { BRAND } from "@/constants";
+
+const NavbarLazy = React.lazy(() =>
+  import("@/components/shared").then((module) => ({
+    default: module.Navbar,
+  }))
+);
 
 export const metadata: Metadata = {
   title: BRAND,
@@ -21,7 +26,9 @@ export default async function MePageLayout({ children }: { readonly children: Re
 
   return (
     <>
-      <Navbar />
+      <Suspense>
+        <NavbarLazy />
+      </Suspense>
       {React.Children.map(children, (child, index) => (
         <section key={`me-layout-child:${index + 1}`} className={"section"}>
           {child}

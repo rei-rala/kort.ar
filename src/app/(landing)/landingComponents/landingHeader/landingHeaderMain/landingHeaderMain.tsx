@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { ForwardedRef, forwardRef } from "react";
-import { Box, Button, Input, InputLabel, Link, Typography } from "@mui/material";
+import { Box, Button, Input, InputLabel, Typography } from "@mui/material";
 import { BRAND } from "@/constants";
 
 import { cn } from "@/utils/classnames";
@@ -29,7 +29,7 @@ export const LandingMain = forwardRef(
               <Typography variant="h3" component="h2">
                 Crea y comparte enlaces cortos con <strong>{BRAND}</strong>
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" component="p">
                 Soy una aplicación que permite crear enlaces cortos y perfiles con enlaces
                 personalizados para compartir tus contenidos de manera fácil y rápida.
               </Typography>

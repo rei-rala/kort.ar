@@ -96,7 +96,7 @@ const themeOptions: ThemeOptions = createTheme({
       //hint: "#757575",
     },
     primary: {
-      main: "#ff5252",
+      main: "#b93b3b",
       light: "#ff8a80",
       dark: "#c50e29",
       contrastText: "#ffffff",

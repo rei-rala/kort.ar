@@ -14,7 +14,7 @@ export const LandingBody = () => {
             Comparte tus enlaces de manera fácil y rápida
           </Typography>
 
-          <Typography variant="h6" align="center">
+          <Typography variant="h6" component="p" align="center">
             {BRAND} te permite crear enlaces cortos y personalizados para compartir tus contenidos
             en redes sociales, correo electrónico o cualquier otra plataforma.
           </Typography>

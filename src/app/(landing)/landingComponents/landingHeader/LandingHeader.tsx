@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Navbar } from "@/components/shared";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 
 import { LandingMain } from "./landingHeaderMain/landingHeaderMain";
+
+const NavbarLazy = React.lazy(() =>
+  import("@/components/shared").then((module) => ({
+    default: module.Navbar,
+  }))
+);
 
 export const LandingHeader = () => {
   const mainRef = useRef<HTMLElement>(null);
@@ -32,7 +37,9 @@ export const LandingHeader = () => {
 
   return (
     <header style={{ width: "100svw" }}>
-      <Navbar hidden={isMainInView} fixed />
+      <Suspense>
+        <NavbarLazy hidden={isMainInView} fixed />
+      </Suspense>
       <LandingMain ref={mainRef} isNavbarVisible={isMainInView} />
     </header>
   );
