@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Tooltip, Typography } from "@mui/material";
-import { CustomCard, CustomCardSkeleton } from "@/components/shared/CustomCard";
+import { CustomCard } from "@/components/shared/CustomCard";
 import { cn } from "@/utils/classnames";
 
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LinkIcon from "@mui/icons-material/Link";
 import styles from "../../landingHeader/landingHeaderMain/landingHeaderMain.module.css";
+import { FeaturedSkeleton } from "./featuredSkeleton";
 
 type FeaturedProps = {
   featured: Featured | null;
@@ -29,20 +30,16 @@ const FeaturedDescription = ({
   );
 };
 
-export const Featured = (props: FeaturedProps) => {
-  if (!props.featured) {
+export const Featured = ({ featured }: FeaturedProps) => {
+  if (!featured) {
     return (
       <div className={cn(styles.content, styles.featuredContainer)}>
-        <CustomCardSkeleton className={cn(styles.contentInner, styles.featured, styles.shadowed)} />
-        <CustomCardSkeleton
-          className={cn(styles.contentInner, styles.featured, styles.shadowed)}
-          hasImage
-        />
+        <FeaturedSkeleton />
       </div>
     );
   }
 
-  const { featuredLink, featuredUser } = props.featured;
+  const { featuredLink, featuredUser } = featured;
 
   return (
     <div className={cn(styles.content, styles.featuredContainer)}>

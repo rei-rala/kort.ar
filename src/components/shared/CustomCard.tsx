@@ -27,6 +27,9 @@ type CardPartialProps = Partial<OverridableComponent<CardTypeMap<{}, "div">>> & 
   className: string;
 };
 
+const imgSize = { height: 140, width: 245 };
+const { height, width } = imgSize;
+
 export const CustomCard = ({
   imageSrc,
   title,
@@ -40,15 +43,17 @@ export const CustomCard = ({
     <Card {...props}>
       <CardActionArea>
         {imageSrc && (
-          <CardMedia component="img" height="140" image={imageSrc} alt={String(title) /* sorry*/} />
+          <CardMedia
+            component="img"
+            height={height}
+            width={width}
+            image={imageSrc}
+            alt={String(title)} // Sorry
+          />
         )}
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div" align={alignment?.title || align}>
-            {title}
-          </Typography>
-          <Typography variant="body2" align={alignment?.description || align}>
-            {description === null ? <Skeleton /> : description}
-          </Typography>
+          {title}
+          {description === null ? <Skeleton /> : description}
         </CardContent>
       </CardActionArea>
       {actions && <CardActions>{actions}</CardActions>}
@@ -68,7 +73,16 @@ export const CustomCardSkeleton = ({
   return (
     <Card {...props}>
       <CardActionArea>
-        {hasImage && <Skeleton variant="rectangular" height={140} sx={{ backgroundColor }} />}
+        {hasImage && (
+          <Skeleton
+            variant="rectangular"
+            height={height}
+            sx={{
+              minWidth: width,
+              backgroundColor,
+            }}
+          />
+        )}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             <Skeleton variant="text" sx={{ backgroundColor }} />
