@@ -1,12 +1,12 @@
 "use client";
-import { Button, Link, Tooltip, Typography } from "@mui/material";
-import styles from "../landingHeaderMain.module.css";
+import { Button, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CustomCard, CustomCardSkeleton } from "@/components/shared/CustomCard";
 import { cn } from "@/utils/classnames";
 
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LinkIcon from "@mui/icons-material/Link";
+import styles from "../../landingHeader/landingHeaderMain/landingHeaderMain.module.css";
 
 type FeaturedProps = {
   featured: Featured | null;
@@ -39,14 +39,9 @@ export const Featured = ({ featured }: FeaturedProps) => {
 
   if (!isClient || featured === null) {
     return (
-      <div
-        className={cn(styles.content, styles.featuredContainer)}
-        style={{
-          minWidth: "200px",
-        }}
-      >
-        <CustomCardSkeleton />
-        <CustomCardSkeleton hasImage />
+      <div className={cn(styles.content, styles.featuredContainer)}>
+        <CustomCardSkeleton className={styles.featured} />
+        <CustomCardSkeleton className={styles.featured} hasImage />
       </div>
     );
   }
@@ -57,7 +52,13 @@ export const Featured = ({ featured }: FeaturedProps) => {
     <div className={cn(styles.content, styles.featuredContainer)}>
       <CustomCard
         className={cn(styles.contentInner, styles.featured, styles.shadowed)}
-        title={`Enlace destacado: ${featuredLink.from}`}
+        title={
+          <>
+            Enlace destacado:
+            <span style={{ color: featuredLink.color }}>/</span>
+            <b>{featuredLink.from}</b>
+          </>
+        }
         description={
           <FeaturedDescription
             icon={<LinkIcon />}
@@ -78,7 +79,7 @@ export const Featured = ({ featured }: FeaturedProps) => {
           />
         }
         imageSrc={featuredUser.image}
-        actions={<Button href={`/${featuredUser.username}`}>Visitar</Button>}
+        actions={<Button href={`/user/${featuredUser.username}`}>Visitar</Button>}
       />
     </div>
   );

@@ -1,21 +1,11 @@
 "use client";
-import { ForwardedRef, forwardRef, Suspense } from "react";
-import { Box, Button, Input, InputLabel, Typography } from "@mui/material";
-
-import styles from "./landingHeaderMain.module.css";
-import { BRAND } from "@/constants";
-import { cn } from "@/utils/classnames";
-import { Featured } from "./featured/featured";
-import { getFeaturedLinkAndProfile } from "@/services/featured.services";
-import { suspenseFetch } from "@/services";
 import { useSession } from "next-auth/react";
+import { ForwardedRef, forwardRef } from "react";
+import { Box, Button, Input, InputLabel, Link, Typography } from "@mui/material";
+import { BRAND } from "@/constants";
 
-const featuredResource = suspenseFetch(getFeaturedLinkAndProfile());
-
-const FeaturedContent = () => {
-  const { data: featured } = featuredResource.read();
-  return <Featured featured={featured} />;
-};
+import { cn } from "@/utils/classnames";
+import styles from "./landingHeaderMain.module.css";
 
 export const LandingMain = forwardRef(
   ({ isNavbarVisible, ...props }: any, ref: ForwardedRef<HTMLElement>) => {
@@ -28,9 +18,13 @@ export const LandingMain = forwardRef(
       >
         <Box {...props} className={styles.container}>
           <div className={styles.content}>
-            <Typography variant="subtitle2" component="h1">
-              Bienvenido {session?.user?.name ? session.user.name : ""}!
-            </Typography>
+            <div>
+              <Typography variant="subtitle2" component="h1">
+                Bienvenido {session?.user?.name ?? "invitado"}!
+                {session?.user && <Button href="/home">Ir a Dashboard</Button>}
+                {!session?.user && <Button href="/api/auth/signin">Iniciar sesión</Button>}
+              </Typography>
+            </div>
             <div className={cn(styles.contentInner, styles.shadowed)}>
               <Typography variant="h3" component="h2">
                 Crea y comparte enlaces cortos con <strong>{BRAND}</strong>

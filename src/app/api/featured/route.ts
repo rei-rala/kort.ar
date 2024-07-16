@@ -34,6 +34,7 @@ async function featuredUserAndLink() {
         alias: true,
         from: true,
         to: true,
+        color: true,
         hitCount: true,
       },
     });

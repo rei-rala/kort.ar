@@ -86,11 +86,13 @@
 .featuredContainer {
   flex-direction: column;
   flex-grow: 1;
+  gap: 2.5rem;
+
+  min-width: 30%;
+  max-width: 400px;
 }
 
 .featured {
-  background: rgba(255, 255, 255, 0.8) !important;
-  min-width: 200px;
   flex-grow: 1;
 }
 

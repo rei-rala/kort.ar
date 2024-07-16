@@ -48,7 +48,7 @@ declare global {
   };
 
   type FeaturedUser = Pick<User, "username" | "image" | "hitCount">;
-  type FeaturedLink = Pick<RedirectLink, "alias" | "from" | "to" | "hitCount">;
+  type FeaturedLink = Pick<RedirectLink, "alias" | "from" | "to" | "color" | "hitCount">;
   type Featured = {
     featuredLink: FeaturedLink;
     featuredUser: FeaturedUser;
