@@ -14,18 +14,19 @@ export const metadata: Metadata = {
 };
 
 export default async function LinkPage({ params: { link } }: { params: { link: string } }) {
+  if (!link) {
+    notFound();
+  }
+
   const { data: redirectLink } = await getRedirectLinkByRedirectPage(link);
 
-  if (!link || !redirectLink) {
+  if (!redirectLink) {
     notFound();
   }
 
   return (
     <section className={styles.linkPage}>
-      <main
-        className={styles.linkPageInner}
-        style={{ backgroundColor: hexToRgba(redirectLink?.color || "#000000", 0.05) }}
-      >
+      <main className={styles.linkPageInner} style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}>
         <RedirectLinkHeader redirectLink={redirectLink} />
         <RedirectLinkBody redirectLink={redirectLink} />
       </main>

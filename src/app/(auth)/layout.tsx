@@ -1,10 +1,10 @@
 import React from "react";
 import { redirect } from "next/navigation";
 
-import { AuthLayout } from "@/layouts";
 import styles from "./layout.module.css";
 import { auth } from "@/libs/auth";
 import { BRAND } from "@/constants";
+import { Box, Container } from "@mui/material";
 
 export default async function AuthPageLayout({ children }: { readonly children: React.ReactNode }) {
   const session = await auth();
@@ -14,9 +14,11 @@ export default async function AuthPageLayout({ children }: { readonly children: 
   }
 
   return (
-    <AuthLayout>
-      <h1 className={styles.brand}>{BRAND}</h1>
-      {children}
-    </AuthLayout>
+    <Container maxWidth="xs">
+      <Box className={styles.layout}>
+        <h1 className={styles.brand}>{BRAND}</h1>
+        {children}
+      </Box>
+    </Container>
   );
 }
