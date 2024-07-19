@@ -1,6 +1,7 @@
 import { NEXTAUTH_URL } from "@/constants";
 import prisma from "@/db/prisma";
 import { auth } from "@/libs/auth";
+import { redirect } from "next/navigation";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -93,7 +94,9 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     .catch((err) => {
       console.error("Error trying to create hit or update hitCount in redirectLink");
       console.error(JSON.stringify(err, null, 2));
-    });
+    })
+
+  if (!linkFound.canReturnToProfile) return redirect(linkFound.to);
 
   return NextResponse.json({ data: linkFound });
 }

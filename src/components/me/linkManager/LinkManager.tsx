@@ -1,8 +1,5 @@
-"use client";
-
 import React from "react";
-import { Button, Typography } from "@mui/material";
-import LinkManagerHeader from "./LinkManagerHeader/LinkManagerHeader";
+import { Box, Button, Typography } from "@mui/material";
 import LinkTable from "./linkTable/LinkTable";
 import { useModal } from "@/contexts/modalContext";
 import { LinkForm } from "../linkForm/LinkForm";
@@ -47,9 +44,9 @@ const LinkManager: React.FC<{ links: RedirectLink[] }> = ({ links }) => {
       >
         <AddLinkIcon sx={{ mr: "0.25rem" }} /> Nuevo link
       </Button>
-      <LinkManagerHeader>
+      <Box>
         <LinkTable rows={links} />
-      </LinkManagerHeader>
+      </Box>
     </>
   );
 };

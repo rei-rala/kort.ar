@@ -4,66 +4,119 @@ import TableHead from "@mui/material/TableHead/TableHead";
 import TableRow from "@mui/material/TableRow/TableRow";
 import TableCell from "@mui/material/TableCell/TableCell";
 import type { TableHeaderData } from "../LinkTable";
+import { Tooltip, Typography } from "@mui/material";
 
-let localeTest: Locales = "es";
+let localeTest: Locale = "es";
 
-type Locales = "es" | "en" | "default";
-type AvailableLocales = { [locale in Locales]?: string };
 export type RedirectLinkLocale = { [key in TableHeaderData]: AvailableLocales } & {
   [key in keyof RedirectLink]?: AvailableLocales;
 } & { actions: AvailableLocales };
 
 export const redirectLinkLocales: RedirectLinkLocale = {
   id: {
-    default: "id",
+    default: {
+      translatedName: "id",
+      description: "El identificador unico del link",
+    },
   },
   owner: {
-    default: "dueño",
+    default: {
+      translatedName: "dueño",
+      description: "El usuario dueño del link",
+    },
   },
   alias: {
-    default: "alias",
+    default: {
+      translatedName: "alias",
+      description: "El alias del link, solo es visible para el dueño del link",
+    },
   },
   from: {
-    default: "desde",
+    default: {
+      translatedName: "desde",
+      description: "El link desde el que se redirige",
+    },
   },
   to: {
-    default: "redirige a",
+    default: {
+      translatedName: "redirige a",
+      description: "El link hacia donde redirige",
+    },
   },
   color: {
-    default: "color",
+    default: {
+      translatedName: "color",
+      description:
+        "El color del link, solo visible para el dueño y en algun detalle estetico para el visitante",
+    },
   },
   icon: {
-    default: "ícono",
+    default: {
+      translatedName: "ícono",
+      description: "El ícono del link, solo visible para el dueño del link",
+    },
   },
   canReturnToProfile: {
-    default: "acceso a tu perfil",
+    default: {
+      translatedName: "acceso a tu perfil",
+      description:
+        "Permite al visitante regresar a tu perfil, esta opcion le dara un tiempo de 5 segundos para regresar a tu perfil y omite la redireccion instantanea",
+    },
   },
   public: {
-    default: "público",
+    default: {
+      translatedName: "público",
+      description:
+        "El link es público y puede ser accedido por cualquier persona, tambien puede ser encontrado en la busqueda de links y puede aparecer destacados",
+    },
   },
   actions: {
-    default: "acciones",
+    default: {
+      translatedName: "acciones",
+      description: "Acciones a realizar con el link",
+    },
   },
   active: {
-    default: "activo",
+    default: {
+      translatedName: "activo",
+      description: "El link está activo",
+    },
   },
   hitCount: {
-    default: "visitas",
+    default: {
+      translatedName: "visitas",
+      description: "Número de visitas",
+    },
   },
   hits: {
-    default: "lista visitas",
+    default: {
+      translatedName: "visitas",
+      description: "Lista de visitas",
+    },
   },
   createdAt: {
-    default: "fecha creación",
+    default: {
+      translatedName: "fecha creación",
+      description: "Fecha de creación del link",
+    },
   },
   updatedAt: {
-    default: "última actualización",
+    default: {
+      translatedName: "última actualización",
+      description: "Fecha de la última actualización del link",
+    },
   },
   deletedAt: {
-    default: "eliminado el",
+    default: {
+      translatedName: "eliminado el",
+      description: "Fecha de eliminación del link",
+    },
   },
   flaggedAt: {
-    default: "denunciado el",
+    default: {
+      translatedName: "denunciado el",
+      description: "Fecha de denuncia del link",
+    },
   },
 };
 
@@ -73,11 +126,21 @@ type LinkTableHeadCellProps = {
 };
 
 const LinkTableHeadCell: ExtendedComponent<LinkTableHeadCellProps> = ({ header, center }) => {
+  const text =
+    redirectLinkLocales[header]?.[localeTest]?.translatedName ??
+    redirectLinkLocales[header]?.default?.translatedName ??
+    String(header);
+
+  const tooltipText =
+    redirectLinkLocales[header]?.[localeTest]?.description ??
+    redirectLinkLocales[header]?.default?.description ??
+    text;
+
   return (
     <TableCell align={center ? "center" : "justify"}>
-      {(redirectLinkLocales[header] && redirectLinkLocales[header][localeTest]) ??
-        redirectLinkLocales[header]?.default ??
-        String(header)}
+      <Tooltip placement="top" title={tooltipText}>
+        <Typography> {text} </Typography>
+      </Tooltip>
     </TableCell>
   );
 };

@@ -18,7 +18,9 @@ type DynamicFormControlProps = React.ComponentProps<typeof FormControl> & {
 };
 
 const getLabel = (formField: string) => {
-  return redirectLinkLocales[formField as keyof RedirectLinkLocale]?.default || formField;
+  return (
+    redirectLinkLocales[formField as keyof RedirectLinkLocale]?.default?.translatedName || formField
+  );
 };
 
 const DynamicFormControl = ({

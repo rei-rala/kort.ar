@@ -1,8 +1,9 @@
 import { ExternalLink, TruthyIcon } from "@/components/shared";
 import { Box, Tooltip, Typography } from "@mui/material";
-import { Info, AlternateEmail } from "@mui/icons-material";
-import { removeHTTPPrefix } from "@/utils/text";
+import { AlternateEmail, ContentCopy } from "@mui/icons-material";
+import { hexToRgba, removeHTTPPrefix } from "@/utils/text";
 import { NEXTAUTH_URL } from "@/constants";
+import toast from "react-hot-toast";
 
 type DataType =
   | "string"
@@ -40,6 +41,17 @@ type CellContentProps = {
 };
 
 export const CellContent = ({ header, data: rowData, center }: CellContentProps) => {
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast("Link copiado al portapapeles!", {
+      icon: "📋",
+      style: {
+        borderRadius: "10px",
+        background: hexToRgba("#f9f9fa", 0.9),
+      },
+    });
+  };
+
   const dataType = dataTypes[header] || "string";
 
   // get only the current header and also the color
@@ -55,9 +67,8 @@ export const CellContent = ({ header, data: rowData, center }: CellContentProps)
     case "externalUrl":
       content = (
         <>
-          <ExternalLink href={data}>{data}</ExternalLink>
-          <Tooltip title={data}>
-            <Info color="info" />
+          <Tooltip title={data} placement="top">
+            <ExternalLink href={data}>{data}</ExternalLink>
           </Tooltip>
         </>
       );
@@ -67,17 +78,37 @@ export const CellContent = ({ header, data: rowData, center }: CellContentProps)
         content = (
           <>
             <AlternateEmail sx={{ color }} />
-            <Typography variant="body1">{data}</Typography>
+            <Typography variant="body1">{data || "[Sin alias]"}</Typography>
           </>
         );
       } else if (header === "from") {
+        const url = `${NEXTAUTH_URL}/${data}`;
+
         content = (
-          <>
-            <Typography variant="body2">{data}</Typography>
-            <Tooltip title={`${removeHTTPPrefix(NEXTAUTH_URL)}/${data}`}>
-              <Info color="info" />
-            </Tooltip>
-          </>
+          <Tooltip
+            sx={{
+              cursor: "pointer",
+            }}
+            placement="top"
+            title={`Copiar "${removeHTTPPrefix(url)}" al portapapeles`}
+          >
+            <Typography
+              variant="body2"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "primary.main",
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              {data}
+              <ContentCopy color="success" onClick={() => handleCopyToClipboard(url)} />
+            </Typography>
+          </Tooltip>
         );
       } else {
         content = <Typography variant="body1">{data}</Typography>;
@@ -87,7 +118,7 @@ export const CellContent = ({ header, data: rowData, center }: CellContentProps)
       content = <Typography variant="body1">{data?.name || "???"}</Typography>;
       break;
     default:
-      content = <Typography variant="body1">{data}</Typography>;
+      content = <Typography variant="body1">{String(data)}</Typography>;
       break;
   }
 

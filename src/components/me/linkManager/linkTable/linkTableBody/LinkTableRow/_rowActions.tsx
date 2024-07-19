@@ -2,12 +2,9 @@ import React from "react";
 import { Button, TableCell, Tooltip, Typography } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { LinkForm } from "@/components/me/linkForm/LinkForm";
-import { BRAND, NEXTAUTH_URL } from "@/constants";
+import { BRAND } from "@/constants";
 import { useModal } from "@/contexts/modalContext";
-import toast from "react-hot-toast";
-import { hexToRgba } from "@/utils/text";
 import { useDialog } from "@/contexts/alertDialogContext";
 
 export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => {
@@ -33,17 +30,6 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
       onAgree: handleSubmit,
       agreeTextColor,
     });
-
-  const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(`${NEXTAUTH_URL}/${redirectLink.from || ""}`);
-    toast("Link copiado al portapapeles!", {
-      icon: "📋",
-      style: {
-        borderRadius: "10px",
-        background: hexToRgba("#f9f9fa", 0.9),
-      },
-    });
-  };
 
   const handleEditConfirmDialog = () => {
     usingDialog(
@@ -95,10 +81,6 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
 
   const actions = [
     {
-      title: "Copiar link",
-      component: <ContentCopyIcon color="success" onClick={handleCopyToClipboard} />,
-    },
-    {
       title: "Editar link",
       component: <EditNoteIcon color="secondary" onClick={handleEditLink} />,
     },
@@ -112,7 +94,9 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
     <TableCell sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
       {actions.map(({ title, component }) => (
         <div key={`action-tooltip:${redirectLink.alias}:${title}`}>
-          <Tooltip title={title}>{component}</Tooltip>
+          <Tooltip title={title} placement="top">
+            {component}
+          </Tooltip>
         </div>
       ))}
     </TableCell>

@@ -1,6 +1,10 @@
 import React from "react";
 
 declare global {
+  type Locale = "es" | "en" | "default";
+  type LocaleField = { translatedName: string; description: string };
+  type AvailableLocales = { [locale in Locale]?: LocaleField };
+
   type OptionalPropsOf<T> = {
     [K in keyof T]?: T[K];
   };
