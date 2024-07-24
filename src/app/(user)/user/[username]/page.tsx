@@ -2,6 +2,7 @@ import { getRedirectLinksByUsername } from "@/services/redirectLink.services";
 import Typography from "@mui/material/Typography";
 import LinkList from "@/components/profile/LinkList/LinkList";
 import { Link } from "@mui/material";
+import { BrandWatermark } from "@/components/shared";
 
 // Define the props for the ProfilePageComponent
 type ProfilePageComponentProps = {
@@ -48,6 +49,7 @@ export default async function ProfilePage({
   return (
     <main>
       <ProfilePageComponent username={username} links={profileRedirectLinks} />
+      <BrandWatermark />
     </main>
   );
 }

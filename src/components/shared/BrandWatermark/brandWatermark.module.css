@@ -1,7 +1,8 @@
 .waterMarkContainer {
   position: fixed;
   bottom: 1svh;
-  width: 100svw;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
 }
 
