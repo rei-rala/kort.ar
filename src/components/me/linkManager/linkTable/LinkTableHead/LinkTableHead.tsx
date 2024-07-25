@@ -58,7 +58,7 @@ export const redirectLinkLocales: RedirectLinkLocale = {
   },
   canReturnToProfile: {
     default: {
-      translatedName: "acceso a tu perfil",
+      translatedName: "acceso a perfil",
       description:
         "Permite al visitante regresar a tu perfil, esta opcion le dara un tiempo de 5 segundos para regresar a tu perfil y omite la redireccion instantanea",
     },
