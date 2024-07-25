@@ -75,6 +75,7 @@ model RedirectLink {
   userEmail String @db.String
   owner     User   @relation(fields: [userEmail], references: [email], onDelete: NoAction)
 
+  text               String
   alias              String
   from               String  @unique
   to                 String

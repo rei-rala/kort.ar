@@ -4,6 +4,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LinkIcon from "@mui/icons-material/Link";
 import { cn } from "@/utils/classnames";
 import styles from "../../landingHeader/landingHeaderMain/landingHeaderMain.module.css";
+import { redirectLinkLocales } from "@/components/me/linkManager/linkTable/LinkTableHead/LinkTableHead";
 
 const FeaturedDescription = ({
   description,
@@ -63,7 +64,7 @@ export const FeaturedRedirectLink = ({ featuredLink }: { featuredLink: FeaturedL
             </Typography>
           }
           icon={<LinkIcon />}
-          tooltip="Redirige hacia"
+          tooltip={redirectLinkLocales.to.default.description}
           text={featuredLink.hitCount.toString()}
         />
       }

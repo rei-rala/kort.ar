@@ -25,6 +25,12 @@ export const redirectLinkLocales: RedirectLinkLocale = {
       description: "El usuario dueño del link",
     },
   },
+  text: {
+    default: {
+      translatedName: "texto",
+      description: "El texto del link, visible para el dueño y el visitante",
+    },
+  },
   alias: {
     default: {
       translatedName: "alias",

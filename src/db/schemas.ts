@@ -11,6 +11,7 @@ export const urlRegex =
 export const invalidStartingCharacters = ["@", "/", "\\", " "];
 
 export const redirectLinkSchema = z.object({
+  text: z.string().max(100, "No puede exceder 100 caracteres"),
   alias: z.string(),
   from: z.preprocess(
     (val) => (typeof val === "string" ? val.trim() : val),

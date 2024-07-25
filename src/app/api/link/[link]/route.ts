@@ -41,6 +41,7 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     },
     select: {
       id: true,
+      text: true,
       from: true,
       to: true,
       hitCount: true,

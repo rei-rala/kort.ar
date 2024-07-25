@@ -1,9 +1,9 @@
 import React from "react";
 
 declare global {
-  type Locale = "es" | "en" | "default";
+  type Locale = "es" | "en";
   type LocaleField = { translatedName: string; description: string };
-  type AvailableLocales = { [locale in Locale]?: LocaleField };
+  type AvailableLocales = { [locale in Locale]?: LocaleField } & { default: LocaleField };
 
   type OptionalPropsOf<T> = {
     [K in keyof T]?: T[K];
@@ -34,6 +34,7 @@ declare global {
 
   type RedirectLink = {
     id?: string;
+    text: string;
     alias: string;
     from: string;
     to: string;

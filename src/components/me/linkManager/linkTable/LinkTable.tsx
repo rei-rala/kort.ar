@@ -9,6 +9,7 @@ export type TableHeaderData = keyof RedirectLink;
 const LinkTable: ExtendedComponent<{ rows: RedirectLink[] }> = ({ rows }) => {
   let pickedHeaders: TableHeaderData[] = [
     "alias",
+    "text",
     "from",
     "to",
     "active",
