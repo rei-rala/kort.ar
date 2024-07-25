@@ -1,7 +1,6 @@
 import { getRedirectLinkByRedirectPage } from "@/services/redirectLink.services";
-import { hexToRgba } from "@/utils/text";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { RedirectLinkHeader, RedirectLinkBody } from "./redirectLinkPageComponents";
 
 import styles from "./linkStyles.module.css";
@@ -13,7 +12,14 @@ export const metadata: Metadata = {
   description: "Crea, acorta y centraliza tus links en un solo lugar!",
 };
 
-export default async function LinkPage({ params: { link } }: { params: { link: string } }) {
+export default async function LinkPage({
+  params,
+  searchParams: { skip },
+}: {
+  params: { link: string };
+  searchParams: { skip: boolean };
+}) {
+  const { link } = params;
   if (!link) {
     notFound();
   }
@@ -23,6 +29,8 @@ export default async function LinkPage({ params: { link } }: { params: { link: s
   if (!redirectLink) {
     notFound();
   }
+
+  if (skip) redirect(redirectLink.to);
 
   return (
     <section className={styles.linkPage}>

@@ -31,7 +31,7 @@ const ProfilePageComponent: ExtendedComponent<ProfilePageComponentProps> = ({
   return (
     <div>
       <Typography component="h2" variant="h4">
-        Los links de {username}
+        Links de {username}
       </Typography>
       <LinkList links={links} />
     </div>

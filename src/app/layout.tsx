@@ -5,6 +5,7 @@ import Providers from "./providers";
 import { BRAND, NEXTAUTH_URL } from "@/constants";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(NEXTAUTH_URL),
   title: `${BRAND} - crea y comparte enlaces cortos`,
   description: `${BRAND} es una aplicación que permite crear enlaces cortos y perfiles con enlaces personalizados para compartir tus contenidos de manera fácil y rápida.`,
   keywords: "enlaces cortos, acortador de enlaces, compartir enlaces, KORT.AR " + BRAND,
