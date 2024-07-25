@@ -34,9 +34,10 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
   const handleEditConfirmDialog = () => {
     usingDialog(
       "Confirmar edición de link",
-      <Typography>
-        ¿Estás seguro que deseas editar este link?\nSi cambiaste el link de {BRAND}, perderas el
-        conteo de visitas
+      <Typography component={"span"}>
+        ¿Estás seguro que deseas editar este link?
+        <br />
+        Si cambiaste el link de {BRAND}, perderas el conteo de visitas
       </Typography>,
       "Confirmar editar",
       "info"
@@ -58,7 +59,7 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
   const handleDeleteConfirmDialog = () => {
     usingDialog(
       "Confirmar eliminación link",
-      <Typography>
+      <Typography component={"span"}>
         ¿Estás seguro que deseas eliminar este link? Esta acción no se puede deshacer
       </Typography>,
       "Confirmar eliminar",
@@ -91,13 +92,13 @@ export const RowActions = ({ redirectLink }: { redirectLink: RedirectLink }) => 
   ];
 
   return (
-    <TableCell sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
+    <TableCell align="center">
       {actions.map(({ title, component }) => (
-        <div key={`action-tooltip:${redirectLink.alias}:${title}`}>
-          <Tooltip title={title} placement="top">
+        <span key={`action-tooltip:${redirectLink.alias}:${title}`}>
+          <Tooltip title={title} placement="top" sx={{ cursor: "pointer" }}>
             {component}
           </Tooltip>
-        </div>
+        </span>
       ))}
     </TableCell>
   );

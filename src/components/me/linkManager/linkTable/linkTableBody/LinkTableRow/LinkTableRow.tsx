@@ -15,7 +15,7 @@ const LinkTableRow: ExtendedComponent<{
   return (
     <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       {headers.map((h, index) => (
-        <TableCell key={h + index} component="th" scope={index === 0 ? "row" : ""}>
+        <TableCell key={h + index} component="td" scope={index === 0 ? "row" : ""}>
           <CellContent center={index !== 0} header={h} data={row} />
         </TableCell>
       ))}

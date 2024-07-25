@@ -37,7 +37,7 @@ const ModalCustomContent = () => {
       >
         <Box sx={{ m: 2, marginLeft: "auto", top: 0, right: 0, position: "absolute" }}>
           <Button onClick={hideModal} sx={{ p: 0, minWidth: "fit-content" }}>
-            <CloseIcon width="auto" />
+            <CloseIcon />
           </Button>
         </Box>
 

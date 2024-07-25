@@ -104,9 +104,10 @@ export const CellContent = ({ header, data: rowData, center }: CellContentProps)
                   textDecoration: "underline",
                 },
               }}
+              onClick={() => handleCopyToClipboard(url)}
             >
               {data}
-              <ContentCopy color="success" onClick={() => handleCopyToClipboard(url)} />
+              <ContentCopy color="success" />
             </Typography>
           </Tooltip>
         );
