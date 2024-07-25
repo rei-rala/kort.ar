@@ -10,9 +10,7 @@ type pageParams = {
 };
 
 export async function GET(req: NextRequest, { params: { username } }: pageParams) {
-  let links: RedirectLink[] = [];
-
-  links = (await prisma.redirectLink.findMany({
+  const links = await prisma.redirectLink.findMany({
     where: {
       owner: {
         username,
@@ -21,20 +19,26 @@ export async function GET(req: NextRequest, { params: { username } }: pageParams
     include: {
       owner: true,
     },
-  })) as any;
+  });
 
   // save the hit to the visited profile if more than 0 links are found
   if (links.length > 0) {
-    auth().then((session) => {
+    await auth().then((session) => {
+      const ip =
+        String(req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || req.ip) ||
+        null;
+      const visitingUserEmail =
+        session?.user?.email && session.user.email !== links[0].owner.email
+          ? session.user.email
+          : null;
+
       prisma.hit.create({
         data: {
-          ip:
-            String(req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for") || req.ip) ||
-            null,
+          ip,
           referer: req.headers.get("referer"),
           userAgent: req.headers.get("user-agent"),
-          visitingUserEmail: session?.user?.email || null,
-          visitedUserId: links[0].owner?.id || null,
+          visitingUserEmail,
+          visitedUserId: links[0].owner.id,
         },
       });
     });

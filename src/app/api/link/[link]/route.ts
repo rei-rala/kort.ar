@@ -51,6 +51,7 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
           username: true,
           name: true,
           image: true,
+          email: true,
         },
       },
     },
@@ -72,6 +73,10 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
       const realIp = req.headers.get("x-real-ip");
       const referer = req.headers.get("referer");
       const userAgent = req.headers.get("user-agent");
+      const user =
+        session?.user?.email && session.user.email !== linkFound.owner.email
+          ? { connect: { id: session.user.email } }
+          : undefined;
 
       return Promise.all([
         prisma.hit.create({
@@ -82,7 +87,7 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
             originalFrom: linkFound.from,
             originalTo: linkFound.to,
             visitedRedirectLink: { connect: { id: linkFound.id } },
-            user: session?.user?.email ? { connect: { id: session.user.email } } : undefined,
+            user,
           },
         }),
         prisma.redirectLink.update({
@@ -94,7 +99,7 @@ export async function GET(req: NextRequest, { params: { link } }: routeParams) {
     .catch((err) => {
       console.error("Error trying to create hit or update hitCount in redirectLink");
       console.error(JSON.stringify(err, null, 2));
-    })
+    });
 
   if (!linkFound.canReturnToProfile) return redirect(linkFound.to);
 
